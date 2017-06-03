@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMMDatepickerViewController">
+            <connections>
+                <outlet property="datePicker" destination="xvi-wb-13s" id="lJW-5F-XLN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ol-kX-ojR">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="w25-mu-0Jd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xvi-wb-13s">
+                                <rect key="frame" x="0.0" y="225" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="518220974.15908098">
+                                    <!--2017-06-03 22:16:14 +0000-->
+                                </date>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBb-1Y-kWg">
+                                <rect key="frame" x="0.0" y="449" width="375" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="SET"/>
+                                <connections>
+                                    <action selector="setDateButton:" destination="-1" eventType="touchUpInside" id="qRR-zt-Lr1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="vBb-1Y-kWg" firstAttribute="leading" secondItem="w25-mu-0Jd" secondAttribute="leading" id="MVc-BY-LJB"/>
+                            <constraint firstItem="xvi-wb-13s" firstAttribute="leading" secondItem="w25-mu-0Jd" secondAttribute="leading" id="OWn-ZO-0xa"/>
+                            <constraint firstItem="vBb-1Y-kWg" firstAttribute="top" secondItem="xvi-wb-13s" secondAttribute="bottom" constant="8" id="Wag-cQ-2Zf"/>
+                            <constraint firstAttribute="trailing" secondItem="xvi-wb-13s" secondAttribute="trailing" id="fI0-Pw-uFA"/>
+                            <constraint firstItem="vBb-1Y-kWg" firstAttribute="centerX" secondItem="w25-mu-0Jd" secondAttribute="centerX" id="jIe-TP-b2g"/>
+                            <constraint firstItem="xvi-wb-13s" firstAttribute="centerY" secondItem="w25-mu-0Jd" secondAttribute="centerY" id="n9i-hc-uPF"/>
+                        </constraints>
+                    </view>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="3Ol-kX-ojR" secondAttribute="trailing" id="8qA-vo-zWF"/>
+                <constraint firstItem="3Ol-kX-ojR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TCY-eW-aga"/>
+                <constraint firstItem="3Ol-kX-ojR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dKV-zg-ddj"/>
+                <constraint firstAttribute="bottom" secondItem="3Ol-kX-ojR" secondAttribute="bottom" id="uqK-H3-xlm"/>
+            </constraints>
+            <point key="canvasLocation" x="422.5" y="83.5"/>
+        </view>
+    </objects>
+</document>

@@ -1,5 +1,5 @@
 //
-//  OMMAddTaskViewController.h
+//  OMMInboxTableViewController.h
 //  ToDoList
 //
 //  Created by Admin on 03.06.17.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMMAddTaskViewController : UIViewController
-
+@interface OMMInboxTableViewController : UITableViewController
 
 @end

@@ -32,7 +32,7 @@
         <!--Inbox-->
         <scene sceneID="Krb-IR-6KA">
             <objects>
-                <tableViewController id="Wxd-MH-SOU" sceneMemberID="viewController">
+                <tableViewController id="Wxd-MH-SOU" customClass="OMMInboxTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="I5C-fm-CXI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,9 +62,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Inbox" id="sHr-4J-eQg">
+                        <barButtonItem key="leftBarButtonItem" title="filter" id="0E5-CT-8hJ"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XUL-a3-YCR">
                             <connections>
-                                <segue destination="Paf-rD-ph5" kind="show" id="Dml-xz-L1T"/>
+                                <action selector="addNewTaskButtonPressed:" destination="Wxd-MH-SOU" id="HEK-GD-kyc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -72,27 +73,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0Q-xy-ZQd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1658" y="-1002"/>
-        </scene>
-        <!--Task-->
-        <scene sceneID="iPw-1x-Mzm">
-            <objects>
-                <viewController id="Paf-rD-ph5" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WUs-q2-k0u"/>
-                        <viewControllerLayoutGuide type="bottom" id="RaN-g7-sXW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="VFo-M0-yd6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Task" id="Tao-De-Nk9">
-                        <barButtonItem key="rightBarButtonItem" title="add" id="7dh-Lr-VJl"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="52E-HZ-w0S" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2468" y="-1003"/>
         </scene>
         <!--Today-->
         <scene sceneID="etw-lx-pE2">
@@ -149,7 +129,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Loc-Bz-QWy">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -187,7 +167,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jgh-nF-hjy">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
