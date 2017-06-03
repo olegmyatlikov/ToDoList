@@ -13,6 +13,8 @@
 		8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFB81EE28BB9004337CF /* Main.storyboard */; };
 		8446DFBC1EE28BB9004337CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBB1EE28BB9004337CF /* Assets.xcassets */; };
 		8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */; };
+		8446DFC91EE2947F004337CF /* OMMAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */; };
+		8446DFCA1EE2947F004337CF /* OMMAddTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,9 @@
 		8446DFBB1EE28BB9004337CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8446DFBE1EE28BB9004337CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8446DFC01EE28BB9004337CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8446DFC61EE2947F004337CF /* OMMAddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMAddTaskViewController.h; sourceTree = "<group>"; };
+		8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMAddTaskViewController.m; sourceTree = "<group>"; };
+		8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMMAddTaskViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,9 +68,9 @@
 				8446DFB51EE28BB9004337CF /* ViewController.h */,
 				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
-				8446DFBB1EE28BB9004337CF /* Assets.xcassets */,
-				8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */,
-				8446DFC01EE28BB9004337CF /* Info.plist */,
+				8446DFC61EE2947F004337CF /* OMMAddTaskViewController.h */,
+				8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */,
+				8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
 			);
 			path = ToDoList;
@@ -74,6 +79,9 @@
 		8446DFAF1EE28BB9004337CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8446DFBB1EE28BB9004337CF /* Assets.xcassets */,
+				8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */,
+				8446DFC01EE28BB9004337CF /* Info.plist */,
 				8446DFB01EE28BB9004337CF /* main.m */,
 			);
 			name = "Supporting Files";
@@ -105,6 +113,7 @@
 		8446DFA41EE28BB9004337CF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = OMM;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Oleg Myatlikov";
 				TargetAttributes = {
@@ -138,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */,
+				8446DFCA1EE2947F004337CF /* OMMAddTaskViewController.xib in Resources */,
 				8446DFBC1EE28BB9004337CF /* Assets.xcassets in Resources */,
 				8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */,
 			);
@@ -151,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8446DFB71EE28BB9004337CF /* ViewController.m in Sources */,
+				8446DFC91EE2947F004337CF /* OMMAddTaskViewController.m in Sources */,
 				8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */,
 				8446DFB11EE28BB9004337CF /* main.m in Sources */,
 			);
@@ -275,6 +286,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ToDoList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.olegmyatlikov.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -286,6 +298,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ToDoList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.olegmyatlikov.ToDoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
