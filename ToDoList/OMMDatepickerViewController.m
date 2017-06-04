@@ -7,6 +7,7 @@
 //
 
 #import "OMMDatepickerViewController.h"
+#import "OMMAddTaskViewController.h"
 
 @interface OMMDatepickerViewController ()
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
@@ -22,8 +23,14 @@
 }
 
 - (IBAction)setDateButton:(UIButton *)sender {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd-MM-YYYY"];
+    [self.delegate sendDateToTaskViewController:[formatter stringFromDate:self.datePicker.date]];
+    [self.delegate showTabBar];
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.selectedDate = self.datePicker.date;
 }
+
+
 
 @end

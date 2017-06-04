@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMMDatepickerViewController.h"
 
-@interface OMMAddTaskViewController : UIViewController
-
+@interface OMMAddTaskViewController : UIViewController <DateSetDelegate>
 
 @end
+
