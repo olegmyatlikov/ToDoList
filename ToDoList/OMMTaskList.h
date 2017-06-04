@@ -13,6 +13,6 @@
 @property (nonatomic, assign) NSInteger taskListID;
 @property (nonatomic, strong) NSString *taskListName;
 @property (nonatomic, strong) NSDate *startDate;
-@property (nonatomic, strong) NSArray *tasks;
+@property (nonatomic, strong) NSMutableArray *tasksArray;
 
 @end

@@ -10,4 +10,22 @@
 
 @implementation OMMTaskService
 
+- (void)addTask:(OMMTask *)task toTaskList:(OMMTaskList *)taskList {
+    [taskList.tasksArray addObject:task];
+}
+
+- (void)closeTask:(OMMTask *)task {
+    task.closed = YES;
+}
+
++ (OMMTask *)createTaskWithName:(NSString *)name finishDate:(NSDate *)date notes:(NSString *)notes {
+    
+    OMMTask *task = [[OMMTask alloc] init];
+    task.name = name;
+    task.finishDate = date;
+    task.note = notes;
+    
+    return task;
+}
+
 @end

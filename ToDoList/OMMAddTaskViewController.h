@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "OMMDatepickerViewController.h"
 
+@protocol addNewTaskDelegate <NSObject>
+
+- (void)addNewTaskInTaskArray:(id)task;
+
+@end
+
+
 @interface OMMAddTaskViewController : UIViewController <DateSetDelegate>
+
+@property (weak, nonatomic) id <addNewTaskDelegate> delegate;
 
 @end
 
