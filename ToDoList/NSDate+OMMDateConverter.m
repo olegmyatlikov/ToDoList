@@ -20,6 +20,7 @@
 
 + (NSDate *)convertStringToDate:(NSString *)dateInString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd-MM-YYYY HH:mm"];
     [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+3]];
     return [formatter dateFromString:dateInString];
 }
