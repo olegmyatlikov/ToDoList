@@ -67,6 +67,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36068B061EE58A6C0088EC2D /* Inbox table */ = {
+			isa = PBXGroup;
+			children = (
+				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
+				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
+			);
+			name = "Inbox table";
+			sourceTree = "<group>";
+		};
+		36068B071EE58A810088EC2D /* Task detail */ = {
+			isa = PBXGroup;
+			children = (
+				364F25E31EE5364600CC43C3 /* OMMDetailsOfTaskViewController.h */,
+				364F25E41EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m */,
+			);
+			name = "Task detail";
+			sourceTree = "<group>";
+		};
 		364F25E61EE571ED00CC43C3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,12 +118,8 @@
 				8446DFB51EE28BB9004337CF /* ViewController.h */,
 				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
-				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
-				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
-				364F25E31EE5364600CC43C3 /* OMMDetailsOfTaskViewController.h */,
-				364F25E41EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m */,
-				8446E0021EE36AF4004337CF /* Datepicker */,
-				8446DFFC1EE35BCE004337CF /* TaskAddVC */,
+				36068B061EE58A6C0088EC2D /* Inbox table */,
+				8446DFFC1EE35BCE004337CF /* AddEditTaskVC */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
@@ -137,14 +151,16 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		8446DFFC1EE35BCE004337CF /* TaskAddVC */ = {
+		8446DFFC1EE35BCE004337CF /* AddEditTaskVC */ = {
 			isa = PBXGroup;
 			children = (
+				8446E0021EE36AF4004337CF /* Datepicker */,
+				36068B071EE58A810088EC2D /* Task detail */,
 				8446DFC61EE2947F004337CF /* OMMAddTaskViewController.h */,
 				8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */,
 				8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */,
 			);
-			name = TaskAddVC;
+			name = AddEditTaskVC;
 			sourceTree = "<group>";
 		};
 		8446E0021EE36AF4004337CF /* Datepicker */ = {
