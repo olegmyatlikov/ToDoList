@@ -14,10 +14,6 @@
     [taskList.tasksArray addObject:task];
 }
 
-- (void)closeTask:(OMMTask *)task {
-    task.closed = YES;
-}
-
 + (OMMTask *)createTaskWithName:(NSString *)name finishDate:(NSDate *)date notes:(NSString *)notes {
     
     OMMTask *task = [[OMMTask alloc] init];

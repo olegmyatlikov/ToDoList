@@ -50,6 +50,7 @@
  return cell;
  }
 
+#pragma mark - Tap to cell
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
@@ -58,6 +59,8 @@
     detailOfTaskViewController.delegate = self;
     [self.navigationController pushViewController:detailOfTaskViewController animated:YES];
 }
+
+#pragma mark - Delegate method
 
 
 - (void)addNewTaskInTaskArray:(OMMTask *)task {
