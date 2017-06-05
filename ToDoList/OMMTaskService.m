@@ -10,7 +10,7 @@
 
 @implementation OMMTaskService
 
-- (void)addTask:(OMMTask *)task toTaskList:(OMMTaskList *)taskList {
++ (void)addTask:(OMMTask *)task toTaskList:(OMMTaskList *)taskList {
     [taskList.tasksArray addObject:task];
 }
 
@@ -24,6 +24,7 @@
     task.name = name;
     task.finishDate = date;
     task.note = notes;
+    task.closed = NO;
     
     return task;
 }

@@ -10,7 +10,7 @@
 #import "NSDate+OMMDateConverter.h"
 #import "OMMAddTaskViewController.h"
 #import "OMMTask.h"
-#import "OMMTaskDetailViewController.h"
+#import "OMMDetailsOfTaskViewController.h"
 
 @interface OMMInboxTableViewController ()
 
@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tasksArray = [[NSMutableArray alloc] init];
+    [self.tableView reloadData];
 }
 
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
@@ -30,8 +31,6 @@
     [taskAddViewController setDelegate:self];
     taskAddViewController.title = @"New task";
     [self.navigationController pushViewController:taskAddViewController animated:YES];
-    
-    
 }
 
 #pragma mark - Table view data source
@@ -40,8 +39,7 @@
     return self.tasksArray.count;
 }
 
-
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      NSString *identifier = @"Cell";
  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
      
@@ -54,18 +52,21 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
-    //UIStoryboard *stryBoard=[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    //OMMTaskDetailViewController *taskDetailViewController = [stryBoard instantiateViewControllerWithIdentifier:@"DetailTask"];
-    //[taskDetailViewController setTask:task];
-    NSLog(@" task.name = %@", task.name);
-
+    OMMDetailsOfTaskViewController *detailOfTaskViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailOfTask"];
+    detailOfTaskViewController.task = task;
+    detailOfTaskViewController.delegate = self;
+    [self.navigationController pushViewController:detailOfTaskViewController animated:YES];
 }
 
 
-- (void)addNewTaskInTaskArray:(id)task {
+- (void)addNewTaskInTaskArray:(OMMTask *)task {
     [self.tasksArray addObject:task];
+    [self.tableView reloadData];
+}
+
+
+- (void)saveChangesInTaskArray:(OMMTask *)editingTask {
     [self.tableView reloadData];
 }
 

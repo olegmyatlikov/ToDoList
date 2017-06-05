@@ -12,16 +12,16 @@
 
 - (NSString *)convertDateToString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-YYYY HH:mm"];
-    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+3]];
+    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     return [formatter stringFromDate:self];
 }
 
 
 + (NSDate *)convertStringToDate:(NSString *)dateInString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-YYYY HH:mm"];
-    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+3]];
+    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     return [formatter dateFromString:dateInString];
 }
 
