@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "OMMTask.h"
-#import "OMMTaskList.h"
+#import "OMMTasksGroup.h"
 
 @interface OMMTaskService : NSObject
 
-+ (void)addTask:(OMMTask *)task toTaskList:(OMMTaskList *)taskList;
++ (void)addTask:(OMMTask *)task toTasksGroup:(OMMTasksGroup *)tasksGroup;
 + (OMMTask *)createTaskWithName:(NSString *)name finishDate:(NSDate *)date notes:(NSString *)notes;
++ (OMMTasksGroup *)createTasksGroup:(NSInteger)groupID groupName:(NSString *)groupName;
 
 
 @end

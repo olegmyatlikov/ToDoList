@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NSDate *finishDate;
 @property (nonatomic, strong) NSString *note;
 @property (nonatomic, assign, getter=isClosed) BOOL closed;
+@property (nonatomic, assign) BOOL enableRemainder;
 
 @end

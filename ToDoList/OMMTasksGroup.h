@@ -1,5 +1,5 @@
 //
-//  OMMTaskList.h
+//  OMMTasksGroup.h
 //  ToDoList
 //
 //  Created by Admin on 03.06.17.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OMMTaskList : NSObject
+@interface OMMTasksGroup : NSObject
 
-@property (nonatomic, assign) NSInteger taskListID;
-@property (nonatomic, strong) NSString *taskListName;
-@property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, assign) NSInteger groupID;
+@property (nonatomic, strong) NSString *groupName;
+@property (nonatomic, strong) NSDate *groupStartDate;
 @property (nonatomic, strong) NSMutableArray *tasksArray;
 
 @end
