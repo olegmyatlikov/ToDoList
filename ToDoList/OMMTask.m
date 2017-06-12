@@ -10,4 +10,27 @@
 
 @implementation OMMTask
 
+- (NSString*)taskPriotityToString:(TaskPriority)taskPriority {
+    NSString *result = nil;
+    
+    switch(taskPriority) {
+        case none:
+            result = @"none";
+            break;
+        case low:
+            result = @"low";
+            break;
+        case medium:
+            result = @"medium";
+            break;
+        case high:
+            result = @"high";
+            break;
+        default:
+            [NSException raise:NSGenericException format:@"Unexpected taskPriority"];
+    }
+    
+    return result;
+}
+
 @end

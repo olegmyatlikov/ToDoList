@@ -10,12 +10,22 @@
 
 @interface OMMTask : NSObject
 
+typedef enum TaskPriority{
+    none,
+    low,
+    medium,
+    high
+} TaskPriority;
+
 @property (nonatomic, assign) NSInteger taskID;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *finishDate;
+@property (nonatomic, assign) TaskPriority priority;
 @property (nonatomic, strong) NSString *note;
 @property (nonatomic, assign, getter=isClosed) BOOL closed;
 @property (nonatomic, assign) BOOL enableRemainder;
+
+- (NSString*)taskPriotityToString:(TaskPriority)taskPriority;
 
 @end

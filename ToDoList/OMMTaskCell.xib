@@ -28,15 +28,15 @@
                         <rect key="frame" x="8" y="38" width="271" height="20.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Task note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8l9-oc-XYg">
-                                <rect key="frame" x="0.0" y="0.0" width="195.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="199.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="finish date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gV4-yS-dFD">
-                                <rect key="frame" x="195.5" y="0.0" width="75.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="199.5" y="0.0" width="71.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -52,7 +52,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="taskFinishDate" destination="gV4-yS-dFD" id="A0P-vm-SCb"/>
+                <outlet property="taskFinishDate" destination="gV4-yS-dFD" id="2pw-rh-B5S"/>
                 <outlet property="taskName" destination="yx9-gP-EFF" id="KZy-GD-VS8"/>
                 <outlet property="taskNote" destination="8l9-oc-XYg" id="A26-WM-YXx"/>
             </connections>

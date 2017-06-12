@@ -22,6 +22,7 @@
 		8446DFF91EE35863004337CF /* OMMInboxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */; };
 		8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFFE1EE36AEC004337CF /* OMMDatepickerViewController.m */; };
 		8446E0011EE36AEC004337CF /* OMMDatepickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFFF1EE36AEC004337CF /* OMMDatepickerViewController.xib */; };
+		849312111EEEFBF5002F780F /* OMMTaskDetailTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 849312101EEEFBF5002F780F /* OMMTaskDetailTableVC.m */; };
 		84B348C41EE464A10017B9F0 /* NSDate+OMMDateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B348C31EE464A10017B9F0 /* NSDate+OMMDateConverter.m */; };
 		84DC83C21EEDCC4D00D84BC2 /* OMMTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC83C01EEDCC4D00D84BC2 /* OMMTaskCell.m */; };
 		84DC83C31EEDCC4D00D84BC2 /* OMMTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84DC83C11EEDCC4D00D84BC2 /* OMMTaskCell.xib */; };
@@ -54,6 +55,8 @@
 		8446DFFD1EE36AEC004337CF /* OMMDatepickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMDatepickerViewController.h; sourceTree = "<group>"; };
 		8446DFFE1EE36AEC004337CF /* OMMDatepickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMDatepickerViewController.m; sourceTree = "<group>"; };
 		8446DFFF1EE36AEC004337CF /* OMMDatepickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMMDatepickerViewController.xib; sourceTree = "<group>"; };
+		8493120F1EEEFBF5002F780F /* OMMTaskDetailTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTaskDetailTableVC.h; sourceTree = "<group>"; };
+		849312101EEEFBF5002F780F /* OMMTaskDetailTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTaskDetailTableVC.m; sourceTree = "<group>"; };
 		84B348C21EE464A10017B9F0 /* NSDate+OMMDateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+OMMDateConverter.h"; sourceTree = "<group>"; };
 		84B348C31EE464A10017B9F0 /* NSDate+OMMDateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+OMMDateConverter.m"; sourceTree = "<group>"; };
 		84DC83BF1EEDCC4D00D84BC2 /* OMMTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTaskCell.h; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 			children = (
 				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
 				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
+				8493120F1EEEFBF5002F780F /* OMMTaskDetailTableVC.h */,
+				849312101EEEFBF5002F780F /* OMMTaskDetailTableVC.m */,
 			);
 			name = "Inbox table";
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
 				364F25E51EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m in Sources */,
+				849312111EEEFBF5002F780F /* OMMTaskDetailTableVC.m in Sources */,
 				8446DFC91EE2947F004337CF /* OMMAddTaskViewController.m in Sources */,
 				84DC83C21EEDCC4D00D84BC2 /* OMMTaskCell.m in Sources */,
 				8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */,

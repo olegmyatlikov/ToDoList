@@ -11,7 +11,7 @@
 #import "OMMAddTaskViewController.h"
 #import "OMMTask.h"
 #import "OMMTaskCell.h"
-#import "OMMDetailsOfTaskViewController.h"
+#import "OMMTaskDetailTableVC.h"
 
 @interface OMMInboxTableViewController ()
 
@@ -28,7 +28,10 @@
     OMMTask *testTask = [[OMMTask alloc] init];
     testTask.name = @"task1";
     testTask.note = @"task1 notes";
-    testTask.finishDate = [NSDate convertStringToDate:@"10-04-2017 10:30"];
+    testTask.startDate = [NSDate convertStringToDate:@"10-04-2017 10:30"];
+    testTask.finishDate = [NSDate convertStringToDate:@"11-04-2017 12:00"];
+    testTask.priority = low;
+    testTask.enableRemainder = NO;
     [self.tasksArray addObject:testTask];
     
     
@@ -72,11 +75,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
-    OMMDetailsOfTaskViewController *detailOfTaskViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailOfTask"];
-    detailOfTaskViewController.task = task;
-    detailOfTaskViewController.delegate = self;
-    [self.navigationController pushViewController:detailOfTaskViewController animated:YES];
+    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    taskDetails.task = task;
+    [self.navigationController pushViewController:taskDetails animated:YES];
 }
+
 
 #pragma mark - Delegate method
 
