@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMMAddTaskViewController.h"
 
-@interface OMMInboxTableViewController : UITableViewController <addNewTaskDelegate>
+@interface OMMInboxTableViewController : UITableViewController
 
 @end

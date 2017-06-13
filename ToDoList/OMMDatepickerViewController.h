@@ -8,20 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol DateSetDelegate;
+@protocol OMMDatepickerViewControllerDelegate;
 
 
 @interface OMMDatepickerViewController : UIViewController
 
 @property (strong, nonatomic) NSDate *selectedDate;
-@property (weak, nonatomic) id <DateSetDelegate> delegate;
+@property (strong, nonatomic) NSDate *startDate;
+@property (weak, nonatomic) id <OMMDatepickerViewControllerDelegate> delegate;
 
 @end
 
 
-@protocol DateSetDelegate <NSObject>
+@protocol OMMDatepickerViewControllerDelegate <NSObject>
 
-- (void)sendDateToTaskViewController:(NSString *)textForButtonTitle;
+- (void)setDateFromDatePickerVC:(OMMDatepickerViewController *)datePickerVC date:(NSString *)date;
 - (void)showTabBar;
 
 @end

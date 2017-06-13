@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		364F25E51EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 364F25E41EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
 		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
 		8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFB81EE28BB9004337CF /* Main.storyboard */; };
 		8446DFBC1EE28BB9004337CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBB1EE28BB9004337CF /* Assets.xcassets */; };
 		8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */; };
-		8446DFC91EE2947F004337CF /* OMMAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */; };
-		8446DFCA1EE2947F004337CF /* OMMAddTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */; };
 		8446DFCD1EE3017D004337CF /* OMMTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFCC1EE3017D004337CF /* OMMTask.m */; };
 		8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFCF1EE3032E004337CF /* OMMTasksGroup.m */; };
 		8446DFD31EE30423004337CF /* OMMTaskService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFD21EE30423004337CF /* OMMTaskService.m */; };
@@ -29,8 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		364F25E31EE5364600CC43C3 /* OMMDetailsOfTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMDetailsOfTaskViewController.h; sourceTree = "<group>"; };
-		364F25E41EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMDetailsOfTaskViewController.m; sourceTree = "<group>"; };
 		8446DFAC1EE28BB9004337CF /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446DFB01EE28BB9004337CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8446DFB21EE28BB9004337CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -41,9 +36,6 @@
 		8446DFBB1EE28BB9004337CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8446DFBE1EE28BB9004337CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8446DFC01EE28BB9004337CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8446DFC61EE2947F004337CF /* OMMAddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMAddTaskViewController.h; sourceTree = "<group>"; };
-		8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMAddTaskViewController.m; sourceTree = "<group>"; };
-		8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMMAddTaskViewController.xib; sourceTree = "<group>"; };
 		8446DFCB1EE3017D004337CF /* OMMTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTask.h; sourceTree = "<group>"; };
 		8446DFCC1EE3017D004337CF /* OMMTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTask.m; sourceTree = "<group>"; };
 		8446DFCE1EE3032E004337CF /* OMMTasksGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTasksGroup.h; sourceTree = "<group>"; };
@@ -86,15 +78,6 @@
 			name = "Inbox table";
 			sourceTree = "<group>";
 		};
-		36068B071EE58A810088EC2D /* Task detail */ = {
-			isa = PBXGroup;
-			children = (
-				364F25E31EE5364600CC43C3 /* OMMDetailsOfTaskViewController.h */,
-				364F25E41EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m */,
-			);
-			name = "Task detail";
-			sourceTree = "<group>";
-		};
 		364F25E61EE571ED00CC43C3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,7 +113,7 @@
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
 				36068B061EE58A6C0088EC2D /* Inbox table */,
 				84DC83C41EEDCC5300D84BC2 /* TaskCell */,
-				8446DFFC1EE35BCE004337CF /* AddEditTaskVC */,
+				8446E0021EE36AF4004337CF /* Datepicker */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
@@ -160,18 +143,6 @@
 				8446DFD21EE30423004337CF /* OMMTaskService.m */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		8446DFFC1EE35BCE004337CF /* AddEditTaskVC */ = {
-			isa = PBXGroup;
-			children = (
-				8446E0021EE36AF4004337CF /* Datepicker */,
-				36068B071EE58A810088EC2D /* Task detail */,
-				8446DFC61EE2947F004337CF /* OMMAddTaskViewController.h */,
-				8446DFC71EE2947F004337CF /* OMMAddTaskViewController.m */,
-				8446DFC81EE2947F004337CF /* OMMAddTaskViewController.xib */,
-			);
-			name = AddEditTaskVC;
 			sourceTree = "<group>";
 		};
 		8446E0021EE36AF4004337CF /* Datepicker */ = {
@@ -255,7 +226,6 @@
 			files = (
 				8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */,
 				8446E0011EE36AEC004337CF /* OMMDatepickerViewController.xib in Resources */,
-				8446DFCA1EE2947F004337CF /* OMMAddTaskViewController.xib in Resources */,
 				8446DFBC1EE28BB9004337CF /* Assets.xcassets in Resources */,
 				84DC83C31EEDCC4D00D84BC2 /* OMMTaskCell.xib in Resources */,
 				8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */,
@@ -275,9 +245,7 @@
 				8446DFCD1EE3017D004337CF /* OMMTask.m in Sources */,
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
-				364F25E51EE5364600CC43C3 /* OMMDetailsOfTaskViewController.m in Sources */,
 				849312111EEEFBF5002F780F /* OMMTaskDetailTableVC.m in Sources */,
-				8446DFC91EE2947F004337CF /* OMMAddTaskViewController.m in Sources */,
 				84DC83C21EEDCC4D00D84BC2 /* OMMTaskCell.m in Sources */,
 				8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */,
 				8446DFB11EE28BB9004337CF /* main.m in Sources */,

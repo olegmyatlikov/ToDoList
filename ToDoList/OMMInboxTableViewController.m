@@ -8,7 +8,6 @@
 
 #import "OMMInboxTableViewController.h"
 #import "NSDate+OMMDateConverter.h"
-#import "OMMAddTaskViewController.h"
 #import "OMMTask.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
@@ -28,8 +27,8 @@
     OMMTask *testTask = [[OMMTask alloc] init];
     testTask.name = @"task1";
     testTask.note = @"task1 notes";
-    testTask.startDate = [NSDate convertStringToDate:@"10-04-2017 10:30"];
-    testTask.finishDate = [NSDate convertStringToDate:@"11-04-2017 12:00"];
+    testTask.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
+    testTask.finishDate = [NSDate convertStringToDate:@"11-07-2017 12:00"];
     testTask.priority = low;
     testTask.enableRemainder = NO;
     [self.tasksArray addObject:testTask];
@@ -38,12 +37,12 @@
     //[self.tableView reloadData];
 }
 
-- (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
-    OMMAddTaskViewController *taskAddViewController = [[OMMAddTaskViewController alloc] initWithNibName:@"OMMAddTaskViewController" bundle:nil];
-    [taskAddViewController setDelegate:self];
-    taskAddViewController.title = @"New task";
-    [self.navigationController pushViewController:taskAddViewController animated:YES];
-}
+//- (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
+//    OMMAddTaskViewController *taskAddViewController = [[OMMAddTaskViewController alloc] initWithNibName:@"OMMAddTaskViewController" bundle:nil];
+//    [taskAddViewController setDelegate:self];
+//    taskAddViewController.title = @"New task";
+//    [self.navigationController pushViewController:taskAddViewController animated:YES];
+//}
 
 #pragma mark - Table view data source
 

@@ -16,9 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *priorityLabel;
 @property (weak, nonatomic) IBOutlet UITextView *taskNotesTextView;
 
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *startDateCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *priorityCell;
+
+@property (assign, nonatomic) BOOL enableRemainder;
+@property (assign, nonatomic) TaskPriority priority;
+@property (strong, nonatomic) UIBarButtonItem *saveTaskButton;
 
 @end
 
@@ -33,7 +36,51 @@
     [self.remaindSwitcher setOn:self.task.enableRemainder];
     self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
     self.taskNotesTextView.text = self.task.note;
+    
+    self.saveTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveTaskButtonPressed)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
+    self.navigationItem.rightBarButtonItem = self.saveTaskButton;
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    [self disableSaveButton];
+    
+    // detect changes
+    [self.taskNameTextField addTarget:self action:@selector(enableSaveButton) forControlEvents:UIControlEventEditingChanged];
+    [self.remaindSwitcher addTarget:self action:@selector(enableSaveButton) forControlEvents:UIControlEventValueChanged];
+    self.taskNotesTextView.delegate = self;
+    [self.startDateLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
+    [self.priorityLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
 }
+
+
+- (void)saveTaskButtonPressed {
+    self.task.name = self.taskNameTextField.text;
+    self.task.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
+    self.task.note = self.taskNotesTextView.text;
+    self.task.priority = self.priority;
+    self.task.enableRemainder = [self.remaindSwitcher isOn];
+}
+
+- (void)cancelButtonPressed {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)enableSaveButton {
+    self.saveTaskButton.enabled = YES;
+}
+
+- (void)disableSaveButton {
+    self.saveTaskButton.enabled = NO;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    [self enableSaveButton];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    [self enableSaveButton];
+}
+
+#pragma mark - tableView methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50.0f;
@@ -45,7 +92,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 50.0f)];
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, tableView.bounds.size.width, 20)];
     
-    headerView.backgroundColor = [UIColor colorWithRed:235.0f/255.0f green:235.0f/255.0f blue:241.0f/255.0f alpha:1.0f];
+    headerView.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:224.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
     headerLabel.textColor = [UIColor grayColor];
     headerLabel.text = sectionTitle;
     
@@ -54,23 +101,44 @@
     return headerView;
 }
 
+#pragma mark - didSelectRowAtIndexPath
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    // push to datePickerVC
     if (selectedCell == self.startDateCell) {
-        
+        OMMDatepickerViewController *datepickerVC = [[OMMDatepickerViewController alloc] init];
+        datepickerVC.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
+        datepickerVC.delegate = self;
+        [self.navigationController pushViewController:datepickerVC animated:YES];
     }
+    
+    // alert actionSheet for chose priority
     if (selectedCell == self.priorityCell) {
         UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:@"Select Priority" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
-        UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){ }];
-        UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:@"Low" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){ }];
-        UIAlertAction *midlePriority = [UIAlertAction actionWithTitle:@"Midle" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){ }];
-        UIAlertAction *highPriority = [UIAlertAction actionWithTitle:@"High" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){ }];
+        UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            self.priorityLabel.text = @"none";
+            self.priority = none;
+        }];
+        UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:@"Low" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            self.priorityLabel.text = @"low";
+            self.priority = low;
+        }];
+        UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:@"Medium" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            self.priorityLabel.text = @"medium";
+            self.priority = medium;
+        }];
+        UIAlertAction *highPriority = [UIAlertAction actionWithTitle:@"High" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            self.priorityLabel.text = @"high";
+            self.priority = high;
+        }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];
         
         [priorityAlert addAction:nonePriority];
         [priorityAlert addAction:lowPriority];
-        [priorityAlert addAction:midlePriority];
+        [priorityAlert addAction:mediumPriority];
         [priorityAlert addAction:highPriority];
         [priorityAlert addAction:cancel];
         
@@ -78,6 +146,16 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - protocol methods
+
+- (void)setDateFromDatePickerVC:(OMMDatepickerViewController *)datePickerVC date:(NSString *)date {
+    self.startDateLabel.text = date;
+}
+
+- (void)showTabBar {
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 
