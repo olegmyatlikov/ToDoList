@@ -70,6 +70,8 @@
 		36068B061EE58A6C0088EC2D /* Inbox table */ = {
 			isa = PBXGroup;
 			children = (
+				84DC83C41EEDCC5300D84BC2 /* TaskCell */,
+				8446E0021EE36AF4004337CF /* Datepicker */,
 				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
 				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
 				8493120F1EEEFBF5002F780F /* OMMTaskDetailTableVC.h */,
@@ -112,8 +114,6 @@
 				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
 				36068B061EE58A6C0088EC2D /* Inbox table */,
-				84DC83C41EEDCC5300D84BC2 /* TaskCell */,
-				8446E0021EE36AF4004337CF /* Datepicker */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,

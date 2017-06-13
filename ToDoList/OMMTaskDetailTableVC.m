@@ -80,6 +80,38 @@
     [self enableSaveButton];
 }
 
+//chose priority with alert method
+
+- (void)openPriorityAlertActionSheet {
+    UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:@"Select Priority" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = @"none";
+        self.priority = none;
+    }];
+    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:@"Low" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = @"low";
+        self.priority = low;
+    }];
+    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:@"Medium" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = @"medium";
+        self.priority = medium;
+    }];
+    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:@"High" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = @"high";
+        self.priority = high;
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];
+    
+    [priorityAlert addAction:nonePriority];
+    [priorityAlert addAction:lowPriority];
+    [priorityAlert addAction:mediumPriority];
+    [priorityAlert addAction:highPriority];
+    [priorityAlert addAction:cancel];
+    
+    [self presentViewController:priorityAlert animated:YES completion:nil];
+}
+
 #pragma mark - tableView methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -116,33 +148,7 @@
     
     // alert actionSheet for chose priority
     if (selectedCell == self.priorityCell) {
-        UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:@"Select Priority" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            self.priorityLabel.text = @"none";
-            self.priority = none;
-        }];
-        UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:@"Low" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            self.priorityLabel.text = @"low";
-            self.priority = low;
-        }];
-        UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:@"Medium" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            self.priorityLabel.text = @"medium";
-            self.priority = medium;
-        }];
-        UIAlertAction *highPriority = [UIAlertAction actionWithTitle:@"High" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            self.priorityLabel.text = @"high";
-            self.priority = high;
-        }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];
-        
-        [priorityAlert addAction:nonePriority];
-        [priorityAlert addAction:lowPriority];
-        [priorityAlert addAction:mediumPriority];
-        [priorityAlert addAction:highPriority];
-        [priorityAlert addAction:cancel];
-        
-        [self presentViewController:priorityAlert animated:YES completion:nil];
+        [self openPriorityAlertActionSheet];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -156,6 +162,12 @@
 
 - (void)showTabBar {
     [self.tabBarController.tabBar setHidden:NO];
+}
+
+- (void)dealloc {
+    [self.priorityLabel removeObserver:self forKeyPath:@"text"];
+    [self.startDateLabel removeObserver:self forKeyPath:@"text"];
+    
 }
 
 
