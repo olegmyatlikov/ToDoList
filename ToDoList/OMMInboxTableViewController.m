@@ -25,6 +25,7 @@
     self.tasksArray = [[NSMutableArray alloc] init];
     
     OMMTask *testTask = [[OMMTask alloc] init];
+    testTask.taskID = 900;
     testTask.name = @"task1";
     testTask.note = @"task1 notes";
     testTask.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
@@ -33,16 +34,30 @@
     testTask.enableRemainder = NO;
     [self.tasksArray addObject:testTask];
     
-    
-    //[self.tableView reloadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
 
-//- (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
-//    OMMAddTaskViewController *taskAddViewController = [[OMMAddTaskViewController alloc] initWithNibName:@"OMMAddTaskViewController" bundle:nil];
-//    [taskAddViewController setDelegate:self];
-//    taskAddViewController.title = @"New task";
-//    [self.navigationController pushViewController:taskAddViewController animated:YES];
-//}
+- (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+    NSDictionary *dictWithTask = notification.userInfo;
+    OMMTask *newTask = [dictWithTask valueForKey:@"message"];
+    
+    if ([[dictWithTask valueForKey:@"status"] isEqual:@"new"]) {
+        [self.tasksArray addObject:newTask];
+    } else { // if edited - find and replace task
+        for (int i = 0; i < [self.tasksArray count]; i++) {
+            OMMTask *task = self.tasksArray[i];
+            if (task.taskID == newTask.taskID) {
+                [self.tasksArray replaceObjectAtIndex:i withObject:newTask];
+            }
+        }
+    }
+    [self.tableView reloadData];
+}
+
+- (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
+    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    [self.navigationController pushViewController:taskDetails animated:YES];
+}
 
 #pragma mark - Table view data source
 
@@ -62,7 +77,7 @@
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
     cell.taskFinishDate.text = [task.finishDate convertDateToString];
- 
+    
  return cell;
  }
 

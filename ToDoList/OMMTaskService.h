@@ -13,7 +13,7 @@
 @interface OMMTaskService : NSObject
 
 + (void)addTask:(OMMTask *)task toTasksGroup:(OMMTasksGroup *)tasksGroup;
-+ (OMMTask *)createTaskWithName:(NSString *)name finishDate:(NSDate *)date notes:(NSString *)notes;
++ (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder;
 + (OMMTasksGroup *)createTasksGroup:(NSInteger)groupID groupName:(NSString *)groupName;
 
 

@@ -21,7 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tabBarController.tabBar setHidden:YES];
-    self.selectedDateLabel.text = [self.startDate convertDateToString];
+    if (self.startDate) {
+        [self.datePicker setDate:self.startDate];
+        self.selectedDateLabel.text = [self.startDate convertDateToString];
+    } else {
+        [self.datePicker setDate:[NSDate date]];
+        self.selectedDateLabel.text = [[NSDate date] convertDateToString];
+    }
     
     self.navigationItem.title = @"Chose date";
     UIBarButtonItem *saveDateButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonPressed)];
@@ -35,7 +41,6 @@
     self.datePicker.backgroundColor = [UIColor whiteColor];
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.datePicker.minimumDate = [NSDate date];
-    [self.datePicker setDate:self.startDate];
 }
 
 - (void)datePicherValueChanged {

@@ -7,6 +7,7 @@
 //
 
 #import "OMMTaskDetailTableVC.h"
+#import "OMMTaskService.h"
 
 @interface OMMTaskDetailTableVC ()
 
@@ -31,11 +32,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.taskNameTextField.text = self.task.name;
-    self.startDateLabel.text = [self.task.startDate convertDateToString];
-    [self.remaindSwitcher setOn:self.task.enableRemainder];
-    self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
-    self.taskNotesTextView.text = self.task.note;
+    if (self.task) {
+        self.taskNameTextField.text = self.task.name;
+        self.startDateLabel.text = [self.task.startDate convertDateToString];
+        [self.remaindSwitcher setOn:self.task.enableRemainder];
+        self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
+        self.taskNotesTextView.text = self.task.note;
+    } else {
+        self.startDateLabel.text = @"set date";
+        self.priorityLabel.text = @"none";
+        self.priority = none;
+    }
     
     self.saveTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveTaskButtonPressed)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
@@ -53,12 +60,25 @@
 
 
 - (void)saveTaskButtonPressed {
-    self.task.name = self.taskNameTextField.text;
-    self.task.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
-    self.task.note = self.taskNotesTextView.text;
-    self.task.priority = self.priority;
-    self.task.enableRemainder = [self.remaindSwitcher isOn];
+    if ([self.taskNameTextField.text length] < 1 || [self.startDateLabel.text isEqualToString:@"set date"]) {
+        [self openEmptyValueAlert];
+    } else {
+        OMMTask *newTask = [OMMTaskService createTaskWithName:self.taskNameTextField.text startDate:[NSDate convertStringToDate:self.startDateLabel.text] notes:self.taskNotesTextView.text priority:self.priority enableRemainder:[self.remaindSwitcher isOn]];
+        
+        NSDictionary *dictWithTask = [NSMutableDictionary dictionaryWithObject:newTask forKey:@"message"];
+        if (self.task) {
+            newTask.taskID = self.task.taskID;
+            newTask.finishDate = [NSDate date]; // DELETE!
+        } else {
+            [dictWithTask setValue:@"new" forKey:@"status"];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self userInfo:dictWithTask];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
+
 
 - (void)cancelButtonPressed {
     [self.navigationController popViewControllerAnimated:YES];
@@ -80,7 +100,15 @@
     [self enableSaveButton];
 }
 
-//chose priority with alert method
+#pragma mark - Alerts
+
+- (void)openEmptyValueAlert {
+    UIAlertController *emptyValueAlert = [UIAlertController alertControllerWithTitle:@"Please add tasks name and chose remainder date!" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    }];
+    [emptyValueAlert addAction:okButton];
+    [self presentViewController:emptyValueAlert animated:YES completion:nil];
+}
 
 - (void)openPriorityAlertActionSheet {
     UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:@"Select Priority" message:nil preferredStyle:UIAlertControllerStyleActionSheet];

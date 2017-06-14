@@ -18,12 +18,15 @@
     return taskGroup;
 }
 
-+ (OMMTask *)createTaskWithName:(NSString *)name finishDate:(NSDate *)date notes:(NSString *)notes {
++ (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder {
     OMMTask *task = [[OMMTask alloc] init];
+    task.taskID = arc4random_uniform(1000);
     task.name = name;
-    task.finishDate = date;
+    task.startDate = date;
     task.note = notes;
     task.closed = NO;
+    task.priority = priority;
+    task.enableRemainder = remainder;
     return task;
 }
 
