@@ -17,7 +17,7 @@ typedef enum TaskPriority{
     high
 } TaskPriority;
 
-@property (nonatomic, assign) NSInteger taskID;
+@property (nonatomic, assign, readonly) NSInteger taskID;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *finishDate;

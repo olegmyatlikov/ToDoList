@@ -8,6 +8,12 @@
 
 #import "OMMTask.h"
 
+@interface OMMTask()
+
+@property (nonatomic, assign, readwrite) NSInteger taskID;
+
+@end
+
 @implementation OMMTask
 
 - (NSString*)taskPriotityToString:(TaskPriority)taskPriority {
@@ -31,6 +37,14 @@
     }
     
     return result;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.taskID = arc4random_uniform(1000);
+    }
+    return self;
 }
 
 @end

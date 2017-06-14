@@ -25,7 +25,6 @@
     self.tasksArray = [[NSMutableArray alloc] init];
     
     OMMTask *testTask = [[OMMTask alloc] init];
-    testTask.taskID = 900;
     testTask.name = @"task1";
     testTask.note = @"task1 notes";
     testTask.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
@@ -33,7 +32,7 @@
     testTask.priority = low;
     testTask.enableRemainder = NO;
     [self.tasksArray addObject:testTask];
-    
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
 
@@ -59,6 +58,11 @@
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
 
+//- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+//    [super setEditing:editing animated:animated];
+//}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -77,13 +81,42 @@
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
     cell.taskFinishDate.text = [task.finishDate convertDateToString];
-    
+
  return cell;
  }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 67.f;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 68.f;
 }
+
+#pragma mark - edit the row
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [(OMMTask *)[self.tasksArray objectAtIndex:indexPath.row] setClosed:YES];
+        tableView.editing = NO;
+        
+    }];
+    
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:@"Are you sure want to delete the task" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.tasksArray removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }];
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            tableView.editing = NO;
+        }];
+        
+        [deleteAlertVC addAction:deleteAction];
+        [deleteAlertVC addAction:closeAction];
+        [self presentViewController:deleteAlertVC animated:YES completion:nil];
+    }];
+    
+    return @[deleteAction, doneAction];
+}
+
 
 #pragma mark - Tap to cell
 
@@ -97,18 +130,14 @@
 
 #pragma mark - Delegate method
 
-
 - (void)addNewTaskInTaskArray:(OMMTask *)task {
     [self.tasksArray addObject:task];
     [self.tableView reloadData];
 }
 
-
 - (void)saveChangesInTaskArray:(OMMTask *)editingTask {
     [self.tableView reloadData];
 }
-
-
 
 
 @end

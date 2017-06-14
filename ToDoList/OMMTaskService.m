@@ -20,7 +20,6 @@
 
 + (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder {
     OMMTask *task = [[OMMTask alloc] init];
-    task.taskID = arc4random_uniform(1000);
     task.name = name;
     task.startDate = date;
     task.note = notes;

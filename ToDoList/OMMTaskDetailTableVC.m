@@ -62,14 +62,26 @@
 - (void)saveTaskButtonPressed {
     if ([self.taskNameTextField.text length] < 1 || [self.startDateLabel.text isEqualToString:@"set date"]) {
         [self openEmptyValueAlert];
-    } else {
-        OMMTask *newTask = [OMMTaskService createTaskWithName:self.taskNameTextField.text startDate:[NSDate convertStringToDate:self.startDateLabel.text] notes:self.taskNotesTextView.text priority:self.priority enableRemainder:[self.remaindSwitcher isOn]];
         
-        NSDictionary *dictWithTask = [NSMutableDictionary dictionaryWithObject:newTask forKey:@"message"];
+    } else {
+        NSDictionary *dictWithTask = [[NSMutableDictionary alloc] init];
+        
         if (self.task) {
-            newTask.taskID = self.task.taskID;
-            newTask.finishDate = [NSDate date]; // DELETE!
+            OMMTask *editTask = self.task;
+            editTask.name = self.taskNameTextField.text;
+            editTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
+            editTask.note = self.taskNotesTextView.text;
+            editTask.priority = self.priority;
+            editTask.enableRemainder = [self.remaindSwitcher isOn];
+            [dictWithTask setValue:editTask forKey:@"message"];
         } else {
+            [dictWithTask setValue:@"new" forKey:@"status"];
+            OMMTask *newTask = [OMMTaskService createTaskWithName:self.taskNameTextField.text
+                                                        startDate:[NSDate convertStringToDate:self.startDateLabel.text]
+                                                            notes:self.taskNotesTextView.text
+                                                         priority:self.priority
+                                                  enableRemainder:[self.remaindSwitcher isOn]];
+            [dictWithTask setValue:newTask forKey:@"message"];
             [dictWithTask setValue:@"new" forKey:@"status"];
         }
         
