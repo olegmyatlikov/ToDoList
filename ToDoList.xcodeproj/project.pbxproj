@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
 		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMSearchTableViewController.h; sourceTree = "<group>"; };
+		36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMSearchTableViewController.m; sourceTree = "<group>"; };
 		8446DFAC1EE28BB9004337CF /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446DFB01EE28BB9004337CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8446DFB21EE28BB9004337CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				8446DFB51EE28BB9004337CF /* ViewController.h */,
 				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
+				36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */,
+				36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */,
 				36068B061EE58A6C0088EC2D /* Inbox table */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
@@ -250,6 +255,7 @@
 				8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */,
 				8446DFB11EE28BB9004337CF /* main.m in Sources */,
 				84B348C41EE464A10017B9F0 /* NSDate+OMMDateConverter.m in Sources */,
+				36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
