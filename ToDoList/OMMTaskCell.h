@@ -12,6 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *taskName;
 @property (weak, nonatomic) IBOutlet UILabel *taskNote;
-@property (weak, nonatomic) IBOutlet UILabel *taskFinishDate;
+@property (weak, nonatomic) IBOutlet UILabel *taskStartDate;
 
 @end

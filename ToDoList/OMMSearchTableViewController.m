@@ -8,11 +8,15 @@
 
 #import "OMMSearchTableViewController.h"
 #import "OMMTask.h"
+#import "OMMTaskCell.h"
+#import "OMMTaskDetailTableVC.h"
 
 @interface OMMSearchTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
 
-@property (nonatomic, strong) NSArray *taskArray;
+@property (nonatomic, strong) NSMutableArray *tasksArray;
 @property (nonatomic, strong) NSArray *resultTaskArray;
+@property (nonatomic, strong) UISearchController *searchController;
+
 
 @end
 
@@ -21,72 +25,73 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.taskArray = @[@"qwe", @"asd", @"zxc", @"qaz"];
+    
+    OMMTask *testTask = [[OMMTask alloc] init];
+    testTask.name = @"task1";
+    testTask.note = @"task1 notes";
+    testTask.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
+    OMMTask *testTask2 = [[OMMTask alloc] init];
+    testTask2.name = @"task2";
+    testTask2.note = @"task2 notes";
+    testTask2.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
+    OMMTask *testTask3 = [[OMMTask alloc] init];
+    testTask3.name = @"task3";
+    testTask3.note = @"task3 notes";
+    testTask3.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
+    self.tasksArray = [[NSMutableArray alloc] initWithObjects:testTask, testTask2, testTask3, nil];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.scopeButtonTitles = @[@"All tasks", @"Completed"];
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Incomplete implementation, return the number of sections
-//    return 0;
-//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.resultTaskArray count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OMMSearchCell" forIndexPath:indexPath];
-    //cell.textLabel =
+    OMMTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
+    if (!cell) {
+        [tableView registerNib:[UINib nibWithNibName:@"OMMTaskCell" bundle:nil] forCellReuseIdentifier:@"OMMTaskCellIdentifier"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
+    }
+    
+    cell.taskName.text = self.resultTaskArray[indexPath.row];
+    cell.taskStartDate.text = @"";
+    cell.taskNote.text = @"";
     
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 68.f;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self contains[cd] %@", searchController.searchBar.text];
+    NSArray *tasksNameArray = [self.tasksArray valueForKeyPath:@"@unionOfObjects.name"];
+    NSLog(@"%@", tasksNameArray);
+    self.resultTaskArray = [tasksNameArray filteredArrayUsingPredicate:predicate];
+    [self.tableView reloadData];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
+    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    taskDetails.task = task;
+//    self.searchController.searchBar.showsScopeBar = NO;
+////    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:taskDetails];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

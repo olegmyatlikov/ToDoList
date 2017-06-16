@@ -32,6 +32,7 @@
     testTask.priority = low;
     testTask.enableRemainder = NO;
     [self.tasksArray addObject:testTask];
+    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
@@ -84,7 +85,7 @@
     OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
-    cell.taskFinishDate.text = [task.finishDate convertDateToString];
+    cell.taskStartDate.text = [task.startDate convertDateToString];
 
  return cell;
  }
