@@ -47,6 +47,8 @@
     self.searchController.searchBar.scopeButtonTitles = @[@"All tasks", @"Completed"];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    self.resultTaskArray = self.tasksArray;
 }
 
 
@@ -64,7 +66,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
     }
     
-    cell.taskName.text = self.resultTaskArray[indexPath.row];
+    OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
+    cell.taskName.text = task.name;
     cell.taskStartDate.text = @"";
     cell.taskNote.text = @"";
     
@@ -76,10 +79,10 @@
 }
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self contains[cd] %@", searchController.searchBar.text];
-    NSArray *tasksNameArray = [self.tasksArray valueForKeyPath:@"@unionOfObjects.name"];
-    NSLog(@"%@", tasksNameArray);
-    self.resultTaskArray = [tasksNameArray filteredArrayUsingPredicate:predicate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchController.searchBar.text];
+    //    NSArray *tasksNameArray = [self.tasksArray valueForKeyPath:@"@unionOfObjects.name"];
+    // NSLog(@"%@", tasksNameArray);
+    self.resultTaskArray = [self.resultTaskArray filteredArrayUsingPredicate:predicate];
     [self.tableView reloadData];
 }
 
@@ -88,7 +91,13 @@
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
     taskDetails.task = task;
 //    self.searchController.searchBar.showsScopeBar = NO;
-////    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:taskDetails];
+//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:taskDetails];
+}
+
+- (NSArray *)findMatchesInArray:(NSArray *)array {
+    
+    
+    return _resultTaskArray;
 }
 
 
