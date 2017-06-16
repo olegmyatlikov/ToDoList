@@ -27,15 +27,15 @@
     
     
     OMMTask *testTask = [[OMMTask alloc] init];
-    testTask.name = @"task1";
+    testTask.name = @"Natallis";
     testTask.note = @"task1 notes";
     testTask.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
     OMMTask *testTask2 = [[OMMTask alloc] init];
-    testTask2.name = @"task2";
+    testTask2.name = @"Oleg";
     testTask2.note = @"task2 notes";
     testTask2.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
     OMMTask *testTask3 = [[OMMTask alloc] init];
-    testTask3.name = @"task3";
+    testTask3.name = @"Bogdan";
     testTask3.note = @"task3 notes";
     testTask3.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
     self.tasksArray = [[NSMutableArray alloc] initWithObjects:testTask, testTask2, testTask3, nil];
@@ -47,6 +47,7 @@
     self.searchController.searchBar.scopeButtonTitles = @[@"All tasks", @"Completed"];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES; // hide searchController if present another viewController and do visible if go back
     
     self.resultTaskArray = self.tasksArray;
 }
@@ -78,29 +79,31 @@
     return 68.f;
 }
 
+
+#pragma mark - search and update result
+
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchController.searchBar.text];
-    //    NSArray *tasksNameArray = [self.tasksArray valueForKeyPath:@"@unionOfObjects.name"];
-    // NSLog(@"%@", tasksNameArray);
-    self.resultTaskArray = [self.resultTaskArray filteredArrayUsingPredicate:predicate];
     [self.tableView reloadData];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.resultTaskArray = self.tasksArray;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
+    if (searchText.length != 0) {
+        self.resultTaskArray = [self.resultTaskArray filteredArrayUsingPredicate:predicate];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
     taskDetails.task = task;
-//    self.searchController.searchBar.showsScopeBar = NO;
-//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:taskDetails];
+    [self.navigationController pushViewController:taskDetails animated:YES];
 }
 
-- (NSArray *)findMatchesInArray:(NSArray *)array {
-    
-    
-    return _resultTaskArray;
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.resultTaskArray = self.tasksArray;
 }
-
-
 
 
 @end
