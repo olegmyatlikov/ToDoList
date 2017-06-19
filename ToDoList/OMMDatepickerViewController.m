@@ -61,6 +61,7 @@
 
 - (void)cancelButtonPressed {
     [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate showTabBar];
 }
 
 @end
