@@ -10,4 +10,12 @@
 
 @implementation OMMTasksGroup
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.groupID = arc4random_uniform(1000);
+    }
+    return self;
+}
+
 @end

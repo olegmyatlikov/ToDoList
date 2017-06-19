@@ -76,7 +76,8 @@
             [dictWithTask setValue:editTask forKey:@"message"];
         } else {
             [dictWithTask setValue:@"new" forKey:@"status"];
-            OMMTask *newTask = [OMMTaskService createTaskWithName:self.taskNameTextField.text
+            OMMTaskService *taskService = [[OMMTaskService alloc] init];
+            OMMTask *newTask = [taskService createTaskWithName:self.taskNameTextField.text
                                                         startDate:[NSDate convertStringToDate:self.startDateLabel.text]
                                                             notes:self.taskNotesTextView.text
                                                          priority:self.priority

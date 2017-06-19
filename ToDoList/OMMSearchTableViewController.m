@@ -25,7 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     OMMTask *testTask = [[OMMTask alloc] init];
     testTask.name = @"Natallis";
     testTask.note = @"task1 notes";
@@ -69,8 +68,8 @@
     
     OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
     cell.taskName.text = task.name;
-    cell.taskStartDate.text = @"";
-    cell.taskNote.text = @"";
+    cell.taskNote.text = task.note;
+    cell.taskStartDate.text = [task.startDate convertDateToString];
     
     return cell;
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */; };
+		36BCC6081EF7EFBA00F28922 /* OMMTaskListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMTaskListTableViewController.m */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
 		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMSearchTableViewController.h; sourceTree = "<group>"; };
 		36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMSearchTableViewController.m; sourceTree = "<group>"; };
+		36BCC6061EF7EFBA00F28922 /* OMMTaskListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTaskListTableViewController.h; sourceTree = "<group>"; };
+		36BCC6071EF7EFBA00F28922 /* OMMTaskListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTaskListTableViewController.m; sourceTree = "<group>"; };
 		8446DFAC1EE28BB9004337CF /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446DFB01EE28BB9004337CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8446DFB21EE28BB9004337CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -70,26 +73,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		36068B061EE58A6C0088EC2D /* Inbox table */ = {
+		36068B061EE58A6C0088EC2D /* details */ = {
 			isa = PBXGroup;
 			children = (
 				84DC83C41EEDCC5300D84BC2 /* TaskCell */,
 				8446E0021EE36AF4004337CF /* Datepicker */,
-				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
-				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
 				8493120F1EEEFBF5002F780F /* OMMTaskDetailTableVC.h */,
 				849312101EEEFBF5002F780F /* OMMTaskDetailTableVC.m */,
 			);
-			name = "Inbox table";
+			name = details;
 			sourceTree = "<group>";
 		};
-		364F25E61EE571ED00CC43C3 /* Helpers */ = {
+		364F25E61EE571ED00CC43C3 /* Categories & Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				84B348C21EE464A10017B9F0 /* NSDate+OMMDateConverter.h */,
 				84B348C31EE464A10017B9F0 /* NSDate+OMMDateConverter.m */,
 			);
-			name = Helpers;
+			name = "Categories & Helpers";
+			sourceTree = "<group>";
+		};
+		36BCC6051EF7EF3F00F28922 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
+				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
+				36BCC6061EF7EFBA00F28922 /* OMMTaskListTableViewController.h */,
+				36BCC6071EF7EFBA00F28922 /* OMMTaskListTableViewController.m */,
+				36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */,
+				36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */,
+			);
+			name = Tabs;
 			sourceTree = "<group>";
 		};
 		8446DFA31EE28BB9004337CF = {
@@ -116,11 +130,10 @@
 				8446DFB51EE28BB9004337CF /* ViewController.h */,
 				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
-				36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */,
-				36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */,
-				36068B061EE58A6C0088EC2D /* Inbox table */,
+				36BCC6051EF7EF3F00F28922 /* Tabs */,
+				36068B061EE58A6C0088EC2D /* details */,
 				8446DFFA1EE3597C004337CF /* Models */,
-				364F25E61EE571ED00CC43C3 /* Helpers */,
+				364F25E61EE571ED00CC43C3 /* Categories & Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
 			);
 			path = ToDoList;
@@ -251,6 +264,7 @@
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
 				849312111EEEFBF5002F780F /* OMMTaskDetailTableVC.m in Sources */,
+				36BCC6081EF7EFBA00F28922 /* OMMTaskListTableViewController.m in Sources */,
 				84DC83C21EEDCC4D00D84BC2 /* OMMTaskCell.m in Sources */,
 				8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */,
 				8446DFB11EE28BB9004337CF /* main.m in Sources */,

@@ -12,9 +12,12 @@
 
 @interface OMMTaskService : NSObject
 
-+ (void)addTask:(OMMTask *)task toTasksGroup:(OMMTasksGroup *)tasksGroup;
-+ (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder;
-+ (OMMTasksGroup *)createTasksGroup:(NSInteger)groupID groupName:(NSString *)groupName;
+@property (nonatomic, strong, readonly) NSArray *tasksGroupArray;
 
+- (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder;
+- (OMMTasksGroup *)createTasksGroup:(NSString *)groupName;
+
+- (void)addTaskGroup:(OMMTasksGroup *)taskGroup;
+- (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup;
 
 @end
