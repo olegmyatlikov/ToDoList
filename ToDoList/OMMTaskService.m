@@ -89,6 +89,9 @@
 }
 
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
+    if (!taskGroup.tasksArray) {
+        taskGroup.tasksArray = [[NSMutableArray alloc] init];
+    }
     [taskGroup.tasksArray addObject:task];
 }
 

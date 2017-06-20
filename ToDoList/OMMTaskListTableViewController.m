@@ -24,9 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.taskService = [[OMMTaskService alloc] init];
     self.tasksGroupArray = [self.taskService tasksGroupArray];
-    
 }
 
 
@@ -57,12 +57,16 @@
     
     OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
     if (indexPath.section == 0) {
+        NSInteger allTaskCount = 0;
+        for (OMMTasksGroup *taskGroup in self.tasksGroupArray) {
+            allTaskCount += [taskGroup.tasksArray count];
+        }
         cell.textLabel.text = @"Inbox";
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%ld)", allTaskCount];
     } else {
         taskGroup = [self.tasksGroupArray objectAtIndex:indexPath.row];
         cell.textLabel.text = taskGroup.groupName;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", [taskGroup.tasksArray count]];
-        NSLog(@"%@", taskGroup.tasksArray);
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", [taskGroup.tasksArray count]];
     }
     
     return cell;
