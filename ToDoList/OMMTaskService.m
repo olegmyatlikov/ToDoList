@@ -22,7 +22,7 @@
     if (self) {
         OMMTasksGroup *taskGroup1 = [self createTasksGroup:@"General"];
         OMMTask *task1 = [self createTaskWithName:@"task1"
-                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
+                                                  startDate:[NSDate convertStringToDate:@"22-07-2017 10:30"]
                                                       notes:@"some task1 notes"
                                                    priority:none
                                             enableRemainder:YES];
@@ -33,10 +33,11 @@
                                                       notes:@"some task2 notes"
                                                    priority:none
                                             enableRemainder:YES];
+        task2.closed = YES;
         [self addTask:task2 toTaskGroup:taskGroup1];
         
         OMMTask *task3 = [self createTaskWithName:@"task3"
-                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
+                                                  startDate:[NSDate date]
                                                       notes:@"some task3 notes"
                                                    priority:none
                                             enableRemainder:YES];
@@ -45,14 +46,15 @@
         
         OMMTasksGroup *taskGroup2 = [self createTasksGroup:@"Another"];
         OMMTask *task4 = [self createTaskWithName:@"task4"
-                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
+                                                  startDate:[NSDate date]
                                                       notes:@"some task4 notes"
                                                    priority:none
                                             enableRemainder:YES];
+        task4.closed = YES;
         [self addTask:task4 toTaskGroup:taskGroup2];
         
         OMMTask *task5 = [self createTaskWithName:@"task5"
-                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
+                                                  startDate:[NSDate date]
                                                       notes:@"some task5 notes"
                                                    priority:none
                                             enableRemainder:YES];

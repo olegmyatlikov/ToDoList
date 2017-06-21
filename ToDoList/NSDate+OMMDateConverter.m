@@ -17,6 +17,13 @@
     return [formatter stringFromDate:self];
 }
 
+- (NSString *)convertToStringForCompareDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd-MM-yyyy"];
+    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
+    return [formatter stringFromDate:self];
+}
+
 
 + (NSDate *)convertStringToDate:(NSString *)dateInString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

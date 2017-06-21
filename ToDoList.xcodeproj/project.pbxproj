@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */; };
 		36BCC6081EF7EFBA00F28922 /* OMMTaskListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMTaskListTableViewController.m */; };
+		36BCC6501EFA646600F28922 /* OMMTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC64F1EFA646600F28922 /* OMMTodayTableViewController.m */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
 		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
@@ -32,6 +33,8 @@
 		36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMSearchTableViewController.m; sourceTree = "<group>"; };
 		36BCC6061EF7EFBA00F28922 /* OMMTaskListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTaskListTableViewController.h; sourceTree = "<group>"; };
 		36BCC6071EF7EFBA00F28922 /* OMMTaskListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTaskListTableViewController.m; sourceTree = "<group>"; };
+		36BCC64E1EFA646600F28922 /* OMMTodayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTodayTableViewController.h; sourceTree = "<group>"; };
+		36BCC64F1EFA646600F28922 /* OMMTodayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTodayTableViewController.m; sourceTree = "<group>"; };
 		8446DFAC1EE28BB9004337CF /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446DFB01EE28BB9004337CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8446DFB21EE28BB9004337CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 		36BCC6051EF7EF3F00F28922 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				36BCC64E1EFA646600F28922 /* OMMTodayTableViewController.h */,
+				36BCC64F1EFA646600F28922 /* OMMTodayTableViewController.m */,
 				8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */,
 				8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */,
 				36BCC6061EF7EFBA00F28922 /* OMMTaskListTableViewController.h */,
@@ -270,6 +275,7 @@
 				8446DFB11EE28BB9004337CF /* main.m in Sources */,
 				84B348C41EE464A10017B9F0 /* NSDate+OMMDateConverter.m in Sources */,
 				36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */,
+				36BCC6501EFA646600F28922 /* OMMTodayTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

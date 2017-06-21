@@ -11,6 +11,7 @@
 @interface NSDate (OMMDateConverter)
 
 - (NSString *)convertDateToString;
+- (NSString *)convertToStringForCompareDate;
 + (NSDate *)convertStringToDate:(NSString *)dateInString;
 
 @end

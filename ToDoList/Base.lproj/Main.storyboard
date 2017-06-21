@@ -19,9 +19,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="wWf-mN-qvC" kind="relationship" relationship="viewControllers" id="Ba4-11-itq"/>
                         <segue destination="6dI-IR-6iu" kind="relationship" relationship="viewControllers" id="088-c4-EWJ"/>
-                        <segue destination="qQS-d9-XaV" kind="relationship" relationship="viewControllers" id="gdS-H3-5Th"/>
+                        <segue destination="wWf-mN-qvC" kind="relationship" relationship="viewControllers" id="Ba4-11-itq"/>
+                        <segue destination="qQS-d9-XaV" kind="relationship" relationship="viewControllers" id="E33-ha-DSd"/>
                         <segue destination="vj5-x1-d9k" kind="relationship" relationship="viewControllers" id="fts-oX-LGk"/>
                     </connections>
                 </tabBarController>
@@ -52,7 +52,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0Q-xy-ZQd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1658" y="-1002"/>
+            <point key="canvasLocation" x="1657" y="-284"/>
         </scene>
         <!--Task Detail TableVC-->
         <scene sceneID="gIv-dv-czr">
@@ -214,47 +214,34 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr6-j8-EQ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2469.5999999999999" y="-1003.4482758620691"/>
+            <point key="canvasLocation" x="2498" y="-285"/>
         </scene>
         <!--Today-->
         <scene sceneID="etw-lx-pE2">
             <objects>
-                <tableViewController id="tKf-Pw-ENX" sceneMemberID="viewController">
+                <tableViewController id="tKf-Pw-ENX" customClass="OMMTodayTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="huB-Ud-gZx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TodayCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodayCell" textLabel="Zcl-35-IhX" style="IBUITableViewCellStyleDefault" id="vfQ-h6-gfw">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vfQ-h6-gfw" id="Ui9-hO-wJL">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zcl-35-IhX">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="tKf-Pw-ENX" id="OPl-ng-87C"/>
                             <outlet property="delegate" destination="tKf-Pw-ENX" id="O4x-wH-fic"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Today" id="g8c-ot-tqQ"/>
+                    <navigationItem key="navigationItem" title="Today" id="g8c-ot-tqQ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="qpk-ap-vHD">
+                            <connections>
+                                <action selector="addNewTaskButtonPressed:" destination="tKf-Pw-ENX" id="8vj-kJ-lt1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKu-bd-FZ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657" y="-299"/>
+            <point key="canvasLocation" x="1657" y="-1003"/>
         </scene>
-        <!--TaskList-->
+        <!--ToDoList-->
         <scene sceneID="FHa-bo-qLd">
             <objects>
                 <tableViewController id="CUM-w1-9Av" customClass="OMMTaskListTableViewController" sceneMemberID="viewController">
@@ -293,7 +280,7 @@
                             <outlet property="delegate" destination="CUM-w1-9Av" id="n9H-8C-hXd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="TaskList" id="qjf-c0-qCH"/>
+                    <navigationItem key="navigationItem" title="ToDoList" id="qjf-c0-qCH"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w4o-nq-Zkx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -335,10 +322,10 @@
             </objects>
             <point key="canvasLocation" x="796" y="1116"/>
         </scene>
-        <!--TaskList-->
+        <!--ToDoList-->
         <scene sceneID="j76-4r-0Gi">
             <objects>
-                <navigationController title="TaskList" id="qQS-d9-XaV" sceneMemberID="viewController">
+                <navigationController title="ToDoList" id="qQS-d9-XaV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="TaskList" id="ZC4-MT-ydP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zx5-v4-I3a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -367,7 +354,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OsB-T8-taA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="796" y="-299"/>
+            <point key="canvasLocation" x="796" y="-1003"/>
         </scene>
         <!--Inbox-->
         <scene sceneID="dmw-US-69x">
@@ -384,7 +371,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XlV-Ji-qV4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="796" y="-1001"/>
+            <point key="canvasLocation" x="796" y="-283"/>
         </scene>
     </scenes>
 </document>
