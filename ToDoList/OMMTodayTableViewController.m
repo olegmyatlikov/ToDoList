@@ -17,9 +17,10 @@
 
 @interface OMMTodayTableViewController ()
 
-@property (strong, nonatomic) NSMutableArray* allTodayTasks;
-@property (strong, nonatomic) NSMutableArray* openTasksArray;
-@property (strong, nonatomic) NSMutableArray* closeTaskArray;
+@property (strong, nonatomic) OMMTaskService *taskService;
+@property (strong, nonatomic) NSMutableArray *allTodayTasks;
+@property (strong, nonatomic) NSMutableArray *openTasksArray;
+@property (strong, nonatomic) NSMutableArray *closeTaskArray;
 
 @end
 
@@ -27,9 +28,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    OMMTaskService *taskService = [[OMMTaskService alloc] init];
-    self.allTodayTasks = [self allTodayTasksInTasksGroupsArray:taskService.tasksGroupArray];
+
+    self.taskService = [[OMMTaskService alloc] init];
+    OMMTasksGroup *allTasksGroup = [self.taskService.tasksGroupsArray objectAtIndex:0]; // It's group Inbox. It have all tasks
+    self.allTodayTasks = [self allTodayTasksInTasksGroupsArray:allTasksGroup.tasksArray];
     self.openTasksArray = [self allOpenTasksInArray:self.allTodayTasks];
     self.closeTaskArray = [self allCloseTasksInArray:self.allTodayTasks];
     
@@ -77,13 +79,11 @@
     return closeTasksArray;
 }
 
-- (NSMutableArray *)allTodayTasksInTasksGroupsArray:(NSArray *)tasksGropsArray {
+- (NSMutableArray *)allTodayTasksInTasksGroupsArray:(NSArray *)tasksArray {
     NSMutableArray *allTodayTasks = [[NSMutableArray alloc] init];
-    for (OMMTasksGroup *tasksGroup in tasksGropsArray) {
-        for (OMMTask *task in tasksGroup.tasksArray) {
-            if ([[task.startDate convertToStringForCompareDate] isEqualToString:[[NSDate date] convertToStringForCompareDate]]) {
+    for (OMMTask *task in tasksArray) {
+        if ([[task.startDate convertToStringForCompareDate] isEqualToString:[[NSDate date] convertToStringForCompareDate]]) {
                 [allTodayTasks addObject:task];
-            }
         }
     }
     

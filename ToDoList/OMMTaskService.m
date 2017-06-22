@@ -12,6 +12,7 @@
 @interface OMMTaskService()
 
 @property (nonatomic, strong) NSMutableArray *privateTaskGroupsArray;
+@property (nonatomic, strong) NSMutableArray *privateTasksArray;
 
 @end
 
@@ -60,9 +61,12 @@
                                             enableRemainder:YES];
         [self addTask:task5 toTaskGroup:taskGroup2];
         
-        
         [self addTaskGroup:taskGroup1];
         [self addTaskGroup:taskGroup2];
+        
+        OMMTasksGroup *inboxTaskGroup = [self createTasksGroup:@"Inbox"];
+        inboxTaskGroup.tasksArray = [self.allTasksArray mutableCopy];
+        [self insertTaskGroup:inboxTaskGroup atIndex:0];
     }
     return self;
 }
@@ -90,6 +94,10 @@
     [self.privateTaskGroupsArray addObject:taskGroup];
 }
 
+- (void)insertTaskGroup:(OMMTasksGroup *)taskGroup atIndex:(NSInteger)index {
+    [self.privateTaskGroupsArray insertObject:taskGroup atIndex:index];
+}
+
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
     if (!taskGroup.tasksArray) {
         taskGroup.tasksArray = [[NSMutableArray alloc] init];
@@ -97,8 +105,12 @@
     [taskGroup.tasksArray addObject:task];
 }
 
-- (NSArray *)tasksGroupArray {
+- (NSArray *)tasksGroupsArray {
     return [self.privateTaskGroupsArray copy];
+}
+
+- (NSArray *)allTasksArray {
+    return [self.privateTasksArray copy];
 }
 
 - (NSMutableArray *)privateTaskGroupsArray {
@@ -107,6 +119,19 @@
     }
     
     return _privateTaskGroupsArray;
+}
+
+- (NSMutableArray *)privateTasksArray {
+    if (!_privateTasksArray) {
+        _privateTasksArray = [[NSMutableArray alloc] init];
+        for (OMMTasksGroup *tasksGroup in self.privateTaskGroupsArray) {
+            for (OMMTask *task in tasksGroup.tasksArray) {
+                [_privateTasksArray addObject:task];
+            }
+        }
+    }
+    
+    return _privateTasksArray;
 }
 
 @end

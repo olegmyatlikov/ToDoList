@@ -7,16 +7,18 @@
 //
 
 #import "OMMSearchTableViewController.h"
+#import "OMMTaskService.h"
+#import "OMMTasksGroup.h"
 #import "OMMTask.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
 
 @interface OMMSearchTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
 
+@property (strong, nonatomic) OMMTaskService *taskService;
 @property (nonatomic, strong) NSMutableArray *tasksArray;
 @property (nonatomic, strong) NSArray *resultTaskArray;
 @property (nonatomic, strong) UISearchController *searchController;
-
 
 @end
 
@@ -25,19 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    OMMTask *testTask = [[OMMTask alloc] init];
-    testTask.name = @"Natallis";
-    testTask.note = @"task1 notes";
-    testTask.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
-    OMMTask *testTask2 = [[OMMTask alloc] init];
-    testTask2.name = @"Oleg";
-    testTask2.note = @"task2 notes";
-    testTask2.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
-    OMMTask *testTask3 = [[OMMTask alloc] init];
-    testTask3.name = @"Bogdan";
-    testTask3.note = @"task3 notes";
-    testTask3.startDate = [NSDate convertStringToDate:@"10-07-2017 10:30"];
-    self.tasksArray = [[NSMutableArray alloc] initWithObjects:testTask, testTask2, testTask3, nil];
+    self.taskService = [[OMMTaskService alloc] init];
+    self.tasksArray = [self.taskService.allTasksArray mutableCopy];
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -94,7 +85,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OMMTask *task = [self.tasksArray objectAtIndex:indexPath.row];
+    OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
     taskDetails.task = task;
     [self.navigationController pushViewController:taskDetails animated:YES];

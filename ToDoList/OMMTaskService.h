@@ -12,7 +12,8 @@
 
 @interface OMMTaskService : NSObject
 
-@property (nonatomic, strong, readonly) NSArray *tasksGroupArray;
+@property (nonatomic, strong, readonly) NSArray *tasksGroupsArray;
+@property (nonatomic, strong, readonly) NSArray *allTasksArray;
 
 - (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder;
 - (OMMTasksGroup *)createTasksGroup:(NSString *)groupName;
