@@ -244,7 +244,7 @@
         <!--ToDoList-->
         <scene sceneID="FHa-bo-qLd">
             <objects>
-                <tableViewController id="CUM-w1-9Av" customClass="OMMTaskListTableViewController" sceneMemberID="viewController">
+                <tableViewController id="CUM-w1-9Av" customClass="OMMToDoListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="w29-xn-5UK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -258,7 +258,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Loc-Bz-QWy">
-                                            <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -326,7 +326,7 @@
         <scene sceneID="j76-4r-0Gi">
             <objects>
                 <navigationController title="ToDoList" id="qQS-d9-XaV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="TaskList" id="ZC4-MT-ydP"/>
+                    <tabBarItem key="tabBarItem" title="ToDoList" id="ZC4-MT-ydP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zx5-v4-I3a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

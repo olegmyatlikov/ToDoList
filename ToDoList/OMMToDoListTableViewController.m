@@ -1,25 +1,25 @@
 //
-//  OMMTaskListTableViewController.m
+//  OMMToDoListTableViewController.m
 //  ToDoList
 //
 //  Created by Oleg Myatlikov on 19/06/2017.
 //  Copyright © 2017 Oleg Myatlikov. All rights reserved.
 //
 
-#import "OMMTaskListTableViewController.h"
+#import "OMMToDoListTableViewController.h"
 #import "OMMTask.h"
 #import "OMMTasksGroup.h"
 #import "OMMTaskService.h"
 #import "NSDate+OMMDateConverter.h"
 
-@interface OMMTaskListTableViewController ()
+@interface OMMToDoListTableViewController ()
 
 @property (nonatomic, strong) OMMTaskService *taskService;
 @property (nonatomic, strong) NSArray *tasksGroupArray;
 
 @end
 
-@implementation OMMTaskListTableViewController
+@implementation OMMToDoListTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

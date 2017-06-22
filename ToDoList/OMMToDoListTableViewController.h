@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMMTaskListTableViewController : UITableViewController
+@interface OMMToDoListTableViewController : UITableViewController
 
 @end
