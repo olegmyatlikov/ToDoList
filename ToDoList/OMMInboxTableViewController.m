@@ -19,7 +19,6 @@
 
 @property (strong, nonatomic) OMMTaskService *taskService;
 @property (strong, nonatomic) NSMutableArray *tasksGroupsArray;
-@property (strong, nonatomic) NSMutableArray *allTasksArray;
 @property (strong, nonatomic) NSMutableArray *openTasksArray;
 @property (strong, nonatomic) NSMutableArray *closeTaskArray;
 
@@ -27,11 +26,13 @@
 
 @implementation OMMInboxTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.taskService = [[OMMTaskService alloc] init];
+    
+    self.taskService = [OMMTaskService sharedInstance];
     self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
-    self.allTasksArray = [self.taskService.allTasksArray mutableCopy]; // delete
+    [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     UISegmentedControl *segmentControlButtons = [[UISegmentedControl alloc] initWithItems:@[@"Group", @"Date"]];
@@ -47,20 +48,9 @@
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
-    NSDictionary *dictWithTask = notification.userInfo;
-    OMMTask *newTask = [dictWithTask valueForKey:@"message"];
+    self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
+    [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
     
-    OMMTasksGroup *allTaskGroup = [self.tasksGroupsArray objectAtIndex:0]; // Inbox
-    if ([[dictWithTask valueForKey:@"status"] isEqual:@"new"]) {
-        [allTaskGroup.tasksArray addObject:newTask];
-    } else { // if edited - find and replace task
-        for (int i = 0; i < [allTaskGroup.tasksArray count]; i++) {
-            OMMTask *task = [allTaskGroup.tasksArray objectAtIndex:i];
-            if (task.taskID == newTask.taskID) {
-                [allTaskGroup.tasksArray replaceObjectAtIndex:i withObject:newTask];
-            }
-        }
-    }
     [self.tableView reloadData];
 }
 
@@ -165,6 +155,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+//    OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
     OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
     OMMTask *task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
     taskDetails.task = task;

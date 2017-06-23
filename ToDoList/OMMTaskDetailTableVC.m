@@ -8,6 +8,7 @@
 
 #import "OMMTaskDetailTableVC.h"
 #import "OMMTaskService.h"
+#import "UIView+OMMHeaderInSection.h"
 
 @interface OMMTaskDetailTableVC ()
 
@@ -64,7 +65,6 @@
         [self openEmptyValueAlert];
         
     } else {
-        NSDictionary *dictWithTask = [[NSMutableDictionary alloc] init];
         
         if (self.task) {
             OMMTask *editTask = self.task;
@@ -73,20 +73,17 @@
             editTask.note = self.taskNotesTextView.text;
             editTask.priority = self.priority;
             editTask.enableRemainder = [self.remaindSwitcher isOn];
-            [dictWithTask setValue:editTask forKey:@"message"];
         } else {
-            [dictWithTask setValue:@"new" forKey:@"status"];
-            OMMTaskService *taskService = [[OMMTaskService alloc] init];
+            OMMTaskService *taskService = [OMMTaskService sharedInstance];
             OMMTask *newTask = [taskService createTaskWithName:self.taskNameTextField.text
                                                         startDate:[NSDate convertStringToDate:self.startDateLabel.text]
                                                             notes:self.taskNotesTextView.text
                                                          priority:self.priority
                                                   enableRemainder:[self.remaindSwitcher isOn]];
-            [dictWithTask setValue:newTask forKey:@"message"];
-            [dictWithTask setValue:@"new" forKey:@"status"];
+            [taskService addTask:newTask];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self userInfo:dictWithTask];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self userInfo:nil];
         
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -161,17 +158,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 50.0f)];
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, tableView.bounds.size.width, 20)];
-    
-    headerView.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:224.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
-    headerLabel.textColor = [UIColor grayColor];
-    headerLabel.text = sectionTitle;
-    
-    [headerView addSubview:headerLabel];
-    
-    return headerView;
+    return [UIView createViewForHeaderInSection:tableView withTitle:sectionTitle];
 }
 
 #pragma mark - didSelectRowAtIndexPath

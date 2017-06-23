@@ -13,7 +13,8 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.groupID = arc4random_uniform(1000);
+        self.groupID = arc4random_uniform(10000);
+        self.groupStartDate = [NSDate date];
     }
     return self;
 }

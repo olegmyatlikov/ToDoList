@@ -26,34 +26,27 @@
 
 @implementation OMMTodayTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.taskService = [[OMMTaskService alloc] init];
-    OMMTasksGroup *allTasksGroup = [self.taskService.tasksGroupsArray objectAtIndex:0]; // It's group Inbox. It have all tasks
-    self.allTodayTasks = [self allTodayTasksInTasksGroupsArray:allTasksGroup.tasksArray];
-    self.openTasksArray = [self allOpenTasksInArray:self.allTodayTasks];
-    self.closeTaskArray = [self allCloseTasksInArray:self.allTodayTasks];
+    
+    self.taskService = [OMMTaskService sharedInstance];
+    [self prepareDataForTableView];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
 
+
+- (void)prepareDataForTableView {
+    self.allTodayTasks = [self allTodayTasksInTasksArray:self.taskService.allTasksArray];
+    self.openTasksArray = [self allOpenTasksInArray:self.allTodayTasks];
+    self.closeTaskArray = [self allCloseTasksInArray:self.allTodayTasks];
+}
+
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
-    NSDictionary *dictWithTask = notification.userInfo;
-    OMMTask *newTask = [dictWithTask valueForKey:@"message"];
-    
-    if ([[dictWithTask valueForKey:@"status"] isEqual:@"new"]) {
-        [self.openTasksArray addObject:newTask];
-    } else { // if edited - find and replace task
-        for (int i = 0; i < [self.allTodayTasks count]; i++) {
-            OMMTask *task = self.allTodayTasks[i];
-            if (task.taskID == newTask.taskID) {
-                [self.allTodayTasks replaceObjectAtIndex:i withObject:newTask];
-            }
-        }
-    }
+    [self prepareDataForTableView];
     [self.tableView reloadData];
 }
 
@@ -79,7 +72,7 @@
     return closeTasksArray;
 }
 
-- (NSMutableArray *)allTodayTasksInTasksGroupsArray:(NSArray *)tasksArray {
+- (NSMutableArray *)allTodayTasksInTasksArray:(NSArray *)tasksArray {
     NSMutableArray *allTodayTasks = [[NSMutableArray alloc] init];
     for (OMMTask *task in tasksArray) {
         if ([[task.startDate convertToStringForCompareDate] isEqualToString:[[NSDate date] convertToStringForCompareDate]]) {

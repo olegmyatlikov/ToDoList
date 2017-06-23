@@ -14,11 +14,16 @@
 
 @property (nonatomic, strong, readonly) NSArray *tasksGroupsArray;
 @property (nonatomic, strong, readonly) NSArray *allTasksArray;
+@property (nonatomic, strong) OMMTasksGroup *inboxTasksGroup;
+
++ (instancetype)sharedInstance;
 
 - (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder;
 - (OMMTasksGroup *)createTasksGroup:(NSString *)groupName;
 
 - (void)addTaskGroup:(OMMTasksGroup *)taskGroup;
+- (void)addTask:(OMMTask *)task;
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup;
+//- (void)replaceEditedTask:(OMMTask*)editedTask inTasksGroup:(OMMTasksGroup *)tasksGroup;
 
 @end

@@ -16,7 +16,6 @@
 @interface OMMSearchTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) OMMTaskService *taskService;
-@property (nonatomic, strong) NSMutableArray *tasksArray;
 @property (nonatomic, strong) NSArray *resultTaskArray;
 @property (nonatomic, strong) UISearchController *searchController;
 
@@ -27,8 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.taskService = [[OMMTaskService alloc] init];
-    self.tasksArray = [self.taskService.allTasksArray mutableCopy];
+    self.taskService = [OMMTaskService sharedInstance];
+    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -38,10 +37,15 @@
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES; // hide searchController if present another viewController and do visible if go back
-    
-    self.resultTaskArray = self.tasksArray;
+   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
 
+
+- (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Table view data source
 
@@ -77,7 +81,7 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.resultTaskArray = self.tasksArray;
+    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     if (searchText.length != 0) {
         self.resultTaskArray = [self.resultTaskArray filteredArrayUsingPredicate:predicate];
@@ -92,7 +96,7 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.resultTaskArray = self.tasksArray;
+    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
 }
 
 

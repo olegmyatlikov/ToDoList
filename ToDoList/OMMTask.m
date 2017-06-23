@@ -41,8 +41,8 @@
 
 - (id)init {
     self = [super init];
-    if (self) {
-        self.taskID = arc4random_uniform(1000);
+    if (self && !self.taskID) {
+        self.taskID = arc4random_uniform(10000);
     }
     return self;
 }
