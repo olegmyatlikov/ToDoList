@@ -155,7 +155,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
-//    OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
     OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
     OMMTask *task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
     taskDetails.task = task;

@@ -33,14 +33,19 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.scopeButtonTitles = @[@"All tasks", @"Completed"];
+    self.searchController.searchBar.scopeButtonTitles = @[@"Active tasks", @"Completed"];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES; // hide searchController if present another viewController and do visible if go back
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.searchController.searchBar becomeFirstResponder];
+}
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
     self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
@@ -49,6 +54,43 @@
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (self.resultTaskArray.count > 0) {
+        self.tableView.backgroundView = nil;
+        
+        return 1;
+    } else {
+        UILabel *noResultLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        noResultLabel.text = @"No Result";
+        [noResultLabel setFont:[UIFont systemFontOfSize:24 weight:normal]];
+        noResultLabel.textColor = [UIColor lightGrayColor];
+        noResultLabel.textAlignment = NSTextAlignmentCenter;
+        self.tableView.backgroundView = noResultLabel;
+        
+        return 0;
+    }
+}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
+//    UISegmentedControl *segmentControlButtons = [[UISegmentedControl alloc] initWithItems:@[@"Active", @"Complited"]];
+//    [segmentControlButtons setWidth:130.f forSegmentAtIndex:0];
+//    [segmentControlButtons setWidth:130.f forSegmentAtIndex:1];
+//    segmentControlButtons.center = headerView.center;
+//    segmentControlButtons.selectedSegmentIndex = 0;
+//    [headerView addSubview:segmentControlButtons];
+//    
+//    return headerView;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 50.f;
+//}
+//
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return @" ";
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.resultTaskArray count];

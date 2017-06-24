@@ -7,11 +7,12 @@
 //
 
 #import "OMMToDoListTableViewController.h"
+#import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
 #import "OMMTask.h"
 #import "OMMTasksGroup.h"
 #import "OMMTaskService.h"
-#import "NSDate+OMMDateConverter.h"
+
 
 @interface OMMToDoListTableViewController ()
 
@@ -25,9 +26,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.taskService = [OMMTaskService sharedInstance];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.taskService = [[OMMTaskService alloc] init];
     self.tasksGroupArray = self.taskService.tasksGroupsArray;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
+}
+
+- (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+    self.tasksGroupArray = self.taskService.tasksGroupsArray;
+    [self.tableView reloadData];
 }
 
 
@@ -73,14 +81,10 @@
     
     OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
     if (indexPath.section == 0) {
-        NSInteger allTaskCount = 0;
-        for (OMMTasksGroup *taskGroup in self.tasksGroupArray) {
-            allTaskCount += [taskGroup.tasksArray count];
-        }
         cell.textLabel.text = @"Inbox";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%ld)", allTaskCount];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%ld)", self.taskService.allTasksArray.count];
     } else {
-        taskGroup = [self.tasksGroupArray objectAtIndex:indexPath.row];
+        taskGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row];
         cell.textLabel.text = taskGroup.groupName;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", [taskGroup.tasksArray count]];
     }
