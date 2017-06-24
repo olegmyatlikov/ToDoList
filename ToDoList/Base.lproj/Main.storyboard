@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="e72-do-JVi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="e72-do-JVi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,7 +32,7 @@
         <!--Inbox-->
         <scene sceneID="Krb-IR-6KA">
             <objects>
-                <tableViewController id="Wxd-MH-SOU" customClass="OMMInboxTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="OMMInboxTableVCIdentifair" id="Wxd-MH-SOU" customClass="OMMInboxTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="I5C-fm-CXI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -250,11 +250,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="OMMTaskListTableVCCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="OMMTaskListTableVCCell" textLabel="Loc-Bz-QWy" detailTextLabel="aun-Ja-tmI" style="IBUITableViewCellStyleValue1" id="t4u-i2-CbI">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="OMMTaskListTableVCCell" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="OMMTaskListTableVCCell" textLabel="Loc-Bz-QWy" detailTextLabel="aun-Ja-tmI" style="IBUITableViewCellStyleValue1" id="t4u-i2-CbI">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t4u-i2-CbI" id="P26-Pd-e6u">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Loc-Bz-QWy">
@@ -265,10 +265,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aun-Ja-tmI">
-                                            <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                            <rect key="frame" x="296" y="12" width="44" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -309,7 +309,7 @@
         <scene sceneID="inl-Yv-b8W">
             <objects>
                 <navigationController title="Search" id="vj5-x1-d9k" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="3pm-2p-s1m"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="ic_search" id="3pm-2p-s1m"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Sfe-aE-uR0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -326,7 +326,7 @@
         <scene sceneID="j76-4r-0Gi">
             <objects>
                 <navigationController title="ToDoList" id="qQS-d9-XaV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="ToDoList" id="ZC4-MT-ydP"/>
+                    <tabBarItem key="tabBarItem" title="ToDoList" image="ic_list" id="ZC4-MT-ydP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zx5-v4-I3a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -343,7 +343,7 @@
         <scene sceneID="6SS-ap-g8j">
             <objects>
                 <navigationController title="Today" id="6dI-IR-6iu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" id="rgF-zX-t7v"/>
+                    <tabBarItem key="tabBarItem" title="Today" image="ic_listing" id="rgF-zX-t7v"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QQS-pp-dqf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -360,7 +360,7 @@
         <scene sceneID="dmw-US-69x">
             <objects>
                 <navigationController title="Inbox" id="wWf-mN-qvC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Inbox" id="g6n-R2-xO3"/>
+                    <tabBarItem key="tabBarItem" title="Inbox" image="ic_inventory" id="g6n-R2-xO3"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k0w-Ni-leb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -374,4 +374,10 @@
             <point key="canvasLocation" x="796" y="-283"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_inventory" width="24" height="24"/>
+        <image name="ic_list" width="24" height="24"/>
+        <image name="ic_listing" width="24" height="24"/>
+        <image name="ic_search" width="24" height="24"/>
+    </resources>
 </document>

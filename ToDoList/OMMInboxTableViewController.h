@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMMTasksGroup.h"
 
 @interface OMMInboxTableViewController : UITableViewController
+
+@property (strong, nonatomic) OMMTasksGroup *tasksGroup;
 
 @end

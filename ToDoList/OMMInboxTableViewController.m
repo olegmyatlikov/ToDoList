@@ -10,7 +10,6 @@
 #import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
 #import "OMMTaskService.h"
-#import "OMMTasksGroup.h"
 #import "OMMTask.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
@@ -31,8 +30,9 @@
     [super viewDidLoad];
     
     self.taskService = [OMMTaskService sharedInstance];
-    self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
-    [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
+    self.tasksGroupsArray = [[NSMutableArray alloc] init];
+    
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     UISegmentedControl *segmentControlButtons = [[UISegmentedControl alloc] initWithItems:@[@"Group", @"Date"]];
@@ -43,7 +43,18 @@
     [headerView addSubview:segmentControlButtons];
     self.tableView.tableHeaderView = headerView;
     
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    if (!self.tasksGroup) {
+        self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
+        [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
+    } else {
+        [self.tasksGroupsArray removeAllObjects];
+        [self.tasksGroupsArray addObject:self.tasksGroup];
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
+        self.navigationItem.leftBarButtonItem = backButtonItem;
+        self.tableView.tableHeaderView = nil;
+    }
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
 }
 
@@ -57,6 +68,10 @@
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
     [self.navigationController pushViewController:taskDetails animated:YES];
+}
+
+- (void)backButtonPressed {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
@@ -160,7 +175,6 @@
     taskDetails.task = task;
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
-
 
 
 @end

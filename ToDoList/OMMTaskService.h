@@ -24,6 +24,9 @@
 - (void)addTaskGroup:(OMMTasksGroup *)taskGroup;
 - (void)addTask:(OMMTask *)task;
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup;
+- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup;
+- (void)removeTask:(OMMTask *)task;
+
 //- (void)replaceEditedTask:(OMMTask*)editedTask inTasksGroup:(OMMTasksGroup *)tasksGroup;
 
 @end

@@ -17,7 +17,11 @@
 
 @property (strong, nonatomic) OMMTaskService *taskService;
 @property (nonatomic, strong) NSArray *resultTaskArray;
+@property (nonatomic, strong) NSArray *tasksArray;
 @property (nonatomic, strong) UISearchController *searchController;
+
+@property (nonatomic, strong) NSPredicate *activeTasksPredicate;
+@property (nonatomic, strong) NSPredicate *closedTasksPredicate;
 
 @end
 
@@ -27,7 +31,11 @@
     [super viewDidLoad];
     
     self.taskService = [OMMTaskService sharedInstance];
-    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
+    self.activeTasksPredicate = [NSPredicate predicateWithFormat:@"closed = 0"];
+    self.closedTasksPredicate = [NSPredicate predicateWithFormat:@"closed = 1"];
+    
+    self.tasksArray = [self.taskService.allTasksArray filteredArrayUsingPredicate:self.activeTasksPredicate];
+    self.resultTaskArray = self.tasksArray;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -48,7 +56,8 @@
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
-    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
+    self.tasksArray = [self.taskService.allTasksArray filteredArrayUsingPredicate:self.activeTasksPredicate];
+    self.resultTaskArray = self.tasksArray;
     [self.tableView reloadData];
 }
 
@@ -71,6 +80,21 @@
         return 0;
     }
 }
+
+// select scope another button
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    if (selectedScope == 0) {
+        self.tasksArray = [self.taskService.allTasksArray filteredArrayUsingPredicate:self.activeTasksPredicate];
+    } else {
+        self.tasksArray = [self.taskService.allTasksArray filteredArrayUsingPredicate:self.closedTasksPredicate];
+    }
+    self.resultTaskArray = self.tasksArray;
+    [self.tableView reloadData];
+    self.searchController.searchBar.text = @"";
+}
+
+
 //
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
@@ -123,10 +147,10 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.resultTaskArray = [self.taskService.allTasksArray mutableCopy];
+    self.resultTaskArray = self.tasksArray;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     if (searchText.length != 0) {
-        self.resultTaskArray = [self.resultTaskArray filteredArrayUsingPredicate:predicate];
+        self.resultTaskArray = [self.tasksArray filteredArrayUsingPredicate:predicate];
     }
 }
 

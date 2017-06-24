@@ -130,6 +130,14 @@
     [taskGroup.tasksArray addObject:task];
 }
 
+- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
+    [self.privateTaskGroupsArray removeObject:tasksGroup];
+}
+
+- (void)removeTask:(OMMTask *)task {
+    //remove task code
+}
+
 - (NSArray *)tasksGroupsArray {
     return [self.privateTaskGroupsArray copy];
 }

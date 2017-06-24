@@ -59,6 +59,11 @@
     [self.priorityLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.taskNameTextField becomeFirstResponder];
+}
+
 
 - (void)saveTaskButtonPressed {
     if ([self.taskNameTextField.text length] < 1 || [self.startDateLabel.text isEqualToString:@"set date"]) {
