@@ -13,6 +13,7 @@
 #import "OMMTasksGroup.h"
 #import "OMMTaskService.h"
 #import "OMMInboxTableViewController.h"
+#import "OMMCreateGroupTableViewController.h"
 
 
 @interface OMMToDoListTableViewController ()
@@ -70,7 +71,7 @@
     if (section == 0) {
         return 1;
     } else {
-        return self.tasksGroupArray.count;
+        return self.tasksGroupArray.count + 1;
     }
 }
 
@@ -85,8 +86,10 @@
     if (indexPath.section == 0) {
         cell.textLabel.text = @"Inbox";
         cell.detailTextLabel.text = [NSString stringWithFormat:@"(%ld)", self.taskService.allTasksArray.count];
+    } else if (indexPath.row == 0) {
+        cell.textLabel.text = @"Create new task";
     } else {
-        taskGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row];
+        taskGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row - 1];
         cell.textLabel.text = taskGroup.groupName;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", [taskGroup.tasksArray count]];
     }
@@ -94,9 +97,17 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 || (indexPath.section == 1 && indexPath.row == 0)) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    OMMTasksGroup *taskGroup = [self.tasksGroupArray objectAtIndex:indexPath.row];
+    OMMTasksGroup *taskGroup = [self.tasksGroupArray objectAtIndex:(indexPath.row - 1)];
     
     UITableViewRowAction *renameAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Rename" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *renameAvlertVC = [UIAlertController alertControllerWithTitle:@"Rename the group" message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -115,7 +126,7 @@
         [renameAvlertVC addAction:closeAction];
         [renameAvlertVC addAction:saveAction];
         [renameAvlertVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.text = [[self.taskService.tasksGroupsArray objectAtIndex:indexPath.row] valueForKey:@"groupName"];
+            textField.text = [[self.taskService.tasksGroupsArray objectAtIndex:(indexPath.row - 1)] valueForKey:@"groupName"];
         }];
         [self presentViewController:renameAvlertVC animated:YES completion:nil];
     }];
@@ -124,7 +135,7 @@
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:@"Are you sure want to delete the group" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self.taskService removeTasksGroup:taskGroup];
-            [self.tasksGroupArray removeObjectAtIndex:indexPath.row];
+            [self.tasksGroupArray removeObjectAtIndex:(indexPath.row - 1)];
             [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:YES];
             tableView.editing = NO;
         }];
@@ -139,24 +150,28 @@
     }];
     
     renameAction.backgroundColor = [UIColor blueColor];
-    if (indexPath.section == 0) {
-        return UITableViewCellEditingStyleNone;
-    } else {
-        return @[deleteAction, renameAction];
-    }
+    return @[deleteAction, renameAction];
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMInboxTableViewController *taskGroupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMInboxTableVCIdentifair"];
+    OMMCreateGroupTableViewController *createGroupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMCreateGroupTableVCIdentifair"];
+    UIViewController *pushingVC = [[UIViewController alloc] init];
+    
     if (indexPath.section == 0) {
         taskGroupVC.tasksGroup = self.taskService.inboxTasksGroup;
+        pushingVC = taskGroupVC;
+    } else if (indexPath.row == 0) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        pushingVC = createGroupVC;
     } else {
-        taskGroupVC.tasksGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row];
+        taskGroupVC.tasksGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row - 1];
+        pushingVC = taskGroupVC;
     }
-    taskGroupVC.navigationItem.title = [NSString stringWithFormat:@"%@ group", taskGroupVC.tasksGroup.groupName];
     
-    [self.navigationController pushViewController:taskGroupVC animated:YES];
+    taskGroupVC.navigationItem.title = [NSString stringWithFormat:@"%@ group", taskGroupVC.tasksGroup.groupName];
+    [self.navigationController pushViewController:pushingVC animated:YES];
 }
 
 

@@ -286,6 +286,54 @@
             </objects>
             <point key="canvasLocation" x="1657" y="413"/>
         </scene>
+        <!--Create Group Table View Controller-->
+        <scene sceneID="54H-xB-Jag">
+            <objects>
+                <tableViewController storyboardIdentifier="OMMCreateGroupTableVCIdentifair" id="aa2-we-yA1" customClass="OMMCreateGroupTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="1" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="teZ-zd-uxc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection headerTitle="Group" id="sKg-9t-TYh">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OMMCreateGroupCell" id="Fhm-U8-BSc">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fhm-U8-BSc" id="LsJ-NV-Xgv">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQl-Dc-rQH">
+                                                    <rect key="frame" x="8" y="19.5" width="359" height="17"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="iQl-Dc-rQH" firstAttribute="leading" secondItem="LsJ-NV-Xgv" secondAttribute="leadingMargin" id="6TE-pl-F7G"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="iQl-Dc-rQH" secondAttribute="trailing" id="AQn-f4-cgG"/>
+                                                <constraint firstItem="iQl-Dc-rQH" firstAttribute="centerY" secondItem="LsJ-NV-Xgv" secondAttribute="centerY" constant="6.25" id="nqU-i3-Gmp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="aa2-we-yA1" id="to7-Fy-riZ"/>
+                            <outlet property="delegate" destination="aa2-we-yA1" id="deE-JN-s2R"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="groupNameTextField" destination="iQl-Dc-rQH" id="4Ei-do-bXz"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ho-Vy-BL2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2496.8000000000002" y="411.544227886057"/>
+        </scene>
         <!--Search-->
         <scene sceneID="qZM-E0-MQo">
             <objects>

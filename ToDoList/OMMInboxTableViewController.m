@@ -42,6 +42,7 @@
     segmentControlButtons.selectedSegmentIndex = 0;
     [headerView addSubview:segmentControlButtons];
     self.tableView.tableHeaderView = headerView;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     if (!self.tasksGroup) {
         self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];

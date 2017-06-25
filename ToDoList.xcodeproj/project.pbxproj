@@ -11,6 +11,7 @@
 		36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */; };
 		36BCC6581EFBBA0400F28922 /* OMMTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */; };
 		36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */; };
+		7C65D0201F005305005122D0 /* OMMCreateGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
 		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
@@ -38,6 +39,8 @@
 		36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTodayTableViewController.m; sourceTree = "<group>"; };
 		36BCC6601EFBBED800F28922 /* UIView+OMMHeaderInSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OMMHeaderInSection.h"; sourceTree = "<group>"; };
 		36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OMMHeaderInSection.m"; sourceTree = "<group>"; };
+		7C65D01E1F005305005122D0 /* OMMCreateGroupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMCreateGroupTableViewController.h; sourceTree = "<group>"; };
+		7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMCreateGroupTableViewController.m; sourceTree = "<group>"; };
 		8446DFAC1EE28BB9004337CF /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446DFB01EE28BB9004337CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8446DFB21EE28BB9004337CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -86,6 +89,8 @@
 				8446E0021EE36AF4004337CF /* Datepicker */,
 				8493120F1EEEFBF5002F780F /* OMMTaskDetailTableVC.h */,
 				849312101EEEFBF5002F780F /* OMMTaskDetailTableVC.m */,
+				7C65D01E1F005305005122D0 /* OMMCreateGroupTableViewController.h */,
+				7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */,
 			);
 			name = details;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
 				36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
+				7C65D0201F005305005122D0 /* OMMCreateGroupTableViewController.m in Sources */,
 				849312111EEEFBF5002F780F /* OMMTaskDetailTableVC.m in Sources */,
 				36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */,
 				84DC83C21EEDCC4D00D84BC2 /* OMMTaskCell.m in Sources */,
