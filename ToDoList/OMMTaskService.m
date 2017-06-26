@@ -12,7 +12,6 @@
 @interface OMMTaskService()
 
 @property (nonatomic, strong) NSMutableArray *privateTaskGroupsArray;
-//@property (nonatomic, strong) OMMTasksGroup *inboxTasksGroup;
 
 @end
 
@@ -125,11 +124,19 @@
 }
 
 - (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
+    for (OMMTask *task in tasksGroup.tasksArray) {
+        [self.inboxTasksGroup.tasksArray removeObject:task];
+    }
     [self.privateTaskGroupsArray removeObject:tasksGroup];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"GroupWasDeleted" object:self];
 }
 
 - (void)removeTask:(OMMTask *)task {
-    //remove task code
+    [self.inboxTasksGroup.tasksArray removeObject:task];
+    for (NSMutableArray *array in [self.tasksGroupsArray valueForKeyPath:@"@unionOfObjects.tasksArray"]) {
+        [array removeObject:task];
+    }
+    //// ADD NONIFACATION
 }
 
 - (NSArray *)tasksGroupsArray {

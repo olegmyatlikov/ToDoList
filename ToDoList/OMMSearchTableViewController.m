@@ -53,6 +53,7 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,6 +62,12 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
+    self.searchController.searchBar.text = OMMsearchClearText;
+    [self.tableView reloadData];
+}
+
+- (void)triggerGroupWasDeleted {
     self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
     self.searchController.searchBar.text = OMMsearchClearText;
     [self.tableView reloadData];
@@ -75,27 +82,6 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     }
     return resultArray;
 }
-
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
-//    UISegmentedControl *segmentControlButtons = [[UISegmentedControl alloc] initWithItems:@[@"Active", @"Complited"]];
-//    [segmentControlButtons setWidth:130.f forSegmentAtIndex:0];
-//    [segmentControlButtons setWidth:130.f forSegmentAtIndex:1];
-//    segmentControlButtons.center = headerView.center;
-//    segmentControlButtons.selectedSegmentIndex = 0;
-//    [headerView addSubview:segmentControlButtons];
-//    
-//    return headerView;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 50.f;
-//}
-//
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    return @" ";
-//}
 
 
 #pragma mark - Table view data source

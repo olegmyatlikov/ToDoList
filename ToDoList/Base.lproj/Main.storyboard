@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="e72-do-JVi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="e72-do-JVi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -214,7 +214,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr6-j8-EQ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2498" y="-285"/>
+            <point key="canvasLocation" x="2448" y="-284"/>
         </scene>
         <!--Today-->
         <scene sceneID="etw-lx-pE2">
@@ -239,7 +239,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKu-bd-FZ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657" y="-1003"/>
+            <point key="canvasLocation" x="1657" y="-1094"/>
         </scene>
         <!--ToDoList-->
         <scene sceneID="FHa-bo-qLd">
@@ -284,7 +284,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w4o-nq-Zkx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657" y="413"/>
+            <point key="canvasLocation" x="1657" y="500"/>
         </scene>
         <!--Create Group Table View Controller-->
         <scene sceneID="54H-xB-Jag">
@@ -305,15 +305,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQl-Dc-rQH">
-                                                    <rect key="frame" x="8" y="19.5" width="359" height="17"/>
+                                                    <rect key="frame" x="18" y="19.5" width="339" height="17"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="iQl-Dc-rQH" firstAttribute="leading" secondItem="LsJ-NV-Xgv" secondAttribute="leadingMargin" id="6TE-pl-F7G"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="iQl-Dc-rQH" secondAttribute="trailing" id="AQn-f4-cgG"/>
+                                                <constraint firstItem="iQl-Dc-rQH" firstAttribute="leading" secondItem="LsJ-NV-Xgv" secondAttribute="leadingMargin" constant="10" id="6TE-pl-F7G"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="iQl-Dc-rQH" secondAttribute="trailing" constant="10" id="AQn-f4-cgG"/>
                                                 <constraint firstItem="iQl-Dc-rQH" firstAttribute="centerY" secondItem="LsJ-NV-Xgv" secondAttribute="centerY" constant="6.25" id="nqU-i3-Gmp"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -332,7 +332,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ho-Vy-BL2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2496.8000000000002" y="411.544227886057"/>
+            <point key="canvasLocation" x="2448" y="500"/>
         </scene>
         <!--Search-->
         <scene sceneID="qZM-E0-MQo">
@@ -351,7 +351,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gKm-nB-okE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657" y="1116"/>
+            <point key="canvasLocation" x="1657" y="1258"/>
         </scene>
         <!--Search-->
         <scene sceneID="inl-Yv-b8W">
@@ -368,7 +368,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="60p-8A-E6n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="796" y="1116"/>
+            <point key="canvasLocation" x="796" y="1258"/>
         </scene>
         <!--ToDoList-->
         <scene sceneID="j76-4r-0Gi">
@@ -385,7 +385,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1G7-Jo-5JL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="796" y="413"/>
+            <point key="canvasLocation" x="796" y="500"/>
         </scene>
         <!--Today-->
         <scene sceneID="6SS-ap-g8j">
@@ -402,7 +402,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OsB-T8-taA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="796" y="-1003"/>
+            <point key="canvasLocation" x="796" y="-1093"/>
         </scene>
         <!--Inbox-->
         <scene sceneID="dmw-US-69x">

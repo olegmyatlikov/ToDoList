@@ -44,6 +44,7 @@
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    // check if we came here by toDoList when pressed in group row
     if (!self.tasksGroup) {
         self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
         [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
@@ -57,9 +58,15 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+    [self.tableView reloadData];
+}
+
+- (void)triggerGroupWasDeleted {
+    self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
     [self.tableView reloadData];
 }
 
@@ -141,6 +148,7 @@
     
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [task setClosed:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self];
         tableView.editing = NO;
     }];
     

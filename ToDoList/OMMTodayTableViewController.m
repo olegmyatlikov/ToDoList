@@ -36,6 +36,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
 }
 
 
@@ -46,6 +47,11 @@
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+    [self prepareDataForTableView];
+    [self.tableView reloadData];
+}
+
+- (void)triggerGroupWasDeleted {
     [self prepareDataForTableView];
     [self.tableView reloadData];
 }
@@ -154,23 +160,26 @@
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [(OMMTask *)[self.openTasksArray objectAtIndex:indexPath.row] setClosed:YES];
+        [[self.openTasksArray objectAtIndex:indexPath.row] setClosed:YES];
         [self.closeTaskArray addObject:[self.openTasksArray objectAtIndex:indexPath.row]];
         [self.openTasksArray removeObjectAtIndex:indexPath.row];
-        [self.tableView reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self];
         tableView.editing = NO;
     }];
     
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:@"Are you sure want to delete the task" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            OMMTask *taskForDelete = [[OMMTask alloc] init];
             if (indexPath.section == 0) {
-                [self.openTasksArray removeObjectAtIndex:indexPath.row];
+                taskForDelete = [self.openTasksArray objectAtIndex:indexPath.row];
+                [self.openTasksArray removeObject:taskForDelete];
             } else {
-                [self.closeTaskArray removeObjectAtIndex:indexPath.row];
+                taskForDelete = [self.closeTaskArray objectAtIndex:indexPath.row];
+                [self.closeTaskArray removeObject:taskForDelete];
             }
+            [self.taskService removeTask:taskForDelete];
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-            //[self.tableView reloadData]; // because without this line header of section not delete immediately
         }];
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;

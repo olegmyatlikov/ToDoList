@@ -27,6 +27,5 @@
 - (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup;
 - (void)removeTask:(OMMTask *)task;
 
-//- (void)replaceEditedTask:(OMMTask*)editedTask inTasksGroup:(OMMTasksGroup *)tasksGroup;
 
 @end

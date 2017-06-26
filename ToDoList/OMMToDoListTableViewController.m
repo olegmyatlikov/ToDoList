@@ -34,10 +34,15 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
     self.tasksGroupArray = [self.taskService.tasksGroupsArray mutableCopy];
+    [self.tableView reloadData];
+}
+
+- (void)triggerGroupWasDeleted {
     [self.tableView reloadData];
 }
 
@@ -86,7 +91,7 @@
         cell.textLabel.text = @"Inbox";
         cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)self.taskService.allTasksArray.count];
     } else if (indexPath.row == 0) {
-        cell.textLabel.text = @"Create new task";
+        cell.textLabel.text = @"Create new group";
         cell.detailTextLabel.text = @"";
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {

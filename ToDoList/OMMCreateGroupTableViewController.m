@@ -11,6 +11,7 @@
 
 @interface OMMCreateGroupTableViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *groupNameTextField;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
 @end
 
 @implementation OMMCreateGroupTableViewController
@@ -18,12 +19,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:nil action:@selector(doneButtonPressed)];
+    self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:nil action:@selector(doneButtonPressed)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:@selector(cancelButtonPressed)];
-    self.navigationItem.rightBarButtonItem = doneButton;
+    self.navigationItem.rightBarButtonItem = self.doneButton;
+    self.doneButton.enabled = NO;
     self.navigationItem.leftBarButtonItem = cancelButton;
+    [self.groupNameTextField addTarget:self action:@selector(checkTextField) forControlEvents:UIControlEventEditingChanged];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.groupNameTextField becomeFirstResponder];
 }
 
 - (void)cancelButtonPressed {
@@ -35,9 +43,32 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-//    
-//}
+- (void)checkTextField {
+    if (self.groupNameTextField.text.length > 0) {
+        self.doneButton.enabled = YES;
+    } else {
+        self.doneButton.enabled = NO;
+    }
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section] animated:YES];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Group";
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    return [UIView createViewForHeaderInSection:tableView withTitle:sectionTitle];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
+        return 50.f;
+}
+
 
 
 @end
