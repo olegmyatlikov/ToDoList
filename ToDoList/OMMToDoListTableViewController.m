@@ -82,16 +82,18 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskListTableVCCell"];
     }
     
-    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
     if (indexPath.section == 0) {
         cell.textLabel.text = @"Inbox";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%ld)", self.taskService.allTasksArray.count];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)self.taskService.allTasksArray.count];
     } else if (indexPath.row == 0) {
         cell.textLabel.text = @"Create new task";
+        cell.detailTextLabel.text = @"";
+        cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
+        OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
         taskGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row - 1];
         cell.textLabel.text = taskGroup.groupName;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", [taskGroup.tasksArray count]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)[taskGroup.tasksArray count]];
     }
     
     return cell;
@@ -104,6 +106,7 @@
         return YES;
     }
 }
+
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -163,7 +166,13 @@
         taskGroupVC.tasksGroup = self.taskService.inboxTasksGroup;
         pushingVC = taskGroupVC;
     } else if (indexPath.row == 0) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        OMMToDoListTableViewController * __weak weakSelfVC = self;
+        createGroupVC.createNewGroup = ^(NSString *newGroupName) {
+            OMMTasksGroup *newGroup = [self.taskService createTasksGroup:newGroupName];
+            [weakSelfVC.taskService addTaskGroup:newGroup];
+            [weakSelfVC.tasksGroupArray addObject:newGroup];
+            [weakSelfVC.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.tasksGroupArray.count inSection:indexPath.section]] withRowAnimation:YES];
+        };
         pushingVC = createGroupVC;
     } else {
         taskGroupVC.tasksGroup = [self.taskService.tasksGroupsArray objectAtIndex:indexPath.row - 1];

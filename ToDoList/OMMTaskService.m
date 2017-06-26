@@ -110,15 +110,6 @@
     [self.privateTaskGroupsArray insertObject:taskGroup atIndex:index];
 }
 
-//- (void)replaceEditedTask:(OMMTask*)editedTask inTasksGroup:(OMMTasksGroup *)tasksGroup {
-//    for (int i = 0; i < [tasksGroup.tasksArray count]; i++) {
-//        OMMTask *task = [tasksGroup.tasksArray objectAtIndex:i];
-//        if (task.taskID == editedTask.taskID) {
-//            [tasksGroup.tasksArray replaceObjectAtIndex:i withObject:editedTask];
-//        }
-//    }
-//}
-
 - (void)addTask:(OMMTask *)task {
     [self.inboxTasksGroup.tasksArray addObject:task];
 }
@@ -126,6 +117,9 @@
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
     if (!taskGroup.tasksArray) {
         taskGroup.tasksArray = [[NSMutableArray alloc] init];
+    }
+    if (![taskGroup isEqual:self.inboxTasksGroup]) {
+        [self.inboxTasksGroup.tasksArray addObject:task];
     }
     [taskGroup.tasksArray addObject:task];
 }

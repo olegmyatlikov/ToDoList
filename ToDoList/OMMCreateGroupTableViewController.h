@@ -10,4 +10,6 @@
 
 @interface OMMCreateGroupTableViewController : UITableViewController
 
+@property (nonatomic, copy, nonnull) void (^createNewGroup)(NSString *_Nonnull);
+
 @end

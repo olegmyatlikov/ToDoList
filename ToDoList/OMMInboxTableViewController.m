@@ -60,14 +60,16 @@
 }
 
 - (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
-    self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
-    [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
-    
     [self.tableView reloadData];
 }
 
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    if (self.tasksGroupsArray.count == 1) { // if we in group not in inbox tab
+        taskDetails.taskGroup = self.tasksGroupsArray[0];
+    } else {
+        taskDetails.taskGroup = self.taskService.inboxTasksGroup;
+    }
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
 

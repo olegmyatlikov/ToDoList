@@ -31,6 +31,7 @@
 }
 
 - (void)doneButtonPressed {
+    self.createNewGroup(self.groupNameTextField.text);
     [self.navigationController popViewControllerAnimated:YES];
 }
 

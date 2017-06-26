@@ -7,7 +7,6 @@
 //
 
 #import "OMMTaskDetailTableVC.h"
-#import "OMMTaskService.h"
 #import "UIView+OMMHeaderInSection.h"
 
 @interface OMMTaskDetailTableVC ()
@@ -85,7 +84,7 @@
                                                             notes:self.taskNotesTextView.text
                                                          priority:self.priority
                                                   enableRemainder:[self.remaindSwitcher isOn]];
-            [taskService addTask:newTask];
+            [taskService addTask:newTask toTaskGroup:self.taskGroup];
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self userInfo:nil];
