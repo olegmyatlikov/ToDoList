@@ -85,7 +85,15 @@
         cell.textLabel.text = @"Inbox";
         cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)self.taskService.allTasksArray.count];
     } else if (indexPath.row == 0) {
-        cell.textLabel.text = @"Create new group";
+        UIImageView *iconPlus = [[UIImageView alloc] initWithFrame:CGRectMake(13, 13, 21, 21)];
+        iconPlus.image = [UIImage imageNamed:@"ic_plus.png"];
+        [cell.contentView addSubview:iconPlus];
+        
+        UILabel *customTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(54.0f, 2.0f, (self.view.bounds.size.width - 95), 40.0f)];
+        customTextLabel.text = @"Create new group";
+        [cell.contentView addSubview:customTextLabel];
+        
+        cell.textLabel.text = nil;
         cell.detailTextLabel.text = @"";
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {

@@ -17,8 +17,8 @@
 
 @property (strong, nonatomic) OMMTaskService *taskService;
 @property (strong, nonatomic) NSMutableArray *tasksGroupsArray;
-@property (strong, nonatomic) NSMutableArray *openTasksArray;
-@property (strong, nonatomic) NSMutableArray *closeTaskArray;
+@property (assign, nonatomic, getter=isArrayReverse) BOOL arrayDirection;
+@property (strong, nonatomic) UISegmentedControl *filterForTasksSegmentControl;
 
 @end
 
@@ -34,16 +34,17 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
-    UISegmentedControl *segmentControlButtons = [[UISegmentedControl alloc] initWithItems:@[@"Group", @"Date"]];
-    [segmentControlButtons setWidth:130.f forSegmentAtIndex:0];
-    [segmentControlButtons setWidth:130.f forSegmentAtIndex:1];
-    segmentControlButtons.center = headerView.center;
-    segmentControlButtons.selectedSegmentIndex = 0;
-    [headerView addSubview:segmentControlButtons];
+    self.filterForTasksSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"Group", @"Date"]];
+    [self.filterForTasksSegmentControl setWidth:130.f forSegmentAtIndex:0];
+    [self.filterForTasksSegmentControl setWidth:130.f forSegmentAtIndex:1];
+    self.filterForTasksSegmentControl.center = headerView.center;
+    self.filterForTasksSegmentControl.selectedSegmentIndex = 0;
+    [self.filterForTasksSegmentControl addTarget:self action:@selector(filteredTasks:) forControlEvents:UIControlEventValueChanged];
+    [headerView addSubview:self.filterForTasksSegmentControl];
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    // check if we came here by toDoList when pressed in group row
+    // check if we came here by toDoList or not
     [self prepareDataForTableView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
@@ -65,6 +66,11 @@
         self.navigationItem.leftBarButtonItem = backButtonItem;
         self.tableView.tableHeaderView = nil;
     }
+    // If array was reverse then i will do it reverse
+    if (self.isArrayReverse) {
+        [self revertButtonPressed:nil];
+        self.arrayDirection = YES;
+    }
 }
 
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
@@ -81,6 +87,26 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (void)filteredTasks:(id)sender {
+    NSLog(@"%ld", (long)[sender selectedSegmentIndex]);
+    if ([sender selectedSegmentIndex]) {
+        [self prepareDataForTableView];
+        [self.tableView reloadData];
+    } else {
+        
+    }
+}
+
+- (IBAction)revertButtonPressed:(UIBarButtonItem *)sender {
+    if (self.filterForTasksSegmentControl.selectedSegmentIndex == 0) {
+        [self.tasksGroupsArray removeObjectAtIndex:0];
+        NSArray *reverceArray = [[self.tasksGroupsArray reverseObjectEnumerator] allObjects];
+        self.tasksGroupsArray = [reverceArray mutableCopy];
+        [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
+        [self.tableView reloadData];
+    }
+    self.arrayDirection = (self.isArrayReverse) ? NO : YES;
+}
 
 #pragma mark - Setup UI for tableView
 
@@ -99,6 +125,23 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 68.f;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section) {
+        OMMTask *task = [self.taskService.inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
+        [self.taskService.inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
+        [self.taskService.inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
+    } else if (sourceIndexPath.section == destinationIndexPath.section) {
+        OMMTask *task = [[[self.taskService.tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:@"tasksArray"] objectAtIndex:sourceIndexPath.row];
+        [[[self.taskService.tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:@"tasksArray"] removeObjectAtIndex:sourceIndexPath.row];
+        [[[self.taskService.tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:@"tasksArray"] insertObject:task atIndex:destinationIndexPath.row];
+    }
+    [tableView reloadData];
 }
 
 
@@ -152,9 +195,10 @@
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:@"Are you sure want to delete the task" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [taskGroup.tasksArray removeObjectAtIndex:indexPath.row];
+            OMMTask *taskForDelete = [taskGroup.tasksArray objectAtIndex:indexPath.row];
+            [taskGroup.tasksArray removeObject:taskForDelete];
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-            //[self.tableView reloadData]; // because without this line header of section not delete immediately
+            [self.taskService removeTask:taskForDelete];
         }];
         
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
