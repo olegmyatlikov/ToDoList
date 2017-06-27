@@ -10,8 +10,6 @@
 #import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
 #import "OMMTaskService.h"
-#import "OMMTasksGroup.h"
-#import "OMMTask.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
 
@@ -35,8 +33,7 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
 }
 
 
@@ -46,12 +43,7 @@
     self.closeTaskArray = [self allCloseTasksInArray:self.allTodayTasks];
 }
 
-- (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
-    [self prepareDataForTableView];
-    [self.tableView reloadData];
-}
-
-- (void)triggerGroupWasDeleted {
+- (void)triggerTaskListWasModify {
     [self prepareDataForTableView];
     [self.tableView reloadData];
 }
@@ -163,7 +155,7 @@
         [[self.openTasksArray objectAtIndex:indexPath.row] setClosed:YES];
         [self.closeTaskArray addObject:[self.openTasksArray objectAtIndex:indexPath.row]];
         [self.openTasksArray removeObjectAtIndex:indexPath.row];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
         tableView.editing = NO;
     }];
     
@@ -178,8 +170,8 @@
                 taskForDelete = [self.closeTaskArray objectAtIndex:indexPath.row];
                 [self.closeTaskArray removeObject:taskForDelete];
             }
-            [self.taskService removeTask:taskForDelete];
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
+            [self.taskService removeTask:taskForDelete];
         }];
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;

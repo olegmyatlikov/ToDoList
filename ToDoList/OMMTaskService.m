@@ -111,6 +111,7 @@
 
 - (void)addTask:(OMMTask *)task {
     [self.inboxTasksGroup.tasksArray addObject:task];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
 }
 
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
@@ -121,6 +122,7 @@
         [self.inboxTasksGroup.tasksArray addObject:task];
     }
     [taskGroup.tasksArray addObject:task];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
 }
 
 - (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
@@ -128,7 +130,7 @@
         [self.inboxTasksGroup.tasksArray removeObject:task];
     }
     [self.privateTaskGroupsArray removeObject:tasksGroup];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GroupWasDeleted" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
 }
 
 - (void)removeTask:(OMMTask *)task {
@@ -136,7 +138,7 @@
     for (NSMutableArray *array in [self.tasksGroupsArray valueForKeyPath:@"@unionOfObjects.tasksArray"]) {
         [array removeObject:task];
     }
-    //// ADD NONIFACATION
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
 }
 
 - (NSArray *)tasksGroupsArray {

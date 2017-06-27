@@ -9,8 +9,6 @@
 #import "OMMToDoListTableViewController.h"
 #import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
-#import "OMMTask.h"
-#import "OMMTasksGroup.h"
 #import "OMMTaskService.h"
 #import "OMMInboxTableViewController.h"
 #import "OMMCreateGroupTableViewController.h"
@@ -33,16 +31,11 @@
     self.tasksGroupArray = [self.taskService.tasksGroupsArray mutableCopy];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
 }
 
-- (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
+- (void)triggerTaskListWasModify {
     self.tasksGroupArray = [self.taskService.tasksGroupsArray mutableCopy];
-    [self.tableView reloadData];
-}
-
-- (void)triggerGroupWasDeleted {
     [self.tableView reloadData];
 }
 
@@ -61,6 +54,7 @@
         return 50.f;
     }
 }
+
 
 #pragma mark - Table view data source
 
@@ -142,10 +136,10 @@
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:@"Are you sure want to delete the group" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self.taskService removeTasksGroup:taskGroup];
             [self.tasksGroupArray removeObjectAtIndex:(indexPath.row - 1)];
             [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:YES];
             tableView.editing = NO;
+            [self.taskService removeTasksGroup:taskGroup];
         }];
         
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

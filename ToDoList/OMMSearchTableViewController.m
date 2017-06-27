@@ -8,8 +8,6 @@
 
 #import "OMMSearchTableViewController.h"
 #import "OMMTaskService.h"
-#import "OMMTasksGroup.h"
-#import "OMMTask.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
 
@@ -52,8 +50,7 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     self.definesPresentationContext = YES; // hide searchController if present another viewController and do visible if go back
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskWasCreatedOrEdited:) name:@"TaskWasCreatedOrEdited" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerGroupWasDeleted) name:@"GroupWasDeleted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,13 +58,7 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     [self.searchController.searchBar becomeFirstResponder];
 }
 
-- (void)triggerTaskWasCreatedOrEdited:(NSNotification *)notification {
-    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
-    self.searchController.searchBar.text = OMMsearchClearText;
-    [self.tableView reloadData];
-}
-
-- (void)triggerGroupWasDeleted {
+- (void)triggerTaskListWasModify {
     self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
     self.searchController.searchBar.text = OMMsearchClearText;
     [self.tableView reloadData];

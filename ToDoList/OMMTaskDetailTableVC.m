@@ -87,7 +87,7 @@
             [taskService addTask:newTask toTaskGroup:self.taskGroup];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskWasCreatedOrEdited" object:self userInfo:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskLisyWasModify" object:self userInfo:nil];
         
         [self.navigationController popViewControllerAnimated:YES];
     }

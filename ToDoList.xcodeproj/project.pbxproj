@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */; };
+		36B7A0321F025EDA00784478 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36B7A0311F025EDA00784478 /* Assets.xcassets */; };
 		36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */; };
 		36BCC6581EFBBA0400F28922 /* OMMTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */; };
 		36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */; };
@@ -16,7 +17,6 @@
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
 		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
 		8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFB81EE28BB9004337CF /* Main.storyboard */; };
-		8446DFBC1EE28BB9004337CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBB1EE28BB9004337CF /* Assets.xcassets */; };
 		8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */; };
 		8446DFCD1EE3017D004337CF /* OMMTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFCC1EE3017D004337CF /* OMMTask.m */; };
 		8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFCF1EE3032E004337CF /* OMMTasksGroup.m */; };
@@ -33,6 +33,7 @@
 /* Begin PBXFileReference section */
 		36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMSearchTableViewController.h; sourceTree = "<group>"; };
 		36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMSearchTableViewController.m; sourceTree = "<group>"; };
+		36B7A0311F025EDA00784478 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		36BCC6061EF7EFBA00F28922 /* OMMToDoListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMToDoListTableViewController.h; sourceTree = "<group>"; };
 		36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMToDoListTableViewController.m; sourceTree = "<group>"; };
 		36BCC6561EFBBA0400F28922 /* OMMTodayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTodayTableViewController.h; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		8446DFB51EE28BB9004337CF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8446DFB61EE28BB9004337CF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8446DFB91EE28BB9004337CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8446DFBB1EE28BB9004337CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8446DFBE1EE28BB9004337CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8446DFC01EE28BB9004337CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8446DFCB1EE3017D004337CF /* OMMTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTask.h; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		36068B061EE58A6C0088EC2D /* details */ = {
+		36068B061EE58A6C0088EC2D /* Edit task/group pages */ = {
 			isa = PBXGroup;
 			children = (
 				84DC83C41EEDCC5300D84BC2 /* TaskCell */,
@@ -92,7 +92,7 @@
 				7C65D01E1F005305005122D0 /* OMMCreateGroupTableViewController.h */,
 				7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */,
 			);
-			name = details;
+			name = "Edit task/group pages";
 			sourceTree = "<group>";
 		};
 		364F25E61EE571ED00CC43C3 /* Helpers */ = {
@@ -146,7 +146,7 @@
 				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
 				36BCC6051EF7EF3F00F28922 /* Tabs */,
-				36068B061EE58A6C0088EC2D /* details */,
+				36068B061EE58A6C0088EC2D /* Edit task/group pages */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
@@ -157,9 +157,9 @@
 		8446DFAF1EE28BB9004337CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8446DFBB1EE28BB9004337CF /* Assets.xcassets */,
 				8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */,
 				8446DFC01EE28BB9004337CF /* Info.plist */,
+				36B7A0311F025EDA00784478 /* Assets.xcassets */,
 				8446DFB01EE28BB9004337CF /* main.m */,
 			);
 			name = "Supporting Files";
@@ -259,8 +259,8 @@
 			files = (
 				8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */,
 				8446E0011EE36AEC004337CF /* OMMDatepickerViewController.xib in Resources */,
-				8446DFBC1EE28BB9004337CF /* Assets.xcassets in Resources */,
 				84DC83C31EEDCC4D00D84BC2 /* OMMTaskCell.xib in Resources */,
+				36B7A0321F025EDA00784478 /* Assets.xcassets in Resources */,
 				8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
