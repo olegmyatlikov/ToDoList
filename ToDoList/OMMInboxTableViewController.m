@@ -17,6 +17,9 @@
 
 @property (strong, nonatomic) OMMTaskService *taskService;
 @property (strong, nonatomic) NSMutableArray *tasksGroupsArray;
+@property (strong, nonatomic) NSMutableArray *startDateForHeaderSectionsArray;
+@property (strong, nonatomic) NSMutableArray *taskByDateArray;
+
 @property (assign, nonatomic, getter=isArrayReverse) BOOL arrayDirection;
 @property (strong, nonatomic) UISegmentedControl *filterForTasksSegmentControl;
 
@@ -48,6 +51,21 @@
     [self prepareDataForTableView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
+    
+//    NSSortDescriptor *sortByDateDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:YES];
+//    NSArray *sortDescriptors = @[sortByDateDescriptor];
+//    NSArray *sortedArray = [self.taskService.allTasksArray sortedArrayUsingDescriptors:sortDescriptors];
+//    
+//    for (OMMTask *task in sortedArray) {
+//        NSLog(@"%@", task.startDate);
+//    }
+//    
+//    self.startDateForHeaderSectionsArray = @[[sortedArray[0]]]
+//    for (int i = 1, i < sortedArray.count, i++) {
+//        NSString *taskStartDate = [[sortedArray[i] objectForKey:@"startDate"] convertToStringForCompareDate];
+//        
+//    }
+    
 }
 
 - (void)triggerTaskListWasModify {
@@ -70,6 +88,12 @@
     if (self.isArrayReverse) {
         [self revertButtonPressed:nil];
         self.arrayDirection = YES;
+    }
+    
+    if (self.filterForTasksSegmentControl.selectedSegmentIndex == 0) {
+        for (OMMTask *task in self.taskService.allTasksArray) {
+            [self.startDateForHeaderSectionsArray addObject:[task.startDate convertToStringForCompareDate]];
+        }
     }
 }
 
@@ -132,7 +156,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section) {
+    if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section && self.filterForTasksSegmentControl.selectedSegmentIndex == 0) {
         OMMTask *task = [self.taskService.inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
         [self.taskService.inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
         [self.taskService.inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
@@ -148,12 +172,21 @@
 #pragma mark - Setup data for tableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.tasksGroupsArray.count;
+    if (self.filterForTasksSegmentControl.selectedSegmentIndex == 0) {
+        return self.tasksGroupsArray.count;
+    } else {
+        return self.startDateForHeaderSectionsArray.count;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:section];
-    return taskGroup.groupName;
+    if (self.filterForTasksSegmentControl.selectedSegmentIndex == 0) {
+        OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:section];
+        return taskGroup.groupName;
+    } else {
+        return [self.startDateForHeaderSectionsArray objectAtIndex:section];
+    }
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
