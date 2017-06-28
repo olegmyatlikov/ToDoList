@@ -11,6 +11,6 @@
 
 @interface OMMInboxTableViewController : UITableViewController
 
-@property (strong, nonatomic) OMMTasksGroup *tasksGroup;
+@property (strong, nonatomic) OMMTasksGroup *tasksGroup; // if we came from ToDoList tab with tap in group 
 
 @end

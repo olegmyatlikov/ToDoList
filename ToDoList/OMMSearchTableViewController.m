@@ -24,12 +24,18 @@
 
 @implementation OMMSearchTableViewController
 
+
+#pragma mark - constants
+
 static NSString * const OMMsearchTaskIsOpen = @"closed = 0";
 static NSString * const OMMsearchTaskIsClosed = @"closed = 1";
 static NSString * const OMMsearchActiveTasks = @"Active tasks";
 static NSString * const OMMsearchComplitedTasks = @"Completed";
 static NSString * const OMMsearchClearText = @"";
 static NSString * const OMMsearchNoResultText = @"No Result";;
+
+
+#pragma mark - life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,6 +63,9 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     [super viewDidAppear:animated];
     [self.searchController.searchBar becomeFirstResponder];
 }
+
+
+#pragma mark - methods
 
 - (void)triggerTaskListWasModify {
     self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
