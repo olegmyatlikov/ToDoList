@@ -10,6 +10,8 @@
 #import "OMMTask.h"
 #import "OMMTasksGroup.h"
 
+extern NSString * const OMMTaskServiceTaskWasModifyNotification;
+
 @interface OMMTaskService : NSObject
 
 @property (nonatomic, strong, readonly) NSArray *tasksGroupsArray;
@@ -26,6 +28,5 @@
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup;
 - (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup;
 - (void)removeTask:(OMMTask *)task;
-
 
 @end

@@ -31,7 +31,6 @@
 
 static NSString * const OMMInboxGroupSegmentControl = @"Group";
 static NSString * const OMMInboxDateSegmentControl = @"Date";
-static NSString * const OMMInboxTaskListWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMInboxCancelButton = @"Cancel";
 static NSString * const OMMInboxStartDateTasksProperty = @"startDate";
 static NSString * const OMMInboxTaskArrayTasksGroupProperty = @"tasksArray";
@@ -67,7 +66,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     
     [self prepareDataForTableView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMInboxTaskListWasModifyNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 
 }
 
@@ -275,7 +274,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     // done button - change task condition in closed
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [task setClosed:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMMInboxTaskListWasModifyNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
         tableView.editing = NO;
     }];
     

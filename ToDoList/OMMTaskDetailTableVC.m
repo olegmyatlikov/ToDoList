@@ -29,6 +29,22 @@
 
 @implementation OMMTaskDetailTableVC
 
+
+#pragma mark - constants 
+
+static NSString * const OMMTaskDetailVCSetDateLabelText = @"set date";
+static NSString * const OMMTaskDetailVCNoneLabelText = @"none";
+static NSString * const OMMTaskDetailVCSaveButtonTitle = @"Save";
+static NSString * const OMMTaskDetailVCCancelButtonTitle = @"Cancel";
+static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
+static NSString * const OMMTaskDetailVCEmptyRequaredFieldsAlertText = @"Please add tasks name and chose remainder date!";
+static NSString * const OMMTaskDetailVCOkWarningAlertActionTitle = @"Ok";
+static NSString * const OMMTaskDetailVCSelectPriorityAlertTitle = @"Select Priority";
+static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
+
+
+#pragma mark - life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -39,13 +55,13 @@
         self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
         self.taskNotesTextView.text = self.task.note;
     } else {
-        self.startDateLabel.text = @"set date";
-        self.priorityLabel.text = @"none";
+        self.startDateLabel.text = OMMTaskDetailVCSetDateLabelText;
+        self.priorityLabel.text = OMMTaskDetailVCNoneLabelText;
         self.priority = none;
     }
     
-    self.saveTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveTaskButtonPressed)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
+    self.saveTaskButton = [[UIBarButtonItem alloc] initWithTitle:OMMTaskDetailVCSaveButtonTitle style:UIBarButtonItemStyleDone target:self action:@selector(saveTaskButtonPressed)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:OMMTaskDetailVCCancelButtonTitle style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
     self.navigationItem.rightBarButtonItem = self.saveTaskButton;
     self.navigationItem.leftBarButtonItem = cancelButton;
     [self disableSaveButton];
@@ -54,8 +70,8 @@
     [self.taskNameTextField addTarget:self action:@selector(enableSaveButton) forControlEvents:UIControlEventEditingChanged];
     [self.remaindSwitcher addTarget:self action:@selector(enableSaveButton) forControlEvents:UIControlEventValueChanged];
     self.taskNotesTextView.delegate = self;
-    [self.startDateLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
-    [self.priorityLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
+    [self.startDateLabel addObserver:self forKeyPath:OMMTaskDetailVCTextLabelProperty options:NSKeyValueObservingOptionNew context:nil];
+    [self.priorityLabel addObserver:self forKeyPath:OMMTaskDetailVCTextLabelProperty options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,13 +80,15 @@
 }
 
 
+#pragma mark - methods
+
 - (void)saveTaskButtonPressed {
-    if ([self.taskNameTextField.text length] < 1 || [self.startDateLabel.text isEqualToString:@"set date"]) {
+    // alert if taskName field empty or didn't chose a start date
+    if ([self.taskNameTextField.text length] < 1 || [self.startDateLabel.text isEqualToString:OMMTaskDetailVCSetDateLabelText]) {
         [self openEmptyValueAlert];
         
     } else {
-        
-        if (self.task) {
+        if (self.task) { // save all changes (use the memory)
             OMMTask *editTask = self.task;
             editTask.name = self.taskNameTextField.text;
             editTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
@@ -84,10 +102,8 @@
                                                             notes:self.taskNotesTextView.text
                                                          priority:self.priority
                                                   enableRemainder:[self.remaindSwitcher isOn]];
-            [taskService addTask:newTask toTaskGroup:self.taskGroup];
+            [taskService addTask:newTask toTaskGroup:self.taskGroup]; // task service save task and push notification to all tabs
         }
-        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskLisyWasModify" object:self userInfo:nil];
         
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -116,34 +132,37 @@
 
 #pragma mark - Alerts
 
+// warning alert if requared fields is empty
 - (void)openEmptyValueAlert {
-    UIAlertController *emptyValueAlert = [UIAlertController alertControllerWithTitle:@"Please add tasks name and chose remainder date!" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    UIAlertController *emptyValueAlert = [UIAlertController alertControllerWithTitle:OMMTaskDetailVCEmptyRequaredFieldsAlertText message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:OMMTaskDetailVCOkWarningAlertActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
     }];
     [emptyValueAlert addAction:okButton];
     [self presentViewController:emptyValueAlert animated:YES completion:nil];
 }
 
+
+// chose priority alertActionSheet
 - (void)openPriorityAlertActionSheet {
-    UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:@"Select Priority" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:OMMTaskDetailVCSelectPriorityAlertTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = @"none";
+    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:OMMTaskPriorityNone style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityLow;
         self.priority = none;
     }];
-    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:@"Low" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = @"low";
+    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityLow style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityLow;
         self.priority = low;
     }];
-    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:@"Medium" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = @"medium";
+    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityMedium style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityMedium;
         self.priority = medium;
     }];
-    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:@"High" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = @"high";
+    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityHigh style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityHigh;
         self.priority = high;
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:OMMTaskDetailVCOkAlertPriorityActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];
     
     [priorityAlert addAction:nonePriority];
     [priorityAlert addAction:lowPriority];
@@ -153,6 +172,7 @@
     
     [self presentViewController:priorityAlert animated:YES completion:nil];
 }
+
 
 #pragma mark - tableView methods
 
@@ -165,7 +185,7 @@
     return [UIView createViewForHeaderInSection:tableView withTitle:sectionTitle];
 }
 
-#pragma mark - didSelectRowAtIndexPath
+#pragma mark - did selec the row
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -196,9 +216,11 @@
     [self.tabBarController.tabBar setHidden:NO];
 }
 
+
+// removeObservers
 - (void)dealloc {
-    [self.priorityLabel removeObserver:self forKeyPath:@"text"];
-    [self.startDateLabel removeObserver:self forKeyPath:@"text"];
+    [self.priorityLabel removeObserver:self forKeyPath:OMMTaskDetailVCTextLabelProperty];
+    [self.startDateLabel removeObserver:self forKeyPath:OMMTaskDetailVCTextLabelProperty];
     
 }
 

@@ -32,7 +32,10 @@ static NSString * const OMMsearchTaskIsClosed = @"closed = 1";
 static NSString * const OMMsearchActiveTasks = @"Active tasks";
 static NSString * const OMMsearchComplitedTasks = @"Completed";
 static NSString * const OMMsearchClearText = @"";
-static NSString * const OMMsearchNoResultText = @"No Result";;
+static NSString * const OMMsearchNoResultText = @"No Result";
+static NSString * const OMMSearchTaskCellIdentifier = @"OMMTaskCellIdentifier";
+static NSString * const OMMSearchTaskCellXibName = @"OMMTaskCell";
+static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCIndentifair";
 
 
 #pragma mark - life cycle
@@ -46,6 +49,7 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     
     self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
     
+    //setup the search controller
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
@@ -56,7 +60,7 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
     self.definesPresentationContext = YES; // hide searchController if present another viewController and do visible if go back
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -91,10 +95,10 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OMMTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
+    OMMTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:OMMSearchTaskCellIdentifier];
     if (!cell) {
-        [tableView registerNib:[UINib nibWithNibName:@"OMMTaskCell" bundle:nil] forCellReuseIdentifier:@"OMMTaskCellIdentifier"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
+        [tableView registerNib:[UINib nibWithNibName:OMMSearchTaskCellXibName bundle:nil] forCellReuseIdentifier:OMMSearchTaskCellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:OMMSearchTaskCellIdentifier];
     }
     
     OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
@@ -111,7 +115,7 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
-    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:OMMSearchTaskDetailVCIndentifair];
     taskDetails.task = task;
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
@@ -138,7 +142,6 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
 {
     if (self.resultTaskArray.count > 0) {
         self.tableView.backgroundView = nil;
-        
         return 1;
     } else {
         UILabel *noResultLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
@@ -147,7 +150,6 @@ static NSString * const OMMsearchNoResultText = @"No Result";;
         noResultLabel.textColor = [UIColor lightGrayColor];
         noResultLabel.textAlignment = NSTextAlignmentCenter;
         self.tableView.backgroundView = noResultLabel;
-        
         return 0;
     }
 }

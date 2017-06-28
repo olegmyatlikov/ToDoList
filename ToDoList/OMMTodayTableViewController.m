@@ -22,8 +22,25 @@
 
 @end
 
+
 @implementation OMMTodayTableViewController
 
+#pragma mark - constants
+
+static NSString * const OMMTodayVCTaskDetailVCIndentifair = @"OMMTaskDetailVCIndentifair";
+static NSString * const OMMTodayVCPredicateOpenTaks = @"closed = 0";
+static NSString * const OMMTodayVCPredicateCloseTaks = @"closed = 1";
+static NSString * const OMMTodayVCSectionHeaderTitleComplited = @"Complited";
+static NSString * const OMMTodayVCEmptyTitleForSectionsHeader = @"";
+static NSString * const OMMTodayVCTaskCellIdentifier = @"OMMTaskCellIdentifier";
+static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
+static NSString * const OMMTodayVCDeleteAction = @"Delete";
+static NSString * const OMMTodayVCDoneAction = @"Done";
+static NSString * const OMMTodayVCCloseACtion = @"Close";
+static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete the task";
+
+
+#pragma mark - life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,9 +50,11 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:@"TaskListWasModify" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 }
 
+
+#pragma mark - methods
 
 - (void)prepareDataForTableView {
     self.allTodayTasks = [self allTodayTasksInTasksArray:self.taskService.allTasksArray];
@@ -48,24 +67,21 @@
     [self.tableView reloadData];
 }
 
-
-#pragma mark - helpers methods
-
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
-    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:OMMTodayVCTaskDetailVCIndentifair];
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
 
 - (NSMutableArray *)allOpenTasksInArray:(NSMutableArray *)array {
     NSMutableArray *openTasksArray = [[NSMutableArray alloc] init];
-    NSPredicate *openTaskPredicate = [NSPredicate predicateWithFormat:@"closed = 0"];
+    NSPredicate *openTaskPredicate = [NSPredicate predicateWithFormat:OMMTodayVCPredicateOpenTaks];
     openTasksArray = [[array filteredArrayUsingPredicate:openTaskPredicate] mutableCopy];
     return openTasksArray;
 }
 
 - (NSMutableArray *)allCloseTasksInArray:(NSMutableArray *)array {
     NSMutableArray *closeTasksArray = [[NSMutableArray alloc] init];
-    NSPredicate *closeTaskPredicate = [NSPredicate predicateWithFormat:@"closed = 1"];
+    NSPredicate *closeTaskPredicate = [NSPredicate predicateWithFormat:OMMTodayVCPredicateCloseTaks];
     closeTasksArray = [[array filteredArrayUsingPredicate:closeTaskPredicate] mutableCopy];
     return closeTasksArray;
 }
@@ -112,9 +128,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"";
+        return OMMTodayVCEmptyTitleForSectionsHeader;
     } else {
-        return @"Complited";
+        return OMMTodayVCSectionHeaderTitleComplited;
     }
 }
 
@@ -128,10 +144,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    OMMTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
+    OMMTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:OMMTodayVCTaskCellIdentifier];
     if (!cell) {
-        [tableView registerNib:[UINib nibWithNibName:@"OMMTaskCell" bundle:nil] forCellReuseIdentifier:@"OMMTaskCellIdentifier"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"OMMTaskCellIdentifier"];
+        [tableView registerNib:[UINib nibWithNibName:OMMTodayVCTaskCellXibName bundle:nil] forCellReuseIdentifier:OMMTodayVCTaskCellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:OMMTodayVCTaskCellIdentifier];
     }
     OMMTask *task = [[OMMTask alloc] init];
     if (indexPath.section == 0) {
@@ -151,17 +167,17 @@
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMTodayVCDoneAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[self.openTasksArray objectAtIndex:indexPath.row] setClosed:YES];
         [self.closeTaskArray addObject:[self.openTasksArray objectAtIndex:indexPath.row]];
         [self.openTasksArray removeObjectAtIndex:indexPath.row];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
         tableView.editing = NO;
     }];
     
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:@"Are you sure want to delete the task" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMTodayVCDeleteAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMTodayVCAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMTodayVCDeleteAction style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             OMMTask *taskForDelete = [[OMMTask alloc] init];
             if (indexPath.section == 0) {
                 taskForDelete = [self.openTasksArray objectAtIndex:indexPath.row];
@@ -173,7 +189,7 @@
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
             [self.taskService removeTask:taskForDelete];
         }];
-        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseACtion style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;
         }];
         
@@ -194,7 +210,7 @@
 #pragma mark - Tap to cell
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:@"OMMTaskDetailVCIndentifair"];
+    OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:OMMTodayVCTaskDetailVCIndentifair];
     
     if (indexPath.section == 0) {
         OMMTask *openTask = [self.openTasksArray objectAtIndex:indexPath.row];

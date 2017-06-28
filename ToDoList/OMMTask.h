@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const OMMTaskPriorityNone;
+extern NSString * const OMMTaskPriorityLow;
+extern NSString * const OMMTaskPriorityMedium;
+extern NSString * const OMMTaskPriorityHigh;
+
 @interface OMMTask : NSObject
 
 typedef enum TaskPriority{

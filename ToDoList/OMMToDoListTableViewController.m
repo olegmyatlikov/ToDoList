@@ -27,7 +27,6 @@
 
 #pragma mark - constants
 
-static NSString * const OMMToDoListTaskListWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMToDoListTaskListTableVCCellIdentifair = @"OMMTaskListTableVCCell";
 static NSString * const OMMToDoListEmptyHeaderSection = @" ";
 static NSString * const OMMToDoListInboxGroup = @"Inbox";
@@ -56,7 +55,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
     self.tasksGroupArray = [self.taskService.tasksGroupsArray mutableCopy];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMToDoListTaskListWasModifyNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 }
 
 - (void)triggerTaskListWasModify {

@@ -10,17 +10,29 @@
 #import "UIView+OMMHeaderInSection.h"
 
 @interface OMMCreateGroupTableViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextField *groupNameTextField;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
+
 @end
 
+
 @implementation OMMCreateGroupTableViewController
+
+#pragma mark - constants
+
+static NSString * const OMMCreateGroupDoneButton = @"Done";
+static NSString * const OMMCreateGroupCabcelButton = @"Cancel";
+static NSString * const OMMCreateGroupTitleForHeaderOfSectionGroup = @"Group";
+
+
+#pragma mark - life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:nil action:@selector(doneButtonPressed)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:@selector(cancelButtonPressed)];
+    self.doneButton = [[UIBarButtonItem alloc] initWithTitle:OMMCreateGroupDoneButton style:UIBarButtonItemStyleDone target:nil action:@selector(doneButtonPressed)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:OMMCreateGroupCabcelButton style:UIBarButtonItemStylePlain target:nil action:@selector(cancelButtonPressed)];
     self.navigationItem.rightBarButtonItem = self.doneButton;
     self.doneButton.enabled = NO;
     self.navigationItem.leftBarButtonItem = cancelButton;
@@ -33,6 +45,9 @@
     [super viewDidAppear:animated];
     [self.groupNameTextField becomeFirstResponder];
 }
+
+
+#pragma mark - methods
 
 - (void)cancelButtonPressed {
     [self.navigationController popViewControllerAnimated:YES];
@@ -52,12 +67,14 @@
 }
 
 
+#pragma mark - tableViews methods
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section] animated:YES];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Group";
+    return OMMCreateGroupTitleForHeaderOfSectionGroup;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -68,7 +85,6 @@
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
         return 50.f;
 }
-
 
 
 @end

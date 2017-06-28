@@ -15,7 +15,14 @@
 
 @end
 
+
 @implementation OMMTaskService
+
+NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
+static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
+
+
+#pragma mark - init service
 
 - (instancetype)init {
     self = [super init];
@@ -64,7 +71,7 @@
         [self addTaskGroup:taskGroup2];
         
         _inboxTasksGroup = [[OMMTasksGroup alloc] init];
-        _inboxTasksGroup.groupName = @"Inbox";
+        _inboxTasksGroup.groupName = OMMTaskServiceNameTaskGroupInbox;
         _inboxTasksGroup.tasksArray = [[NSMutableArray alloc] init];
         [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup1.tasksArray];
         [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup2.tasksArray];
@@ -83,6 +90,9 @@
     
     return shared;
 }
+
+
+// general methods
 
 - (OMMTasksGroup *)createTasksGroup:(NSString *)groupName {
     OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
@@ -111,7 +121,7 @@
 
 - (void)addTask:(OMMTask *)task {
     [self.inboxTasksGroup.tasksArray addObject:task];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
 }
 
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
@@ -122,7 +132,7 @@
         [self.inboxTasksGroup.tasksArray addObject:task];
     }
     [taskGroup.tasksArray addObject:task];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
 }
 
 - (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
@@ -130,7 +140,7 @@
         [self.inboxTasksGroup.tasksArray removeObject:task];
     }
     [self.privateTaskGroupsArray removeObject:tasksGroup];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
 }
 
 - (void)removeTask:(OMMTask *)task {
@@ -138,8 +148,11 @@
     for (NSMutableArray *array in [self.tasksGroupsArray valueForKeyPath:@"@unionOfObjects.tasksArray"]) {
         [array removeObject:task];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TaskListWasModify" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
 }
+
+
+#pragma mark - help methods
 
 - (NSArray *)tasksGroupsArray {
     return [self.privateTaskGroupsArray copy];

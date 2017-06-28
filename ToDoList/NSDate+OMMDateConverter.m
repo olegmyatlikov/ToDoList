@@ -10,24 +10,26 @@
 
 @implementation NSDate (OMMDateConverter)
 
+static NSString * const OMMDateConverterFormatterDDMMYYYY_HHMM = @"dd-MM-yyyy HH:mm";
+static NSString * const OMMDateConverterFormatterDDMMYYYY = @"dd-MM-yyyy";
+
 - (NSString *)convertDateToString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+    [formatter setDateFormat:OMMDateConverterFormatterDDMMYYYY_HHMM];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     return [formatter stringFromDate:self];
 }
 
 - (NSString *)convertToStringForCompareDate {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-yyyy"];
+    [formatter setDateFormat:OMMDateConverterFormatterDDMMYYYY];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     return [formatter stringFromDate:self];
 }
 
-
 + (NSDate *)convertStringToDate:(NSString *)dateInString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+    [formatter setDateFormat:OMMDateConverterFormatterDDMMYYYY_HHMM];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     return [formatter dateFromString:dateInString];
 }

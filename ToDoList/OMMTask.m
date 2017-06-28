@@ -14,23 +14,30 @@
 
 @end
 
+
 @implementation OMMTask
+
+NSString * const OMMTaskPriorityNone = @"none";
+NSString * const OMMTaskPriorityLow = @"low";
+NSString * const OMMTaskPriorityMedium = @"medium";
+NSString * const OMMTaskPriorityHigh = @"high";
+
 
 - (NSString*)taskPriotityToString:(TaskPriority)taskPriority {
     NSString *result = nil;
     
     switch(taskPriority) {
         case none:
-            result = @"none";
+            result = OMMTaskPriorityNone;
             break;
         case low:
-            result = @"low";
+            result = OMMTaskPriorityLow;
             break;
         case medium:
-            result = @"medium";
+            result = OMMTaskPriorityMedium;
             break;
         case high:
-            result = @"high";
+            result = OMMTaskPriorityHigh;
             break;
         default:
             [NSException raise:NSGenericException format:@"Unexpected taskPriority"];
@@ -38,6 +45,7 @@
     
     return result;
 }
+
 
 - (id)init {
     self = [super init];
