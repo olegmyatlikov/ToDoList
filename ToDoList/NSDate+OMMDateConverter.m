@@ -13,7 +13,7 @@
 static NSString * const OMMDateConverterFormatterDDMMYYYY_HHMM = @"dd-MM-yyyy HH:mm";
 static NSString * const OMMDateConverterFormatterDDMMYYYY = @"dd-MM-yyyy";
 
-- (NSString *)convertDateToString {
+- (NSString *)convertDateToLongDateString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:OMMDateConverterFormatterDDMMYYYY_HHMM];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];

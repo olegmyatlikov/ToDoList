@@ -23,10 +23,10 @@
     [self.tabBarController.tabBar setHidden:YES];
     if (self.startDate) {
         [self.datePicker setDate:self.startDate];
-        self.selectedDateLabel.text = [self.startDate convertDateToString];
+        self.selectedDateLabel.text = [self.startDate convertDateToLongDateString];
     } else {
         [self.datePicker setDate:[NSDate date]];
-        self.selectedDateLabel.text = [[NSDate date] convertDateToString];
+        self.selectedDateLabel.text = [[NSDate date] convertDateToLongDateString];
     }
     
     self.navigationItem.title = @"Chose date";
@@ -44,7 +44,7 @@
 }
 
 - (void)datePicherValueChanged {
-    self.selectedDateLabel.text = [self.datePicker.date convertDateToString];
+    self.selectedDateLabel.text = [self.datePicker.date convertDateToLongDateString];
 }
 
 - (IBAction)setDateButton:(UIButton *)sender {

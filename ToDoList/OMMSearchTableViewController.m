@@ -104,7 +104,7 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
     OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
-    cell.taskStartDate.text = [task.startDate convertDateToString];
+    cell.taskStartDate.text = [task.startDate convertDateToLongDateString];
     
     return cell;
 }

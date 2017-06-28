@@ -157,7 +157,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
     }
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
-    cell.taskStartDate.text = [task.startDate convertDateToString];
+    cell.taskStartDate.text = [task.startDate convertDateToLongDateString];
     
     return cell;
 }

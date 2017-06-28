@@ -10,7 +10,7 @@
 
 @interface NSDate (OMMDateConverter)
 
-- (NSString *)convertDateToString;
+- (NSString *)convertDateToLongDateString;
 - (NSString *)convertToStringForCompareDate;
 + (NSDate *)convertStringToDate:(NSString *)dateInString;
 

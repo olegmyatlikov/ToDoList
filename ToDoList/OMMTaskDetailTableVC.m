@@ -50,7 +50,7 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
     
     if (self.task) {
         self.taskNameTextField.text = self.task.name;
-        self.startDateLabel.text = [self.task.startDate convertDateToString];
+        self.startDateLabel.text = [self.task.startDate convertDateToLongDateString];
         [self.remaindSwitcher setOn:self.task.enableRemainder];
         self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
         self.taskNotesTextView.text = self.task.note;

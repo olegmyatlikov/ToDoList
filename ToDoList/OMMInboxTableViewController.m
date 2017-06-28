@@ -251,7 +251,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
-    cell.taskStartDate.text = [task.startDate convertDateToString];
+    cell.taskStartDate.text = [task.startDate convertDateToLongDateString];
 
  return cell;
  }
