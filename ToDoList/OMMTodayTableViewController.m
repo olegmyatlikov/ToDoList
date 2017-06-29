@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *allTodayTasks;
 @property (strong, nonatomic) NSMutableArray *openTasksArray;
 @property (strong, nonatomic) NSMutableArray *closeTaskArray;
+@property (assign, nonatomic) BOOL taskListWasModified;
 
 @end
 
@@ -53,6 +54,13 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.taskListWasModified) {
+        [self prepareDataForTableView];
+        [self.tableView reloadData];
+        self.taskListWasModified = NO;
+    }
+}
 
 #pragma mark - methods
 
@@ -63,8 +71,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
 }
 
 - (void)triggerTaskListWasModify {
-    [self prepareDataForTableView];
-    [self.tableView reloadData];
+    self.taskListWasModified = YES;
 }
 
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
@@ -105,9 +112,8 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
         return 0;
     } else if (section == 0) {
         return 25.f;
-    } else {
-        return 50.f;
-    }
+    } 
+    return 50.f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -168,10 +174,16 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMTodayVCDoneAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[self.openTasksArray objectAtIndex:indexPath.row] setClosed:YES];
-        [self.closeTaskArray addObject:[self.openTasksArray objectAtIndex:indexPath.row]];
-        [self.openTasksArray removeObjectAtIndex:indexPath.row];
+        
+        OMMTask *task = [self.openTasksArray objectAtIndex:indexPath.row];
+        [task setClosed:YES];
+        [self.openTasksArray removeObject:task];
+        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.closeTaskArray addObject:task];
+        [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:(self.closeTaskArray.count - 1) inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+        self.taskListWasModified = NO; // don't reload data if changes was in this tab
         tableView.editing = NO;
     }];
     
@@ -188,6 +200,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
             }
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
             [self.taskService removeTask:taskForDelete];
+            self.taskListWasModified = NO; // don't reload data if changes was in this tab
         }];
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseACtion style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;

@@ -18,12 +18,12 @@
 
 @property (nonatomic, strong) OMMTaskService *taskService;
 @property (nonatomic, strong) NSMutableArray *tasksGroupArray;
+@property (assign, nonatomic) BOOL taskListWasModified;
 
 @end
 
 
 @implementation OMMToDoListTableViewController
-
 
 #pragma mark - constants
 
@@ -58,9 +58,18 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.taskListWasModified) {
+        self.tasksGroupArray = [self.taskService.tasksGroupsArray mutableCopy];
+        [self.tableView reloadData];
+        self.taskListWasModified = NO;
+        NSLog(@"Data was reloaded in today tab");
+    }
+}
+
 - (void)triggerTaskListWasModify {
-    self.tasksGroupArray = [self.taskService.tasksGroupsArray mutableCopy];
-    [self.tableView reloadData];
+    self.taskListWasModified = YES;
+    NSLog(@"Data was changed. TRIGGER");
 }
 
 
@@ -176,8 +185,9 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMToDoListDeleteTitleForEditingAction style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self.tasksGroupArray removeObjectAtIndex:(indexPath.row - 1)];
             [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:YES];
-            tableView.editing = NO;
             [self.taskService removeTasksGroup:taskGroup];
+            self.taskListWasModified = NO;
+            tableView.editing = NO;
         }];
         
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMToDoListCloseTitleForEditingAction style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

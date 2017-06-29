@@ -21,6 +21,7 @@
 
 @property (assign, nonatomic, getter=isTasksArrayDirectionReverse) BOOL taskArrayDirection;
 @property (strong, nonatomic) UISegmentedControl *sortByGroupsOrDateSegmentControl;
+@property (assign, nonatomic) BOOL taskListWasModified;
 
 @end
 
@@ -67,19 +68,27 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     [self prepareDataForTableView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.taskListWasModified) {
+        [self prepareDataForTableView];
+        [self sortAllTaskByDate];
+        if (self.isTasksArrayDirectionReverse) { // If tableView was reverse then reverse updated tableview
+            [self revertButtonPressed:nil];
+            self.taskListWasModified = NO;
+        }
+        [self.tableView reloadData];
+        NSLog(@"Data was reloaded in today tab");
+    }
 }
 
 
 #pragma mark - methods
 
 - (void)triggerTaskListWasModify {
-    [self prepareDataForTableView];
-    [self sortAllTaskByDate];
-    if (self.isTasksArrayDirectionReverse) { // If tableView was reverse then reverse updated tableview
-        [self revertButtonPressed:nil];
-    }
-    [self.tableView reloadData];
+    self.taskListWasModified = YES;
+    NSLog(@"Data was changed. TRIGGER");
 }
 
 - (void)prepareDataForTableView {
@@ -147,7 +156,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
             NSMutableArray *array = [[NSMutableArray alloc] init];
             [array addObject:tasksSortedByStartDate[i]];
             [self.allTasksSortedByDateInArrays addObject:array];
-        } else if ([[[tasksSortedByStartDate[i] valueForKey:OMMInboxStartDateTasksProperty] convertToStringForCompareDate] isEqual:[[tasksSortedByStartDate[i-1] valueForKey:OMMInboxStartDateTasksProperty] convertToStringForCompareDate]]) {
+        } else if ([[[tasksSortedByStartDate[i] valueForKey:OMMInboxStartDateTasksProperty] convertToStringForCompareDate] isEqual:[[tasksSortedByStartDate[i-1] valueForKeyPath:OMMInboxStartDateTasksProperty] convertToStringForCompareDate]]) {
             [[self.allTasksSortedByDateInArrays lastObject] addObject:tasksSortedByStartDate[i]];
         } else {
             NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -164,9 +173,8 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
         return 0;
-    } else {
-        return 50.f;
     }
+    return 50.f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -275,6 +283,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [task setClosed:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+        self.taskListWasModified = NO;
         tableView.editing = NO;
     }];
     
@@ -283,12 +292,26 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMInboxAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMInboxDeleteButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-                [taskGroup.tasksArray removeObject:task];
+                
+                // Delete task in all groups with animations
+                for (NSInteger i = 0; i < self.tasksGroupsArray.count; i++) {
+                    OMMTasksGroup *checkTaskGroup = [self.tasksGroupsArray objectAtIndex:i];
+                    if ([checkTaskGroup.tasksArray containsObject:task]) {
+                        NSInteger j = [checkTaskGroup.tasksArray indexOfObject:task];
+                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
+                        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                }
+                [self.allTasksSortedByDateInArrays removeObject:task]; // and delete this task from allTasksSortedByDateInArrays
+                [self sortAllTaskByDate]; // reload allTasksSortedByDateInArrays
+                
             } else {
                 [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
+                [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
             }
-            [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
+            
             [self.taskService removeTask:task];
+            self.taskListWasModified = NO;
         }];
         
         // cancel button close alert and stop editing

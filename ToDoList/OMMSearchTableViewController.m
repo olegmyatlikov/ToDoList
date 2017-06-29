@@ -16,14 +16,15 @@
 @property (strong, nonatomic) OMMTaskService *taskService;
 @property (nonatomic, strong) NSArray *resultTaskArray;
 @property (nonatomic, strong) UISearchController *searchController;
+@property (assign, nonatomic) BOOL taskListWasModified;
 
 @property (nonatomic, strong) NSPredicate *activeTasksPredicate;
 @property (nonatomic, strong) NSPredicate *closedTasksPredicate;
 
 @end
 
-@implementation OMMSearchTableViewController
 
+@implementation OMMSearchTableViewController
 
 #pragma mark - constants
 
@@ -63,6 +64,16 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.taskListWasModified) {
+        self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
+        self.searchController.searchBar.text = OMMsearchClearText;
+        [self.tableView reloadData];
+        self.taskListWasModified = NO;
+        NSLog(@"Data was reloaded in today tab");
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.searchController.searchBar becomeFirstResponder];
@@ -72,9 +83,8 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 #pragma mark - methods
 
 - (void)triggerTaskListWasModify {
-    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
-    self.searchController.searchBar.text = OMMsearchClearText;
-    [self.tableView reloadData];
+    self.taskListWasModified = YES;
+    NSLog(@"Data was changed. TRIGGER");
 }
 
 - (NSArray *)filterArrayUsingSelectScopeButton:(NSArray *)array {
