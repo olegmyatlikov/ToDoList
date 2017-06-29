@@ -15,7 +15,6 @@
 
 @interface OMMTodayTableViewController ()
 
-@property (strong, nonatomic) OMMTaskService *taskService;
 @property (strong, nonatomic) NSMutableArray *allTodayTasks;
 @property (strong, nonatomic) NSMutableArray *openTasksArray;
 @property (strong, nonatomic) NSMutableArray *closeTaskArray;
@@ -45,8 +44,6 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.taskService = [OMMTaskService sharedInstance];
     [self prepareDataForTableView];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -65,7 +62,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
 #pragma mark - methods
 
 - (void)prepareDataForTableView {
-    self.allTodayTasks = [self allTodayTasksInTasksArray:self.taskService.allTasksArray];
+    self.allTodayTasks = [self allTodayTasksInTasksArray:[OMMTaskService sharedInstance].allTasksArray];
     self.openTasksArray = [self allOpenTasksInArray:self.allTodayTasks];
     self.closeTaskArray = [self allCloseTasksInArray:self.allTodayTasks];
 }
@@ -198,7 +195,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
                 [self.closeTaskArray removeObject:taskForDelete];
             }
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-            [self.taskService removeTask:taskForDelete];
+            [[OMMTaskService sharedInstance] removeTask:taskForDelete];
             self.taskListWasModified = NO; // don't reload data if changes was in this tab
         }];
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseACtion style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

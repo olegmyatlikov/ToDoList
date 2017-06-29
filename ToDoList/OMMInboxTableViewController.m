@@ -15,7 +15,6 @@
 
 @interface OMMInboxTableViewController ()
 
-@property (strong, nonatomic) OMMTaskService *taskService;
 @property (strong, nonatomic) NSMutableArray *tasksGroupsArray;
 @property (strong, nonatomic) NSMutableArray *allTasksSortedByDateInArrays;
 
@@ -74,9 +73,9 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
         [self sortAllTaskByDate];
         if (self.taskArrayDirectionReverse) { // If tableView was reverse then reverse updated tableview
             [self revertButtonPressed:nil];
-            self.taskListWasModified = NO;
         }
         [self.tableView reloadData];
+        self.taskListWasModified = NO;
         NSLog(@"Data was reloaded in today tab");
     }
 }
@@ -91,10 +90,9 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
 - (void)prepareDataForTableView {
     // check - if we came here from toDoList show only one group tasks
-    self.taskService = [OMMTaskService sharedInstance];
     if (!self.tasksGroup) {
-        self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
-        [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
+        self.tasksGroupsArray = [[OMMTaskService sharedInstance].tasksGroupsArray mutableCopy];
+        [self.tasksGroupsArray insertObject:[OMMTaskService sharedInstance].inboxTasksGroup atIndex:0];
     } else {
         [self.tasksGroupsArray removeAllObjects];
         [self.tasksGroupsArray addObject:self.tasksGroup];
@@ -112,7 +110,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     if (self.tasksGroupsArray.count == 1) { // if we in the group then send this group and add new task in it
         taskDetails.taskGroup = self.tasksGroupsArray[0];
     } else { // else add task in inbox group
-        taskDetails.taskGroup = self.taskService.inboxTasksGroup;
+        taskDetails.taskGroup = [OMMTaskService sharedInstance].inboxTasksGroup;
     }
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
@@ -131,7 +129,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     [self.tasksGroupsArray removeObjectAtIndex:0];
     NSArray *reverceArray = [[self.tasksGroupsArray reverseObjectEnumerator] allObjects];
     self.tasksGroupsArray = [reverceArray mutableCopy];
-    [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
+    [self.tasksGroupsArray insertObject:[OMMTaskService sharedInstance].inboxTasksGroup atIndex:0];
 
     // revert task witch sorted by date
     NSMutableArray *reverceTaskArray = [[NSMutableArray alloc] init];
@@ -148,7 +146,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     self.allTasksSortedByDateInArrays = [[NSMutableArray alloc] init];
     NSSortDescriptor *sortByDateDescriptor = [[NSSortDescriptor alloc] initWithKey:OMMInboxStartDateTasksProperty ascending:YES];
     NSArray *sortDescriptorsArray = @[sortByDateDescriptor];
-    NSArray *tasksSortedByStartDate = [self.taskService.allTasksArray sortedArrayUsingDescriptors:sortDescriptorsArray];
+    NSArray *tasksSortedByStartDate = [[OMMTaskService sharedInstance].allTasksArray sortedArrayUsingDescriptors:sortDescriptorsArray];
     
     for (int i = 0; i < tasksSortedByStartDate.count; i++) {
         if (i == 0) {
@@ -193,15 +191,15 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     
     // move row in inbox section
     if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section && self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-        OMMTask *task = [self.taskService.inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
-        [self.taskService.inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
-        [self.taskService.inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
+        OMMTask *task = [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
+        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
+        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
         
     // move row in group but only on it section
     } else if (sourceIndexPath.section == destinationIndexPath.section) {
-        OMMTask *task = [[[self.taskService.tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] objectAtIndex:sourceIndexPath.row];
-        [[[self.taskService.tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] removeObjectAtIndex:sourceIndexPath.row];
-        [[[self.taskService.tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] insertObject:task atIndex:destinationIndexPath.row];
+        OMMTask *task = [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] objectAtIndex:sourceIndexPath.row];
+        [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] removeObjectAtIndex:sourceIndexPath.row];
+        [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] insertObject:task atIndex:destinationIndexPath.row];
     }
     
     [tableView reloadData];
@@ -305,7 +303,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
                 [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
             }
             
-            [self.taskService removeTask:task];
+            [[OMMTaskService sharedInstance] removeTask:task];
             self.taskListWasModified = NO;
         }];
         

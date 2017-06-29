@@ -13,7 +13,6 @@
 
 @interface OMMSearchTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
 
-@property (strong, nonatomic) OMMTaskService *taskService;
 @property (nonatomic, strong) NSArray *resultTaskArray;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (assign, nonatomic) BOOL taskListWasModified;
@@ -44,11 +43,10 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.taskService = [OMMTaskService sharedInstance];
     self.activeTasksPredicate = [NSPredicate predicateWithFormat:OMMsearchTaskIsOpen];
     self.closedTasksPredicate = [NSPredicate predicateWithFormat:OMMsearchTaskIsClosed];
     
-    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
+    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:[OMMTaskService sharedInstance].allTasksArray];
     
     //setup the search controller
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
@@ -66,7 +64,7 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 
 - (void)viewWillAppear:(BOOL)animated {
     if (self.taskListWasModified) {
-        self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
+        self.resultTaskArray = [self filterArrayUsingSelectScopeButton:[OMMTaskService sharedInstance].allTasksArray];
         self.searchController.searchBar.text = OMMsearchClearText;
         [self.tableView reloadData];
         self.taskListWasModified = NO;
@@ -138,7 +136,7 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
+    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:[OMMTaskService sharedInstance].allTasksArray];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     if (searchText.length != 0) {
@@ -168,16 +166,16 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     if (selectedScope == 0) {
-        self.resultTaskArray = [self.taskService.allTasksArray filteredArrayUsingPredicate:self.activeTasksPredicate];
+        self.resultTaskArray = [[OMMTaskService sharedInstance].allTasksArray filteredArrayUsingPredicate:self.activeTasksPredicate];
     } else {
-        self.resultTaskArray = [self.taskService.allTasksArray filteredArrayUsingPredicate:self.closedTasksPredicate];
+        self.resultTaskArray = [[OMMTaskService sharedInstance].allTasksArray filteredArrayUsingPredicate:self.closedTasksPredicate];
     }
     [self.tableView reloadData];
     self.searchController.searchBar.text = OMMsearchClearText;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:self.taskService.allTasksArray];
+    self.resultTaskArray = [self filterArrayUsingSelectScopeButton:[OMMTaskService sharedInstance].allTasksArray];
 }
 
 
