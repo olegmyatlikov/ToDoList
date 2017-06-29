@@ -135,17 +135,16 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return OMMTodayVCEmptyTitleForSectionsHeader;
-    } else {
-        return OMMTodayVCSectionHeaderTitleComplited;
     }
+    return OMMTodayVCSectionHeaderTitleComplited;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return self.openTasksArray.count;
-    } else {
-        return self.closeTaskArray.count;
     }
+    return self.closeTaskArray.count;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -213,10 +212,8 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
     
     if (indexPath.section == 0) {
         return @[deleteAction, doneAction];
-    } else {
-        return @[deleteAction];
     }
-    
+    return @[deleteAction];
 }
 
 

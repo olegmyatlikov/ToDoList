@@ -210,6 +210,7 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
 
 - (void)setDateFromDatePickerVC:(OMMDatepickerViewController *)datePickerVC date:(NSString *)date {
     self.startDateLabel.text = date;
+    [self showTabBar];
 }
 
 - (void)showTabBar {

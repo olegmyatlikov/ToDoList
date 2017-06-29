@@ -153,15 +153,15 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
     if (self.resultTaskArray.count > 0) {
         self.tableView.backgroundView = nil;
         return 1;
-    } else {
-        UILabel *noResultLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        noResultLabel.text = OMMsearchNoResultText;
-        [noResultLabel setFont:[UIFont systemFontOfSize:24 weight:normal]];
-        noResultLabel.textColor = [UIColor lightGrayColor];
-        noResultLabel.textAlignment = NSTextAlignmentCenter;
-        self.tableView.backgroundView = noResultLabel;
-        return 0;
     }
+    UILabel *noResultLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    noResultLabel.text = OMMsearchNoResultText;
+    [noResultLabel setFont:[UIFont systemFontOfSize:24 weight:normal]];
+    noResultLabel.textColor = [UIColor lightGrayColor];
+    noResultLabel.textAlignment = NSTextAlignmentCenter;
+    self.tableView.backgroundView = noResultLabel;
+    return 0;
+
 }
 
 // select scope another button

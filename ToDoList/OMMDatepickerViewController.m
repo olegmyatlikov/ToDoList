@@ -49,13 +49,11 @@
 
 - (IBAction)setDateButton:(UIButton *)sender {
     [self.delegate setDateFromDatePickerVC:self date:self.selectedDateLabel.text];
-    [self.delegate showTabBar];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)doneButtonPressed {
     [self.delegate setDateFromDatePickerVC:self date:self.selectedDateLabel.text];
-    [self.delegate showTabBar];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

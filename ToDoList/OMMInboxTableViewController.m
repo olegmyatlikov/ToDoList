@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *tasksGroupsArray;
 @property (strong, nonatomic) NSMutableArray *allTasksSortedByDateInArrays;
 
-@property (assign, nonatomic, getter=isTasksArrayDirectionReverse) BOOL taskArrayDirection;
+@property (assign, nonatomic) BOOL taskArrayDirectionReverse;
 @property (strong, nonatomic) UISegmentedControl *sortByGroupsOrDateSegmentControl;
 @property (assign, nonatomic) BOOL taskListWasModified;
 
@@ -48,10 +48,8 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.taskService = [OMMTaskService sharedInstance];
+
     self.tasksGroupsArray = [[NSMutableArray alloc] init];
-    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
@@ -74,7 +72,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     if (self.taskListWasModified) {
         [self prepareDataForTableView];
         [self sortAllTaskByDate];
-        if (self.isTasksArrayDirectionReverse) { // If tableView was reverse then reverse updated tableview
+        if (self.taskArrayDirectionReverse) { // If tableView was reverse then reverse updated tableview
             [self revertButtonPressed:nil];
             self.taskListWasModified = NO;
         }
@@ -93,6 +91,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
 - (void)prepareDataForTableView {
     // check - if we came here from toDoList show only one group tasks
+    self.taskService = [OMMTaskService sharedInstance];
     if (!self.tasksGroup) {
         self.tasksGroupsArray = [self.taskService.tasksGroupsArray mutableCopy];
         [self.tasksGroupsArray insertObject:self.taskService.inboxTasksGroup atIndex:0];
@@ -141,7 +140,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     }
     self.allTasksSortedByDateInArrays = reverceTaskArray;
 
-    self.taskArrayDirection = (self.isTasksArrayDirectionReverse) ? NO : YES; // save direction condition
+    self.taskArrayDirectionReverse = (self.taskArrayDirectionReverse) ? NO : YES; // save direction condition
     [self.tableView reloadData];
 }
 
@@ -214,30 +213,26 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
         return self.tasksGroupsArray.count;
-    } else {
-        return self.allTasksSortedByDateInArrays.count;
     }
+    return self.allTasksSortedByDateInArrays.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
         OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:section];
         return taskGroup.groupName;
-    } else {
-        OMMTask *task = [[self.allTasksSortedByDateInArrays objectAtIndex:section] objectAtIndex:0];
-        return [task.startDate convertToStringForCompareDate];
     }
     
+    OMMTask *task = [[self.allTasksSortedByDateInArrays objectAtIndex:section] objectAtIndex:0];
+    return [task.startDate convertToStringForCompareDate];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
         OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:section];
         return taskGroup.tasksArray.count;
-    } else {
-        return [[self.allTasksSortedByDateInArrays objectAtIndex:section] count];
     }
-    
+    return [[self.allTasksSortedByDateInArrays objectAtIndex:section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -328,9 +323,8 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     // if task closed show only delete button
     if (task.isClosed) {
         return @[deleteAction];
-    } else {
-        return @[deleteAction, doneAction];
-    }
+    } 
+    return @[deleteAction, doneAction];
 }
 
 

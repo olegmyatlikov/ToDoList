@@ -83,9 +83,8 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return 25.f;
-    } else {
-        return 50.f;
     }
+    return 50.f;
 }
 
 
@@ -102,9 +101,8 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
-    } else {
-        return self.tasksGroupArray.count + 1; // +1 - "greate new group" row
     }
+    return self.tasksGroupArray.count + 1; // +1 - "greate new group" row
 }
 
 
@@ -144,9 +142,8 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 || (indexPath.section == 1 && indexPath.row == 0)) { // disallow edit inbox and "greate new group"  rows
         return NO;
-    } else {
-        return YES;
-    }
+    } 
+    return YES;
 }
 
 
