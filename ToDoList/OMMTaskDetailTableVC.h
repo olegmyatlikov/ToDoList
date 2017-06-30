@@ -17,7 +17,7 @@
 @property (strong, nonatomic) OMMTask *task;
 @property (strong, nonatomic) OMMTasksGroup *taskGroup;
 
-- (void)setDateFromDatePickerVC:(OMMDatepickerViewController *)datePickerVC date:(NSString *)date;
-- (void)showTabBar;
+- (void)viewControllerDidDoneAction:(OMMDatepickerViewController *)sender;
+- (void)viewControllerDidCancelAction:(OMMDatepickerViewController *)sender;
 
 @end

@@ -12,7 +12,6 @@
 @interface OMMDatepickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UILabel *selectedDateLabel;
 
 @end
 
@@ -47,19 +46,12 @@
     self.selectedDateLabel.text = [self.datePicker.date convertDateToLongDateString];
 }
 
-- (IBAction)setDateButton:(UIButton *)sender {
-    [self.delegate setDateFromDatePickerVC:self date:self.selectedDateLabel.text];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)doneButtonPressed {
-    [self.delegate setDateFromDatePickerVC:self date:self.selectedDateLabel.text];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate viewControllerDidDoneAction:self];
 }
 
 - (void)cancelButtonPressed {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.delegate showTabBar];
+    [self.delegate viewControllerDidCancelAction:self];
 }
 
 @end

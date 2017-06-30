@@ -33,6 +33,7 @@
 
 #pragma mark - constants 
 
+NSString * const OMMTaskDetailTaskWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMTaskDetailVCSetDateLabelText = @"set date";
 static NSString * const OMMTaskDetailVCNoneLabelText = @"none";
 static NSString * const OMMTaskDetailVCSaveButtonTitle = @"Save";
@@ -97,6 +98,7 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
             editTask.note = self.taskNotesTextView.text;
             editTask.priority = self.priority;
             editTask.enableRemainder = [self.remaindSwitcher isOn];
+            [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskDetailTaskWasModifyNotification object:self];
         } else {
             OMMTaskService *taskService = [OMMTaskService sharedInstance];
             OMMTask *newTask = [taskService createTaskWithName:self.taskNameTextField.text
@@ -210,13 +212,15 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
 
 #pragma mark - protocol methods
 
-- (void)setDateFromDatePickerVC:(OMMDatepickerViewController *)datePickerVC date:(NSString *)date {
-    self.startDateLabel.text = date;
-    [self showTabBar];
+- (void)viewControllerDidDoneAction:(OMMDatepickerViewController *)sender {
+    self.startDateLabel.text = sender.selectedDateLabel.text;
+    [self.tabBarController.tabBar setHidden:NO];
+    [sender.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)showTabBar {
+- (void)viewControllerDidCancelAction:(OMMDatepickerViewController *)sender {
     [self.tabBarController.tabBar setHidden:NO];
+    [sender.navigationController popViewControllerAnimated:YES];
 }
 
 

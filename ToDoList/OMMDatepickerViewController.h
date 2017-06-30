@@ -13,6 +13,7 @@
 
 @interface OMMDatepickerViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *selectedDateLabel;
 @property (strong, nonatomic) NSDate *selectedDate;
 @property (strong, nonatomic) NSDate *startDate;
 @property (weak, nonatomic) id <OMMDatepickerViewControllerDelegate> delegate;
@@ -22,8 +23,8 @@
 
 @protocol OMMDatepickerViewControllerDelegate <NSObject>
 
-- (void)setDateFromDatePickerVC:(OMMDatepickerViewController *)datePickerVC date:(NSString *)date;
-- (void)showTabBar;
+- (void)viewControllerDidDoneAction:(OMMDatepickerViewController *)sender;
+- (void)viewControllerDidCancelAction:(id)sender;
 
 @end
 
