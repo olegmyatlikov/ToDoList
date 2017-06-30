@@ -125,6 +125,7 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
     OMMTask *task = [self.resultTaskArray objectAtIndex:indexPath.row];
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:OMMSearchTaskDetailVCIndentifair];
     taskDetails.task = task;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
 

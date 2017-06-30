@@ -227,6 +227,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
         taskDetails.task = closedTask;
     }
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
 

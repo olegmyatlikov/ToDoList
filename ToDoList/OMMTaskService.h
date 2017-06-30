@@ -20,7 +20,7 @@ extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 
 + (instancetype)sharedInstance;
 
-- (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(TaskPriority)priority enableRemainder:(BOOL)remainder;
+- (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(OMMTaskPriority)priority enableRemainder:(BOOL)remainder;
 - (OMMTasksGroup *)createTasksGroup:(NSString *)groupName;
 
 - (void)addTaskGroup:(OMMTasksGroup *)taskGroup;

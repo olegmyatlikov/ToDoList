@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *priorityCell;
 
 @property (assign, nonatomic) BOOL enableRemainder;
-@property (assign, nonatomic) TaskPriority priority;
+//@property (assign, nonatomic) TaskPriority priority;
+@property (assign, nonatomic) OMMTaskPriority priority;
 @property (strong, nonatomic) UIBarButtonItem *saveTaskButton;
 
 @end
@@ -52,12 +53,13 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
         self.taskNameTextField.text = self.task.name;
         self.startDateLabel.text = [self.task.startDate convertDateToLongDateString];
         [self.remaindSwitcher setOn:self.task.enableRemainder];
-        self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
+//        self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
+        self.priorityLabel.text = OMMTaskPriorityString[self.task.priority];
         self.taskNotesTextView.text = self.task.note;
     } else {
         self.startDateLabel.text = OMMTaskDetailVCSetDateLabelText;
         self.priorityLabel.text = OMMTaskDetailVCNoneLabelText;
-        self.priority = none;
+        self.priority = OMMTaskPriorityNone;
     }
     
     self.saveTaskButton = [[UIBarButtonItem alloc] initWithTitle:OMMTaskDetailVCSaveButtonTitle style:UIBarButtonItemStyleDone target:self action:@selector(saveTaskButtonPressed)];
@@ -100,7 +102,7 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
             OMMTask *newTask = [taskService createTaskWithName:self.taskNameTextField.text
                                                         startDate:[NSDate convertStringToDate:self.startDateLabel.text]
                                                             notes:self.taskNotesTextView.text
-                                                         priority:self.priority
+                                                        priority:self.priority
                                                   enableRemainder:[self.remaindSwitcher isOn]];
             [taskService addTask:newTask toTaskGroup:self.taskGroup]; // task service save task and push notification to all tabs
         }
@@ -146,21 +148,21 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
 - (void)openPriorityAlertActionSheet {
     UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:OMMTaskDetailVCSelectPriorityAlertTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:OMMTaskPriorityNone style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityLow;
-        self.priority = none;
+    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityNone] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityNone];
+        self.priority = OMMTaskPriorityNone;
     }];
-    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityLow style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityLow;
-        self.priority = low;
+    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityLow] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityLow];
+        self.priority = OMMTaskPriorityLow;
     }];
-    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityMedium style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityMedium;
-        self.priority = medium;
+    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityMedium] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityMedium];
+        self.priority = OMMTaskPriorityMedium;
     }];
-    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityHigh style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityHigh;
-        self.priority = high;
+    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityHigh] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityHigh];
+        self.priority = OMMTaskPriorityHigh;
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:OMMTaskDetailVCOkAlertPriorityActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];
     

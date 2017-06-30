@@ -225,6 +225,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
     
     // push to inboxVC with group witch we chosed 
     taskGroupVC.navigationItem.title = [NSString stringWithFormat:@"%@ group", taskGroupVC.tasksGroup.groupName];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:pushingVC animated:YES];
 }
 

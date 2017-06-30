@@ -341,6 +341,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     }
 
     taskDetails.task = task;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:taskDetails animated:YES]; // go to the edit task VC
 }
 
