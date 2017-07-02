@@ -157,7 +157,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
         UIAlertAction *saveAction = [UIAlertAction actionWithTitle:OMMToDoListSaveButtonInRenameAlert style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (renameAvlertVC.textFields.count > 0) {
                 UITextField *textField = [renameAvlertVC.textFields firstObject];
-                taskGroup.groupName = textField.text;
+                [[OMMTaskService sharedInstance] renameTasksGroup:taskGroup to:textField.text];
                 self.tableView.editing = NO;
                 [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:YES];
             }

@@ -17,16 +17,24 @@ extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 @property (nonatomic, strong, readonly) NSArray *tasksGroupsArray;
 @property (nonatomic, strong, readonly) NSArray *allTasksArray;
 @property (nonatomic, strong) OMMTasksGroup *inboxTasksGroup;
+@property (nonatomic, strong, readonly) NSString *appDataFilePath;
 
 + (instancetype)sharedInstance;
 
 - (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(OMMTaskPriority)priority enableRemainder:(BOOL)remainder;
 - (OMMTasksGroup *)createTasksGroup:(NSString *)groupName;
 
-- (void)addTaskGroup:(OMMTasksGroup *)taskGroup;
+
 - (void)addTask:(OMMTask *)task;
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup;
-- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup;
 - (void)removeTask:(OMMTask *)task;
+- (void)closeTask:(OMMTask *)task;
+- (void)updateTask:(OMMTask *)task  name:(NSString *)changedName taskStartDate:(NSDate *)changedDate taskNotes:(NSString *)changedTaskNotes taskPriority:(OMMTaskPriority)changedPriority enableRemainder:(BOOL)changedRemainder;
+- (void)addTaskGroup:(OMMTasksGroup *)taskGroup;
+- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup;
+- (void)renameTasksGroup:(OMMTasksGroup *)taskGroup to:(NSString *)newName;
+
+- (void)updateDataFromFile:(OMMTaskService *)data;
+- (void)saveData;
 
 @end

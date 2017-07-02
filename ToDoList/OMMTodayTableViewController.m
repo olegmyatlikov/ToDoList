@@ -172,7 +172,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMTodayVCDoneAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         
         OMMTask *task = [self.openTasksArray objectAtIndex:indexPath.row];
-        [task setClosed:YES];
+        [[OMMTaskService sharedInstance] closeTask:task];
         [self.openTasksArray removeObject:task];
         [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationBottom];
         [self.closeTaskArray addObject:task];

@@ -12,6 +12,7 @@
 @interface OMMTaskService()
 
 @property (nonatomic, strong) NSMutableArray *privateTaskGroupsArray;
+@property (nonatomic, strong, readwrite) NSString *appDataFilePath;
 
 @end
 
@@ -20,65 +21,24 @@
 
 NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
+static NSString * const OMMTaskServiceDataFilePath = @"appData";
 
 
 #pragma mark - init service
 
-//- (instancetype)init {
-//    self = [super init];
-//    if (self) {
-//        OMMTasksGroup *taskGroup1 = [self createTasksGroup:@"General"];
-//        OMMTask *task1 = [self createTaskWithName:@"task1"
-//                                                  startDate:[NSDate convertStringToDate:@"22-07-2017 10:30"]
-//                                                      notes:@"some task1 notes"
-//                                                   priority:OMMTaskPriorityNone
-//                                            enableRemainder:YES];
-//        [self addTask:task1 toTaskGroup:taskGroup1];
-//        
-//        OMMTask *task2 = [self createTaskWithName:@"task2"
-//                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
-//                                                      notes:@"some task2 notes"
-//                                                   priority:OMMTaskPriorityNone
-//                                            enableRemainder:YES];
-//        task2.closed = YES;
-//        [self addTask:task2 toTaskGroup:taskGroup1];
-//        
-//        OMMTask *task3 = [self createTaskWithName:@"task3"
-//                                                  startDate:[NSDate date]
-//                                                      notes:@"some task3 notes"
-//                                                   priority:OMMTaskPriorityNone
-//                                            enableRemainder:YES];
-//        [self addTask:task3 toTaskGroup:taskGroup1];
-//        
-//        
-//        OMMTasksGroup *taskGroup2 = [self createTasksGroup:@"Another"];
-//        OMMTask *task4 = [self createTaskWithName:@"task4"
-//                                                  startDate:[NSDate date]
-//                                                      notes:@"some task4 notes"
-//                                                   priority:OMMTaskPriorityNone
-//                                            enableRemainder:YES];
-//        task4.closed = YES;
-//        [self addTask:task4 toTaskGroup:taskGroup2];
-//        
-//        OMMTask *task5 = [self createTaskWithName:@"task5"
-//                                                  startDate:[NSDate date]
-//                                                      notes:@"some task5 notes"
-//                                                   priority:OMMTaskPriorityNone
-//                                            enableRemainder:YES];
-//        [self addTask:task5 toTaskGroup:taskGroup2];
-//        
-//        [self addTaskGroup:taskGroup1];
-//        [self addTaskGroup:taskGroup2];
-//        
-//        _inboxTasksGroup = [[OMMTasksGroup alloc] init];
-//        _inboxTasksGroup.groupName = OMMTaskServiceNameTaskGroupInbox;
-//        _inboxTasksGroup.tasksArray = [[NSMutableArray alloc] init];
-//        [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup1.tasksArray];
-//        [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup2.tasksArray];
-//    }
-//    
-//    return self;
-//}
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        _appDataFilePath = [path stringByAppendingPathComponent:OMMTaskServiceDataFilePath];
+        
+        _inboxTasksGroup = [[OMMTasksGroup alloc] init];
+        _inboxTasksGroup.groupName = OMMTaskServiceNameTaskGroupInbox;
+        _inboxTasksGroup.tasksArray = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
 
 #pragma mark - coding protocol methods
 
@@ -87,13 +47,14 @@ static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
     if (!self) {
         return nil;
     }
-    self.inboxTasksGroup = [[OMMTasksGroup alloc] init];
     self.privateTaskGroupsArray = [aDecoder decodeObjectForKey:@"taskGroupArray"];
+    self.inboxTasksGroup = [aDecoder decodeObjectForKey:@"inboxTasksGroup"];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.privateTaskGroupsArray forKey:@"taskGroupArray"];
+    [aCoder encodeObject:self.inboxTasksGroup forKey:@"inboxTasksGroup"];
 }
 
 + (instancetype)sharedInstance {
@@ -129,15 +90,18 @@ static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
 
 - (void)addTaskGroup:(OMMTasksGroup *)taskGroup {
     [self.privateTaskGroupsArray addObject:taskGroup];
+    [self saveData];
 }
 
 - (void)insertTaskGroup:(OMMTasksGroup *)taskGroup atIndex:(NSInteger)index {
     [self.privateTaskGroupsArray insertObject:taskGroup atIndex:index];
+    [self saveData];
 }
 
 - (void)addTask:(OMMTask *)task {
     [self.inboxTasksGroup.tasksArray addObject:task];
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+    [self saveData];
 }
 
 - (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
@@ -149,14 +113,7 @@ static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
     }
     [taskGroup.tasksArray addObject:task];
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-}
-
-- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
-    for (OMMTask *task in tasksGroup.tasksArray) {
-        [self.inboxTasksGroup.tasksArray removeObject:task];
-    }
-    [self.privateTaskGroupsArray removeObject:tasksGroup];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+    [self saveData];
 }
 
 - (void)removeTask:(OMMTask *)task {
@@ -165,6 +122,45 @@ static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
         [array removeObject:task];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+    [self saveData];
+}
+
+- (void)closeTask:(OMMTask *)task {
+    task.closed = YES;
+    [self saveData];
+}
+
+- (void)updateTask:(OMMTask *)task  name:(NSString *)changedName taskStartDate:(NSDate *)changedDate taskNotes:(NSString *)changedTaskNotes taskPriority:(OMMTaskPriority)changedPriority enableRemainder:(BOOL)changedRemainder {
+    task.name = changedName;
+    task.startDate = changedDate;
+    task.note = changedTaskNotes;
+    task.priority = changedPriority;
+    task.enableRemainder = changedRemainder;
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+    [self saveData];
+}
+
+- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
+    for (OMMTask *task in tasksGroup.tasksArray) {
+        [self.inboxTasksGroup.tasksArray removeObject:task];
+    }
+    [self.privateTaskGroupsArray removeObject:tasksGroup];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+    [self saveData];
+}
+
+- (void)renameTasksGroup:(OMMTasksGroup *)taskGroup to:(NSString *)newName{
+    taskGroup.groupName = newName;
+    [self saveData];
+}
+
+- (void)updateDataFromFile:(OMMTaskService *)data {
+    self.privateTaskGroupsArray = [data.tasksGroupsArray mutableCopy];
+    self.inboxTasksGroup = data.inboxTasksGroup;
+}
+
+- (void)saveData {
+    [NSKeyedArchiver archiveRootObject:self toFile:self.appDataFilePath];
 }
 
 
