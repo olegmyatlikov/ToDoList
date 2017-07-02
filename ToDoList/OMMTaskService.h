@@ -12,7 +12,7 @@
 
 extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 
-@interface OMMTaskService : NSObject
+@interface OMMTaskService : NSObject <NSCoding>
 
 @property (nonatomic, strong, readonly) NSArray *tasksGroupsArray;
 @property (nonatomic, strong, readonly) NSArray *allTasksArray;

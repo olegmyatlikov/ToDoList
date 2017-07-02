@@ -24,60 +24,76 @@ static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
 
 #pragma mark - init service
 
-- (instancetype)init {
+//- (instancetype)init {
+//    self = [super init];
+//    if (self) {
+//        OMMTasksGroup *taskGroup1 = [self createTasksGroup:@"General"];
+//        OMMTask *task1 = [self createTaskWithName:@"task1"
+//                                                  startDate:[NSDate convertStringToDate:@"22-07-2017 10:30"]
+//                                                      notes:@"some task1 notes"
+//                                                   priority:OMMTaskPriorityNone
+//                                            enableRemainder:YES];
+//        [self addTask:task1 toTaskGroup:taskGroup1];
+//        
+//        OMMTask *task2 = [self createTaskWithName:@"task2"
+//                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
+//                                                      notes:@"some task2 notes"
+//                                                   priority:OMMTaskPriorityNone
+//                                            enableRemainder:YES];
+//        task2.closed = YES;
+//        [self addTask:task2 toTaskGroup:taskGroup1];
+//        
+//        OMMTask *task3 = [self createTaskWithName:@"task3"
+//                                                  startDate:[NSDate date]
+//                                                      notes:@"some task3 notes"
+//                                                   priority:OMMTaskPriorityNone
+//                                            enableRemainder:YES];
+//        [self addTask:task3 toTaskGroup:taskGroup1];
+//        
+//        
+//        OMMTasksGroup *taskGroup2 = [self createTasksGroup:@"Another"];
+//        OMMTask *task4 = [self createTaskWithName:@"task4"
+//                                                  startDate:[NSDate date]
+//                                                      notes:@"some task4 notes"
+//                                                   priority:OMMTaskPriorityNone
+//                                            enableRemainder:YES];
+//        task4.closed = YES;
+//        [self addTask:task4 toTaskGroup:taskGroup2];
+//        
+//        OMMTask *task5 = [self createTaskWithName:@"task5"
+//                                                  startDate:[NSDate date]
+//                                                      notes:@"some task5 notes"
+//                                                   priority:OMMTaskPriorityNone
+//                                            enableRemainder:YES];
+//        [self addTask:task5 toTaskGroup:taskGroup2];
+//        
+//        [self addTaskGroup:taskGroup1];
+//        [self addTaskGroup:taskGroup2];
+//        
+//        _inboxTasksGroup = [[OMMTasksGroup alloc] init];
+//        _inboxTasksGroup.groupName = OMMTaskServiceNameTaskGroupInbox;
+//        _inboxTasksGroup.tasksArray = [[NSMutableArray alloc] init];
+//        [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup1.tasksArray];
+//        [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup2.tasksArray];
+//    }
+//    
+//    return self;
+//}
+
+#pragma mark - coding protocol methods
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
-    if (self) {
-        OMMTasksGroup *taskGroup1 = [self createTasksGroup:@"General"];
-        OMMTask *task1 = [self createTaskWithName:@"task1"
-                                                  startDate:[NSDate convertStringToDate:@"22-07-2017 10:30"]
-                                                      notes:@"some task1 notes"
-                                                   priority:OMMTaskPriorityNone
-                                            enableRemainder:YES];
-        [self addTask:task1 toTaskGroup:taskGroup1];
-        
-        OMMTask *task2 = [self createTaskWithName:@"task2"
-                                                  startDate:[NSDate convertStringToDate:@"10-07-2017 10:30"]
-                                                      notes:@"some task2 notes"
-                                                   priority:OMMTaskPriorityNone
-                                            enableRemainder:YES];
-        task2.closed = YES;
-        [self addTask:task2 toTaskGroup:taskGroup1];
-        
-        OMMTask *task3 = [self createTaskWithName:@"task3"
-                                                  startDate:[NSDate date]
-                                                      notes:@"some task3 notes"
-                                                   priority:OMMTaskPriorityNone
-                                            enableRemainder:YES];
-        [self addTask:task3 toTaskGroup:taskGroup1];
-        
-        
-        OMMTasksGroup *taskGroup2 = [self createTasksGroup:@"Another"];
-        OMMTask *task4 = [self createTaskWithName:@"task4"
-                                                  startDate:[NSDate date]
-                                                      notes:@"some task4 notes"
-                                                   priority:OMMTaskPriorityNone
-                                            enableRemainder:YES];
-        task4.closed = YES;
-        [self addTask:task4 toTaskGroup:taskGroup2];
-        
-        OMMTask *task5 = [self createTaskWithName:@"task5"
-                                                  startDate:[NSDate date]
-                                                      notes:@"some task5 notes"
-                                                   priority:OMMTaskPriorityNone
-                                            enableRemainder:YES];
-        [self addTask:task5 toTaskGroup:taskGroup2];
-        
-        [self addTaskGroup:taskGroup1];
-        [self addTaskGroup:taskGroup2];
-        
-        _inboxTasksGroup = [[OMMTasksGroup alloc] init];
-        _inboxTasksGroup.groupName = OMMTaskServiceNameTaskGroupInbox;
-        _inboxTasksGroup.tasksArray = [[NSMutableArray alloc] init];
-        [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup1.tasksArray];
-        [_inboxTasksGroup.tasksArray addObjectsFromArray:taskGroup2.tasksArray];
+    if (!self) {
+        return nil;
     }
-    
+    self.inboxTasksGroup = [[OMMTasksGroup alloc] init];
+    self.privateTaskGroupsArray = [aDecoder decodeObjectForKey:@"taskGroupArray"];
     return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.privateTaskGroupsArray forKey:@"taskGroupArray"];
 }
 
 + (instancetype)sharedInstance {
@@ -92,7 +108,7 @@ static NSString * const OMMTaskServiceNameTaskGroupInbox = @"Inbox";
 }
 
 
-// general methods
+#pragma mark - general methods
 
 - (OMMTasksGroup *)createTasksGroup:(NSString *)groupName {
     OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
