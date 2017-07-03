@@ -17,11 +17,22 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // accept to recive noyifications || use sound || use badge on icon
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType userNotificationType = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
+        UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:userNotificationType categories:nil];
+        [application registerUserNotificationSettings:notificationSettings];
+        [application registerForRemoteNotifications];
+    }
+    
+    // load data from file
     NSString *dataFilePath = [OMMTaskService sharedInstance].appDataFilePath;
     if ([[NSFileManager defaultManager] fileExistsAtPath:dataFilePath]) {
         OMMTaskService *taskServiceFromFile = [NSKeyedUnarchiver unarchiveObjectWithFile:dataFilePath];
         [[OMMTaskService sharedInstance] updateDataFromFile:taskServiceFromFile];
     }
+    
     return YES;
 }
 
@@ -44,7 +55,7 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    application.applicationIconBadgeNumber = 0;
 }
 
 

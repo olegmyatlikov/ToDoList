@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		365640E51F0A3DE5005D909E /* OMMNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 365640E41F0A3DE5005D909E /* OMMNotificationTableViewController.m */; };
 		36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */; };
 		36B7A0321F025EDA00784478 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36B7A0311F025EDA00784478 /* Assets.xcassets */; };
 		36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */; };
@@ -31,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		365640E31F0A3DE5005D909E /* OMMNotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMNotificationTableViewController.h; sourceTree = "<group>"; };
+		365640E41F0A3DE5005D909E /* OMMNotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMNotificationTableViewController.m; sourceTree = "<group>"; };
 		36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMSearchTableViewController.h; sourceTree = "<group>"; };
 		36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMSearchTableViewController.m; sourceTree = "<group>"; };
 		36B7A0311F025EDA00784478 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 				36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */,
 				36AF75981EF2B39000D6FF2A /* OMMSearchTableViewController.h */,
 				36AF75991EF2B39000D6FF2A /* OMMSearchTableViewController.m */,
+				365640E31F0A3DE5005D909E /* OMMNotificationTableViewController.h */,
+				365640E41F0A3DE5005D909E /* OMMNotificationTableViewController.m */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
 				36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
+				365640E51F0A3DE5005D909E /* OMMNotificationTableViewController.m in Sources */,
 				7C65D0201F005305005122D0 /* OMMCreateGroupTableViewController.m in Sources */,
 				849312111EEEFBF5002F780F /* OMMTaskDetailTableVC.m in Sources */,
 				36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */,

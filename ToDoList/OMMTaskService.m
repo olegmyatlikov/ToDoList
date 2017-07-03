@@ -6,6 +6,7 @@
 //  Copyright © 2017 Oleg Myatlikov. All rights reserved.
 //
 
+#import <UIKit/UIKit.h> // for UILocalNotification
 #import "OMMTaskService.h"
 #import "NSDate+OMMDateConverter.h"
 
@@ -85,6 +86,7 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
     task.closed = NO;
     task.priority = priority;
     task.enableRemainder = remainder;
+    
     return task;
 }
 
@@ -112,6 +114,12 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
         [self.inboxTasksGroup.tasksArray addObject:task];
     }
     [taskGroup.tasksArray addObject:task];
+    
+    // add local notification
+    if (task.enableRemainder) {
+        [self addLocalNotificationForTask:task];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveData];
 }
@@ -121,12 +129,18 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
     for (NSMutableArray *array in [self.tasksGroupsArray valueForKeyPath:@"@unionOfObjects.tasksArray"]) {
         [array removeObject:task];
     }
+    
+    [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveData];
 }
 
 - (void)closeTask:(OMMTask *)task {
     task.closed = YES;
+    task.enableRemainder = NO;
+    
+    [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveData];
 }
 
@@ -136,6 +150,15 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
     task.note = changedTaskNotes;
     task.priority = changedPriority;
     task.enableRemainder = changedRemainder;
+    
+    
+    if (task.enableRemainder) { // if remainder on - close old notification and open new
+        [self cancelLocalNotificationForTask:task];
+        [self addLocalNotificationForTask:task];
+    } else {
+        [self cancelLocalNotificationForTask:task]; 
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveData];
 }
@@ -161,6 +184,35 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
 
 - (void)saveData {
     [NSKeyedArchiver archiveRootObject:self toFile:self.appDataFilePath];
+}
+
+- (void)addLocalNotificationForTask:(OMMTask *)task {
+    NSDictionary *taskUserInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                  task.name, @"notificationInfo",
+                                  [task.startDate convertDateToLongDateString], @"notificationDate",
+                                  [NSString stringWithFormat:@"%ld", task.taskID], @"taskID",
+                                  nil];
+    UILocalNotification *notificaion = [[UILocalNotification alloc] init];
+    notificaion.userInfo = taskUserInfo;
+    notificaion.timeZone = [NSTimeZone defaultTimeZone];
+    notificaion.fireDate = task.startDate;
+    notificaion.alertTitle = task.name;
+    notificaion.alertBody = task.note;
+    notificaion.applicationIconBadgeNumber = 1;
+    notificaion.soundName = UILocalNotificationDefaultSoundName;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:notificaion];
+}
+
+- (void)cancelLocalNotificationForTask:(OMMTask *)task {
+    NSArray *notificationsArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    for (UILocalNotification *notification in notificationsArray) {
+        NSDictionary *userInfoNotificationDictionary = notification.userInfo;
+        if ([[userInfoNotificationDictionary objectForKey:@"taskID"] isEqualToString:[NSString stringWithFormat:@"%ld", task.taskID]]) {
+            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+        }
+     }
 }
 
 
