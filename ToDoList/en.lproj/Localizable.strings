@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  ToDoList
+
+  Created by Oleg Myatlikov on 7/3/17.
+  Copyright © 2017 Oleg Myatlikov. All rights reserved.
+*/
+
+/* Dock menu "About" item title */
+"DockMenuAbout" = "About...";

@@ -14,6 +14,12 @@
 #import "OMMCreateGroupTableViewController.h"
 
 
+#pragma mark - constants
+
+static NSString *OMMToDoListGreateNewGroupLabelText;
+//static NSString *OMMToDoListInboxGroup;
+
+
 @interface OMMToDoListTableViewController ()
 
 @property (nonatomic, strong) NSMutableArray *tasksGroupArray;
@@ -24,13 +30,23 @@
 
 @implementation OMMToDoListTableViewController
 
+
+#pragma mark - localization
+
++ (void)initialize
+{
+    OMMToDoListGreateNewGroupLabelText =  NSLocalizedString(@"CreateNewGroup", nil);
+    //OMMToDoListInboxGroup = NSLocalizedString(@"Inbox", nil);
+}
+
+
 #pragma mark - constants
 
 static NSString * const OMMToDoListTaskListTableVCCellIdentifair = @"OMMTaskListTableVCCell";
 static NSString * const OMMToDoListEmptyHeaderSection = @" ";
 static NSString * const OMMToDoListInboxGroup = @"Inbox";
 static NSString * const OMMToDoListPlusImage = @"ic_plus.png";
-static NSString * const OMMToDoListGreateNewGroupLabelText = @"Create new group";
+//static NSString * const OMMToDoListGreateNewGroupLabelText = @"Create new group";
 static NSString * const OMMToDoListEmptyLabelText = @"";
 static NSString * const OMMToDoListRenameTitleForEditingAction = @"Rename";
 static NSString * const OMMToDoListRenameGroupAlertName = @"Rename the group";

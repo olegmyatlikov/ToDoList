@@ -1,0 +1,81 @@
+
+/* Class = "UITabBarItem"; title = "Search"; ObjectID = "3pm-2p-s1m"; */
+"3pm-2p-s1m.title" = "poisk";
+
+/* Class = "UITextField"; placeholder = "add name..."; ObjectID = "4FR-fR-cQI"; */
+"4FR-fR-cQI.placeholder" = "add name...";
+
+/* Class = "UITableViewSection"; headerTitle = "NOTES"; ObjectID = "69M-jJ-kko"; */
+"69M-jJ-kko.headerTitle" = "NOTES";
+
+/* Class = "UINavigationController"; title = "Today"; ObjectID = "6dI-IR-6iu"; */
+"6dI-IR-6iu.title" = "Today";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "6fc-D2-kkZ"; */
+"6fc-D2-kkZ.text" = "Detail";
+
+/* Class = "UINavigationItem"; title = "Search"; ObjectID = "6ja-QO-5Mq"; */
+"6ja-QO-5Mq.title" = "Search";
+
+/* Class = "UILabel"; text = "Remaind me on the Day"; ObjectID = "9JL-px-tYT"; */
+"9JL-px-tYT.text" = "Remaind me on the Day";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Loc-Bz-QWy"; */
+"Loc-Bz-QWy.text" = "Title";
+
+/* Class = "UITabBarItem"; title = "ToDoList"; ObjectID = "ZC4-MT-ydP"; */
+"ZC4-MT-ydP.title" = "ToDoList";
+
+/* Class = "UILabel"; text = "10.12.2017 12:30"; ObjectID = "ZaG-L9-6pz"; */
+"ZaG-L9-6pz.text" = "10.12.2017 12:30";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "aun-Ja-tmI"; */
+"aun-Ja-tmI.text" = "Detail";
+
+/* Class = "UITableViewSection"; headerTitle = "TASK"; ObjectID = "fkR-NV-Ret"; */
+"fkR-NV-Ret.headerTitle" = "TASK";
+
+/* Class = "UITabBarItem"; title = "Inbox"; ObjectID = "g6n-R2-xO3"; */
+"g6n-R2-xO3.title" = "Inbox";
+
+/* Class = "UINavigationItem"; title = "Today"; ObjectID = "g8c-ot-tqQ"; */
+"g8c-ot-tqQ.title" = "Today";
+
+/* Class = "UITextField"; placeholder = "Group name"; ObjectID = "iQl-Dc-rQH"; */
+"iQl-Dc-rQH.placeholder" = "Group name";
+
+/* Class = "UITabBarItem"; title = "Notify"; ObjectID = "jjN-99-7Qd"; */
+"jjN-99-7Qd.title" = "Notify";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "lG0-kp-5zU"; */
+"lG0-kp-5zU.text" = "Title";
+
+/* Class = "UINavigationController"; title = "ToDoList"; ObjectID = "qQS-d9-XaV"; */
+"qQS-d9-XaV.title" = "ToDoList";
+
+/* Class = "UINavigationItem"; title = "ToDoList"; ObjectID = "qjf-c0-qCH"; */
+"qjf-c0-qCH.title" = "ToDoList";
+
+/* Class = "UITabBarItem"; title = "Today"; ObjectID = "rgF-zX-t7v"; */
+"rgF-zX-t7v.title" = "Today";
+
+/* Class = "UITableViewSection"; headerTitle = "PRIORITY"; ObjectID = "rvB-Dq-EB8"; */
+"rvB-Dq-EB8.headerTitle" = "PRIORITY";
+
+/* Class = "UINavigationItem"; title = "Inbox"; ObjectID = "sHr-4J-eQg"; */
+"sHr-4J-eQg.title" = "Inbox";
+
+/* Class = "UITableViewSection"; headerTitle = "Group"; ObjectID = "sKg-9t-TYh"; */
+"sKg-9t-TYh.headerTitle" = "Group";
+
+/* Class = "UINavigationController"; title = "Search"; ObjectID = "vj5-x1-d9k"; */
+"vj5-x1-d9k.title" = "Search";
+
+/* Class = "UINavigationController"; title = "Inbox"; ObjectID = "wWf-mN-qvC"; */
+"wWf-mN-qvC.title" = "Inbox";
+
+/* Class = "UINavigationItem"; title = "Notifications"; ObjectID = "xuF-dO-Cha"; */
+"xuF-dO-Cha.title" = "Notifications";
+
+/* Class = "UITableViewSection"; headerTitle = "REMAINDER"; ObjectID = "yn3-3b-A2s"; */
+"yn3-3b-A2s.headerTitle" = "REMAINDER";

@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  ToDoList
+
+  Created by Oleg Myatlikov on 7/3/17.
+  Copyright © 2017 Oleg Myatlikov. All rights reserved.
+*/
+
+/* ToDoList - "greate new group" cell name */
+"CreateNewGroup" = "Create new group";
+
+/* ToDoList - tabBar tab name  */
+"Inbox" = "Inbox";
