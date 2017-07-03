@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "OMMTaskService.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    NSString *dataFilePath = [OMMTaskService sharedInstance].appDataFilePath;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:dataFilePath]) {
+        OMMTaskService *taskServiceFromFile = [NSKeyedUnarchiver unarchiveObjectWithFile:dataFilePath];
+        [[OMMTaskService sharedInstance] updateDataFromFile:taskServiceFromFile];
+    }
     return YES;
 }
 
