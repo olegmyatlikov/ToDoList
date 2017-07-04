@@ -19,11 +19,17 @@
 
 @implementation OMMCreateGroupTableViewController
 
-#pragma mark - constants
+#pragma mark - localization
 
-static NSString * const OMMCreateGroupDoneButton = @"Done";
-static NSString * const OMMCreateGroupCabcelButton = @"Cancel";
-static NSString * const OMMCreateGroupTitleForHeaderOfSectionGroup = @"Group";
+static NSString *OMMCreateGroupDoneButton;
+static NSString *OMMCreateGroupCabcelButton;
+static NSString *OMMCreateGroupTitleForHeaderOfSectionGroup;
+
++ (void)initialize {
+    OMMCreateGroupDoneButton = NSLocalizedString(@"navigation_item_button.title-DONE", nil);
+    OMMCreateGroupCabcelButton = NSLocalizedString(@"navigation_item_button.title-CANCEL", nil);
+    OMMCreateGroupTitleForHeaderOfSectionGroup = NSLocalizedString(@"header_section.title-GROUP", nil);
+}
 
 
 #pragma mark - life cycle

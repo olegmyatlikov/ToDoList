@@ -17,6 +17,23 @@
 
 @implementation OMMTask
 
+#pragma mark - localization
+
+static NSString *OMMTaskPriorityStringNone;
+static NSString *OMMTaskPriorityStringLow;
+static NSString *OMMTaskPriorityStringMedium;
+static NSString *OMMTaskPriorityStringHigh;
+
++ (void)initialize {
+    OMMTaskPriorityStringNone = NSLocalizedString(@"", nil);
+    OMMTaskPriorityStringLow = NSLocalizedString(@"", nil);
+    OMMTaskPriorityStringMedium = NSLocalizedString(@"", nil);
+    OMMTaskPriorityStringHigh = NSLocalizedString(@"", nil);
+}
+
+
+// enum options in string
+
 NSString * const OMMTaskPriorityString[] = {
     [OMMTaskPriorityNone] = @"none",
     [OMMTaskPriorityLow] = @"low",

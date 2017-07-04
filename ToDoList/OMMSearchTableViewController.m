@@ -25,14 +25,24 @@
 
 @implementation OMMSearchTableViewController
 
+#pragma mark - localisation
+
+static NSString *OMMsearchActiveTasks;
+static NSString *OMMsearchComplitedTasks;
+static NSString *OMMsearchNoResultText;
+
++ (void)initialize {
+    OMMsearchActiveTasks = NSLocalizedString(@"scope_button.title-ACTIVE_TASKS", nil);
+    OMMsearchComplitedTasks = NSLocalizedString(@"scope_button.title-COMPLITED_TASKS", nil);
+    OMMsearchNoResultText = NSLocalizedString(@"label.text-NO_RESULT", nil);
+}
+
+
 #pragma mark - constants
 
 static NSString * const OMMsearchTaskIsOpen = @"closed = 0";
 static NSString * const OMMsearchTaskIsClosed = @"closed = 1";
-static NSString * const OMMsearchActiveTasks = @"Active tasks";
-static NSString * const OMMsearchComplitedTasks = @"Completed";
 static NSString * const OMMsearchClearText = @"";
-static NSString * const OMMsearchNoResultText = @"No Result";
 static NSString * const OMMSearchTaskCellIdentifier = @"OMMTaskCellIdentifier";
 static NSString * const OMMSearchTaskCellXibName = @"OMMTaskCell";
 static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCIndentifair";
@@ -68,7 +78,6 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
         self.searchController.searchBar.text = OMMsearchClearText;
         [self.tableView reloadData];
         self.taskListWasModified = NO;
-        NSLog(@"Data was reloaded in today tab");
     }
 }
 
@@ -82,7 +91,6 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 
 - (void)triggerTaskListWasModify {
     self.taskListWasModified = YES;
-    NSLog(@"Data was changed. TRIGGER");
 }
 
 - (NSArray *)filterArrayUsingSelectScopeButton:(NSArray *)array {

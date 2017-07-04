@@ -6,8 +6,162 @@
   Copyright © 2017 Oleg Myatlikov. All rights reserved.
 */
 
-/* ToDoList - "greate new group" cell name */
-"CreateNewGroup" = "Create new group";
 
-/* ToDoList - tabBar tab name  */
-"Inbox" = "Inbox";
+
+// --- TODAY TAB
+
+/* Today - header of section with complited tasks */
+"section_header.title-COMPLITED" = "Complited";
+
+/* Today -  title of editing action "delete task" */
+"editing_action.title-DELETE" = "Delete";
+
+/* Today - title of editing action "complite task" */
+"edeiting_action.title-DONE" = "Done";
+
+/* Today - delete task alert button "delete" */
+"alert_action_button.title-DELETE" = "Delete";
+
+/* Today - delete task alert button "close" */
+"alert_action_button.title-CLOSE" = "Close";
+
+/* Today - delete task alert title */
+"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_TASK" = "Are you sure want to delete the task?";
+
+
+
+// ---  INBOX TAB
+
+/* Inbox -  sordet type segmetn control "sort by group" */
+"segment_control.title-GROUP" = "Group";
+
+/* Inbox -  sordet type segmetn control "sort by date" */
+"segment_control,title-DATE" = "Date";
+
+/* Inbox - left bar button item "Close". Add when we came to this VC from toDOList tab */
+"left_bar_button_item.title-CLOSE" = "Close";
+
+/* Inbox - editing action "Delete" on the row with task */
+"editing_action.title-DELETE" = "Delete";
+
+/* Inbox - editing action "Done" on the row with task */
+"edeiting_action.title-DONE" = "Done";
+
+/* Inbox - button "Delete" on alert when we going to delete the task */
+"alert_action_button.title-DELETE" = "Delete";
+    
+/* Inbox - button wich close alert */
+"alert_action_button.title-CLOSE" = "Close";
+
+/* Inbox - title of alert "Delete task" */
+"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_TASK" = "Are you sure want to delete the task?";
+
+
+
+// --- TODO LIST TAB
+
+/* ToDoList - tabBar tab name */
+"section_name.text-INBOX" = "Inbox";
+
+/* ToDoList - "greate new group" cell name */
+"cell.title-GREATE_NEW_GROUP" = "Create new group";
+
+/* ToDoList - title for rename action */
+"editing_action_button.title-RENAME" = "Rename";
+
+/* ToDoList - title for rename action */
+"alert_rename_group_name.title-RENAME_THE_GROUP" = "Rename the group";
+
+/* ToDoList - title for rename action */
+"alert_rename_group_button.title-SAVE" = "Save";
+
+/* ToDoList - title for rename action */
+"alert_rename_group_button.title-CLOSE" = "Close";
+
+/* ToDoList - title for rename action */
+"alert_delte_droup_button.title-DELETE" = "Delete";
+
+/* ToDoList - title for rename action */
+"alert_delte_droup_button.title-CLOSE" = "Close";
+
+/* ToDoList - delete group alert title */
+"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_GROUP" = "Are you sure want to delete the group?";
+
+
+
+// --- SEARCH TAB
+
+/* Search - search only in active tasks button (in scope) */
+"scope_button.title-ACTIVE_TASKS" = "Active tasks";
+
+/* Search - search only in complited tasks button (in scope) */
+"scope_button.title-COMPLITED_TASKS" = "Complited";
+
+/* Search - text witch we show when we didn't have result */
+"label.text-NO_RESULT" = "No Result";
+
+
+
+// --- DATEPIKER VC
+
+/* Datepicker - navigation item title */
+"navigation_item.title-CHOSE_DATE" = "Chose date";
+
+/* Datepicker - navigation item button Done */
+"navigation_item_button.title-DONE" = "Done";
+
+/* Datepicker - navigation item button Cancel */
+"navigation_item_button.title-CANCEL" = "Cancel";
+
+/* Datepicker - datepiker locale */
+"datepicker_locale.identifair" = "en_GB";
+
+
+
+// --- CREATE NEW GROUP VC
+
+/* CreateGroupVC - navigation item button Done */
+"navigation_item_button.title-DONE" = "Done";
+
+/* CreateGroupVC - navigation item button Cancel */
+"navigation_item_button.title-CANCEL" = "Cancel";
+
+/* CreateGroupVC - navigation item title */
+"header_section.title-GROUP" = "Group";
+
+
+
+// --- TASK DETAILS
+
+/* TaskDetails - title of Set date row */
+"cell_label.text-SET_DATE" = "Set date";
+
+/* TaskDetails - title of Chose Priority row */
+"cell_label.text-NONE" = "None";
+
+/* TaskDetails - navigation item button Save */
+"navigation_item_button.title-SAVE" = "Save";
+
+/* TaskDetails - navigation item button Cancel */
+"navigation_item_button.title-CANCEL" = "Cancel";
+
+/* TaskDetails - warning alert title (when no set the task name or remainder date) */
+"warning_alert.title-PLEASE_ADD_TASKS_NAME_AND_CHOSE_REMAIDER_DATE" = "Please add tasks name and chose remainder date!";
+
+/* TaskDetails - warning alert button Ok */
+"warning_alert_action.title-OK" = "Ok";
+
+/* TaskDetails - title of Set priority row */
+"priority_alert_action.title-SELECT_PRIORITY" = "Select priority";
+
+/* TaskDetails - priority alert button Cancel */
+"priority_alert_action.title-CANCEL" = "Cancel";
+
+
+
+// --- OTHERS
+
+/* TaskService - property value of name inbox group  */
+"inbox_group_propertu_name-INBOX" = "Inbox";
+
+

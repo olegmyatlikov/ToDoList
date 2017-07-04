@@ -30,19 +30,32 @@
 
 @implementation OMMTaskDetailTableVC
 
+#pragma mark - localization 
+
+static NSString *OMMTaskDetailVCSetDateLabelText;
+static NSString *OMMTaskDetailVCNoneLabelText;
+static NSString *OMMTaskDetailVCSaveButtonTitle;
+static NSString *OMMTaskDetailVCCancelButtonTitle;
+static NSString *OMMTaskDetailVCEmptyRequaredFieldsAlertText;
+static NSString *OMMTaskDetailVCOkWarningAlertActionTitle;
+static NSString *OMMTaskDetailVCSelectPriorityAlertTitle;
+static NSString *OMMTaskDetailVCOkAlertPriorityActionTitle;
+
++ (void)initialize {
+    OMMTaskDetailVCSetDateLabelText = NSLocalizedString(@"cell_label.text-SET_DATE", nil);
+    OMMTaskDetailVCNoneLabelText = NSLocalizedString(@"cell_label.text-NONE", nil);
+    OMMTaskDetailVCSaveButtonTitle = NSLocalizedString(@"navigation_item_button.title-SAVE", nil);
+    OMMTaskDetailVCCancelButtonTitle = NSLocalizedString(@"navigation_item_button.title-CANCEL", nil);
+    OMMTaskDetailVCEmptyRequaredFieldsAlertText = NSLocalizedString(@"warning_alert.title-PLEASE_ADD_TASKS_NAME_AND_CHOSE_REMAIDER_DATE", nil);
+    OMMTaskDetailVCOkWarningAlertActionTitle = NSLocalizedString(@"warning_alert_action.title-OK", nil);
+    OMMTaskDetailVCSelectPriorityAlertTitle = NSLocalizedString(@"priority_alert_action.title-SELECT_PRIORITY", nil);
+    OMMTaskDetailVCOkAlertPriorityActionTitle = NSLocalizedString(@"priority_alert_action.title-CANCEL", nil);
+}
 
 #pragma mark - constants 
 
-NSString * const OMMTaskDetailTaskWasModifyNotification = @"TaskListWasModify";
-static NSString * const OMMTaskDetailVCSetDateLabelText = @"set date";
-static NSString * const OMMTaskDetailVCNoneLabelText = @"none";
-static NSString * const OMMTaskDetailVCSaveButtonTitle = @"Save";
-static NSString * const OMMTaskDetailVCCancelButtonTitle = @"Cancel";
+//NSString * const OMMTaskDetailTaskWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
-static NSString * const OMMTaskDetailVCEmptyRequaredFieldsAlertText = @"Please add tasks name and chose remainder date!";
-static NSString * const OMMTaskDetailVCOkWarningAlertActionTitle = @"Ok";
-static NSString * const OMMTaskDetailVCSelectPriorityAlertTitle = @"Select Priority";
-static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
 
 
 #pragma mark - life cycle

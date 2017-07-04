@@ -6,5 +6,163 @@
   Copyright © 2017 Oleg Myatlikov. All rights reserved.
 */
 
-/* ToDoList - greate new group Cell */
-"CreateNewGroup" = "Sozdat' novuyu gruppu";
+
+
+// --- TODAY TAB
+
+/* Today - header of section with complited tasks */
+"section_header.title-COMPLITED" = "Завершенные";
+
+/* Today -  title of editing action "delete task" */
+"editing_action.title-DELETE" = "Удалить";
+
+/* Today - title of editing action "complite task" */
+"edeiting_action.title-DONE" = "Закрыть";
+
+/* Today - delete task alert button "delete" */
+"alert_action_button.title-DELETE" = "Удалить";
+
+/* Today - delete task alert button "close" */
+"alert_action_button.title-CLOSE" = "Отмена";
+
+/* Today - delete task alert title */
+"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_TASK" = "Вы уверены, что хотите удалить задачу?";
+
+
+
+// ---  INBOX TAB
+
+/* Inbox -  sordet type segmetn control "sort by group" */
+"segment_control.title-GROUP" = "По группам";
+
+/* Inbox -  sordet type segmetn control "sort by date" */
+"segment_control,title-DATE" = "По дате";
+
+/* Inbox - left bar button item "Close". Add when we came to this VC from toDOList tab */
+"left_bar_button_item.title-CLOSE" = "Закрыть";
+
+/* Inbox - editing action "Delete" on the row with task */
+"editing_action.title-DELETE" = "Удалить";
+
+/* Inbox - editing action "Done" on the row with task */
+"edeiting_action.title-DONE" = "Закрыть";
+
+/* Inbox - button "Delete" on alert when we going to delete the task */
+"alert_action_button.title-DELETE" = "Удалить";
+
+/* Inbox - button wich close alert */
+"alert_action_button.title-CLOSE" = "Отмена";
+
+/* Inbox - title of alert "Delete task" */
+"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_TASK" = "Вы уверены, что хотите удалить задачу?";
+
+
+
+// --- TODO LIST TAB
+
+/* ToDoList - tabBar tab name  */
+"section_name.text-INBOX" = "Инбокс";
+
+/* ToDoList - "greate new group" cell name */
+"cell.title-GREATE_NEW_GROUP" = "Создать новую группу";
+
+/* ToDoList - title for rename action */
+"editing_action_button.title-RENAME" = "Переименовать";
+
+/* ToDoList - title for alert "Rename the group" */
+"alert_rename_group_name.title-RENAME_THE_GROUP" = "Переменуйте группу";
+
+/* ToDoList - title for action save changed name of group */
+"alert_rename_group_button.title-SAVE" = "Сохранить";
+
+/* ToDoList - title for action close rename alert */
+"alert_rename_group_button.title-CLOSE" = "Закрыть";
+
+/* ToDoList - title for action delete */
+"alert_delte_droup_button.title-DELETE" = "Удалить";
+
+/* ToDoList - title for action close wirning alert */
+"alert_delte_droup_button.title-CLOSE" = "Отмена";
+
+/* ToDoList - title for warnig alert */
+"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_GROUP" = "Вы уверены, что хотите удалить группу?";
+
+
+
+// --- SEARCH TAB
+
+/* Search - search only in active tasks button (in scope) */
+"scope_button.title-ACTIVE_TASKS" = "Активные таски";
+
+/* Search - search only in complited tasks button (in scope) */
+"scope_button.title-COMPLITED_TASKS" = "Завершенные";
+
+/* Search - text witch we show when we didn't have result */
+"label.text-NO_RESULT" = "Нет Совпадений";
+
+
+
+// --- DATEPIKER VC
+
+/* Datepicker - navigation item title */
+"navigation_item.title-CHOSE_DATE" = "Выбор даты";
+
+/* Datepicker - navigation item button Done */
+"navigation_item_button.title-DONE" = "Готово";
+
+/* Datepicker - navigation item button Cancel */
+"navigation_item_button.title-CANCEL" = "Отмена";
+
+/* Datepicker - datepiker locale */
+"datepicker_locale.identifair" = "ru_RU";
+
+
+
+// --- CREATE NEW GROUP VC
+
+/* CreateGroupVC - navigation item button Done */
+"navigation_item_button.title-DONE" = "Готово";
+
+/* CreateGroupVC - navigation item button Cancel */
+"navigation_item_button.title-CANCEL" = "Отмена";
+
+/* CreateGroupVC - navigation item title */
+"header_section.title-GROUP" = "Группа";
+
+
+
+// --- TASK DETAILS
+
+/* TaskDetails - title of Set date row */
+"cell_label.text-SET_DATE" = "Дата и время напоминания";
+
+/* TaskDetails - title of Chose Priority row */
+"cell_label.text-NONE" = "Не установлен";
+
+/* TaskDetails - navigation item button Save */
+"navigation_item_button.title-SAVE" = "Сохранить";
+
+/* TaskDetails - navigation item button Cancel */
+"navigation_item_button.title-CANCEL" = "Отмена";
+
+/* TaskDetails - warning alert title (when no set the task name or remainder date) */
+"warning_alert.title-PLEASE_ADD_TASKS_NAME_AND_CHOSE_REMAIDER_DATE" = "Пожалуйста, введите имя задачи и установите дату и время напоминания!";
+
+/* TaskDetails - warning alert button Ok */
+"warning_alert_action.title-OK" = "Хорошо";
+
+/* TaskDetails - title of Set priority row */
+"priority_alert_action.title-SELECT_PRIORITY" = "Выберите приоритет";
+
+/* TaskDetails - priority alert button Cancel */
+"priority_alert_action.title-CANCEL" = "Отмена";
+
+
+
+// --- OTHERS
+
+/* TaskService - property value of name inbox group  */
+"inbox_group_property_name-INBOX" = "Инбокс";
+
+
+
