@@ -17,29 +17,6 @@
 
 @implementation OMMTask
 
-#pragma mark - localization
-
-static NSString *OMMTaskPriorityStringNone;
-static NSString *OMMTaskPriorityStringLow;
-static NSString *OMMTaskPriorityStringMedium;
-static NSString *OMMTaskPriorityStringHigh;
-
-+ (void)initialize {
-    OMMTaskPriorityStringNone = NSLocalizedString(@"", nil);
-    OMMTaskPriorityStringLow = NSLocalizedString(@"", nil);
-    OMMTaskPriorityStringMedium = NSLocalizedString(@"", nil);
-    OMMTaskPriorityStringHigh = NSLocalizedString(@"", nil);
-}
-
-
-// enum options in string
-
-NSString * const OMMTaskPriorityString[] = {
-    [OMMTaskPriorityNone] = @"none",
-    [OMMTaskPriorityLow] = @"low",
-    [OMMTaskPriorityMedium] = @"medium",
-    [OMMTaskPriorityHigh] = @"high"
-};
 
 - (id)init {
     self = [super init];
@@ -48,6 +25,33 @@ NSString * const OMMTaskPriorityString[] = {
     }
     return self;
 }
+
+
+#pragma mark - localization
+
++ (NSString *)taskPriorityToString:(OMMTaskPriority)taskPriority {
+    NSString *priorityInString = [[NSString alloc] init];
+    switch (taskPriority) {
+        case OMMTaskPriorityNone:
+            priorityInString = NSLocalizedString(@"task_priority.string-NONE", nil);
+            break;
+        case OMMTaskPriorityLow:
+            priorityInString = NSLocalizedString(@"task_priority.string-LOW", nil);
+            break;
+        case OMMTaskPriorityMedium:
+            priorityInString = NSLocalizedString(@"task_priority.string-MEDIUM", nil);
+            break;
+        case OMMTaskPriorityHigh:
+            priorityInString = NSLocalizedString(@"task_priority.string-HIGH", nil);
+            break;
+            
+        default:
+            break;
+    }
+    
+    return priorityInString;
+}
+
 
 #pragma mark - NSCoding method 
 

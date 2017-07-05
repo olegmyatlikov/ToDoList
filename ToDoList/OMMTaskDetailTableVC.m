@@ -67,7 +67,7 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
         self.taskNameTextField.text = self.task.name;
         self.startDateLabel.text = [self.task.startDate convertDateToLongDateString];
         [self.remaindSwitcher setOn:self.task.enableRemainder];
-        self.priorityLabel.text = OMMTaskPriorityString[self.task.priority];
+        self.priorityLabel.text = [OMMTask taskPriorityToString:self.task.priority];
         self.taskNotesTextView.text = self.task.note;
     } else {
         self.startDateLabel.text = OMMTaskDetailVCSetDateLabelText;
@@ -159,20 +159,20 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
 - (void)openPriorityAlertActionSheet {
     UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:OMMTaskDetailVCSelectPriorityAlertTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityNone] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityNone];
+    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityNone] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityNone];
         self.priority = OMMTaskPriorityNone;
     }];
-    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityLow] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityLow];
+    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityLow] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityLow] ;
         self.priority = OMMTaskPriorityLow;
     }];
-    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityMedium] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityMedium];
+    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityMedium] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityMedium];
         self.priority = OMMTaskPriorityMedium;
     }];
-    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:OMMTaskPriorityString[OMMTaskPriorityHigh] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = OMMTaskPriorityString[OMMTaskPriorityHigh];
+    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityHigh] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityHigh];
         self.priority = OMMTaskPriorityHigh;
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:OMMTaskDetailVCOkAlertPriorityActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];

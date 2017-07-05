@@ -164,5 +164,18 @@
 /* TaskService - property value of name inbox group  */
 "inbox_group_property_name-INBOX" = "Инбокс";
 
+/* Task - priority none */
+"task_priority.string-NONE" = "не установлен";
+
+/* Task - low priority */
+"task_priority.string-LOW" = "низкий";
+
+/* Task - medium priority */
+"task_priority.string-MEDIUM" = "средний";
+
+/* Task - high priority */
+"task_priority.string-HIGH" = "высокий";
+
+
 
 

@@ -161,7 +161,18 @@
 
 // --- OTHERS
 
-/* TaskService - property value of name inbox group  */
-"inbox_group_propertu_name-INBOX" = "Inbox";
+/* TaskService - property value of name inbox group */
+"inbox_group_property_name-INBOX" = "Inbox";
 
+/* Task - priority none */
+"task_priority.string-NONE" = "none";
+
+/* Task - low priority */
+"task_priority.string-LOW" = "low";
+
+/* Task - medium priority */
+"task_priority.string-MEDIUM" = "medium";
+
+/* Task - high priority */
+"task_priority.string-HIGH" = "high";
 

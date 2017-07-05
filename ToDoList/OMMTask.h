@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const OMMTaskPriorityString[];
 
 @interface OMMTask : NSObject <NSCoding>
 
@@ -27,5 +26,7 @@ typedef NS_ENUM(NSInteger, OMMTaskPriority) {
 @property (nonatomic, strong) NSString *note;
 @property (nonatomic, assign, getter=isClosed) BOOL closed;
 @property (nonatomic, assign) BOOL enableRemainder;
+
++ (NSString *)taskPriorityToString:(OMMTaskPriority)taskPriority;
 
 @end
