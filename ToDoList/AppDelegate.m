@@ -17,11 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *dataFilePath = [OMMTaskService sharedInstance].appDataFilePath;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:dataFilePath]) {
-        OMMTaskService *taskServiceFromFile = [NSKeyedUnarchiver unarchiveObjectWithFile:dataFilePath];
-        [[OMMTaskService sharedInstance] updateDataFromFile:taskServiceFromFile];
-    }
+    [[OMMTaskService sharedInstance] loadData];
     return YES;
 }
 
