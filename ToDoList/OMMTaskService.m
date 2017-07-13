@@ -177,9 +177,15 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
     [self saveData];
 }
 
-- (void)updateDataFromFile:(OMMTaskService *)data {
-    self.privateTaskGroupsArray = [data.tasksGroupsArray mutableCopy];
-    self.inboxTasksGroup = data.inboxTasksGroup;
+
+#pragma mark - manage data
+
+- (void)loadData {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:self.appDataFilePath]) {
+        OMMTaskService *taskServiceFromFile = [NSKeyedUnarchiver unarchiveObjectWithFile:self.appDataFilePath];
+        self.privateTaskGroupsArray = [taskServiceFromFile.tasksGroupsArray mutableCopy];
+        self.inboxTasksGroup = taskServiceFromFile.inboxTasksGroup;
+    }
 }
 
 - (void)saveData {

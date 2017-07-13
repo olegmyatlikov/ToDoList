@@ -34,7 +34,7 @@ extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 - (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup;
 - (void)renameTasksGroup:(OMMTasksGroup *)taskGroup to:(NSString *)newName;
 
-- (void)updateDataFromFile:(OMMTaskService *)data;
+- (void)loadData;
 - (void)saveData;
 
 @end
