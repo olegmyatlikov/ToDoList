@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "OMMTaskService.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [[OMMTaskService sharedInstance] loadData];
     return YES;
 }
 

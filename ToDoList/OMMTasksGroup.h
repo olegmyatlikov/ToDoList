@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OMMTasksGroup : NSObject
+@interface OMMTasksGroup : NSObject <NSCoding>
 
 @property (nonatomic, assign) NSInteger groupID;
 @property (nonatomic, strong) NSString *groupName;

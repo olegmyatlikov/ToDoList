@@ -10,7 +10,7 @@
 
 extern NSString * const OMMTaskPriorityString[];
 
-@interface OMMTask : NSObject
+@interface OMMTask : NSObject <NSCoding>
 
 typedef NS_ENUM(NSInteger, OMMTaskPriority) {
     OMMTaskPriorityNone = 0,

@@ -54,7 +54,6 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
         self.taskNameTextField.text = self.task.name;
         self.startDateLabel.text = [self.task.startDate convertDateToLongDateString];
         [self.remaindSwitcher setOn:self.task.enableRemainder];
-//        self.priorityLabel.text = [self.task taskPriotityToString:self.task.priority];
         self.priorityLabel.text = OMMTaskPriorityString[self.task.priority];
         self.taskNotesTextView.text = self.task.note;
     } else {
@@ -89,24 +88,21 @@ static NSString * const OMMTaskDetailVCOkAlertPriorityActionTitle = @"Cancel";
     // alert if taskName field empty or didn't chose a start date
     if ([self.taskNameTextField.text length] < 1 || [self.startDateLabel.text isEqualToString:OMMTaskDetailVCSetDateLabelText]) {
         [self openEmptyValueAlert];
-        
     } else {
-        if (self.task) { // save all changes (use the memory)
-            OMMTask *editTask = self.task;
-            editTask.name = self.taskNameTextField.text;
-            editTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
-            editTask.note = self.taskNotesTextView.text;
-            editTask.priority = self.priority;
-            editTask.enableRemainder = [self.remaindSwitcher isOn];
-            [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskDetailTaskWasModifyNotification object:self];
-        } else {
-            OMMTaskService *taskService = [OMMTaskService sharedInstance];
-            OMMTask *newTask = [taskService createTaskWithName:self.taskNameTextField.text
+        
+        if (self.task) { // save all changes 
+            [[OMMTaskService sharedInstance] updateTask:self.task name:self.taskNameTextField.text
+                      taskStartDate:[NSDate convertStringToDate:self.startDateLabel.text]
+                          taskNotes:self.taskNotesTextView.text
+                       taskPriority:self.priority
+                    enableRemainder:[self.remaindSwitcher isOn]];
+        } else { // add new task
+            OMMTask *newTask = [[OMMTaskService sharedInstance] createTaskWithName:self.taskNameTextField.text
                                                         startDate:[NSDate convertStringToDate:self.startDateLabel.text]
                                                             notes:self.taskNotesTextView.text
                                                         priority:self.priority
                                                   enableRemainder:[self.remaindSwitcher isOn]];
-            [taskService addTask:newTask toTaskGroup:self.taskGroup]; // task service save task and push notification to all tabs
+            [[OMMTaskService sharedInstance] addTask:newTask toTaskGroup:self.taskGroup]; // task service save task and push notification to all tabs
         }
         
         [self.navigationController popViewControllerAnimated:YES];
