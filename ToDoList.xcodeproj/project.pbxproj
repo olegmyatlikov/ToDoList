@@ -13,6 +13,7 @@
 		36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */; };
 		36BCC6581EFBBA0400F28922 /* OMMTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */; };
 		36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */; };
+		7C4A3B071F1AA2AF007A518B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */; };
 		7C65D0201F005305005122D0 /* OMMCreateGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */; };
 		7C99D7F51F0AC4E300AB3CF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7C99D7F71F0AC4E300AB3CF0 /* Localizable.strings */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
@@ -44,6 +45,7 @@
 		36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTodayTableViewController.m; sourceTree = "<group>"; };
 		36BCC6601EFBBED800F28922 /* UIView+OMMHeaderInSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OMMHeaderInSection.h"; sourceTree = "<group>"; };
 		36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OMMHeaderInSection.m"; sourceTree = "<group>"; };
+		7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7C65D01E1F005305005122D0 /* OMMCreateGroupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMCreateGroupTableViewController.h; sourceTree = "<group>"; };
 		7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMCreateGroupTableViewController.m; sourceTree = "<group>"; };
 		7C99D7F11F0AC38600AB3CF0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		8446DFA31EE28BB9004337CF = {
 			isa = PBXGroup;
 			children = (
+				7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */,
 				8446DFAE1EE28BB9004337CF /* ToDoList */,
 				8446DFAD1EE28BB9004337CF /* Products */,
 			);
@@ -290,6 +293,7 @@
 				8446DFB71EE28BB9004337CF /* ViewController.m in Sources */,
 				8446DFCD1EE3017D004337CF /* OMMTask.m in Sources */,
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
+				7C4A3B071F1AA2AF007A518B /* Model.xcdatamodeld in Sources */,
 				36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
 				365640E51F0A3DE5005D909E /* OMMNotificationTableViewController.m in Sources */,
@@ -478,6 +482,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */,
+			);
+			currentVersion = 7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = ToDoList/Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8446DFA41EE28BB9004337CF /* Project object */;
 }
