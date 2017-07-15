@@ -36,5 +36,6 @@ extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 
 - (void)updateDataFromFile:(OMMTaskService *)data;
 - (void)saveData;
+- (void)loadData;
 
 @end
