@@ -14,7 +14,6 @@
 		36BCC6581EFBBA0400F28922 /* OMMTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */; };
 		36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */; };
 		7C4A3B071F1AA2AF007A518B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */; };
-		7C4A3B0D1F1AA7F4007A518B /* TableViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A3B0C1F1AA7F4007A518B /* TableViewController2.m */; };
 		7C65D0201F005305005122D0 /* OMMCreateGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */; };
 		7C99D7F51F0AC4E300AB3CF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7C99D7F71F0AC4E300AB3CF0 /* Localizable.strings */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
@@ -47,8 +46,6 @@
 		36BCC6601EFBBED800F28922 /* UIView+OMMHeaderInSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OMMHeaderInSection.h"; sourceTree = "<group>"; };
 		36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OMMHeaderInSection.m"; sourceTree = "<group>"; };
 		7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		7C4A3B0B1F1AA7F4007A518B /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
-		7C4A3B0C1F1AA7F4007A518B /* TableViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController2.m; sourceTree = "<group>"; };
 		7C65D01E1F005305005122D0 /* OMMCreateGroupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMCreateGroupTableViewController.h; sourceTree = "<group>"; };
 		7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMCreateGroupTableViewController.m; sourceTree = "<group>"; };
 		7C99D7F11F0AC38600AB3CF0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -139,8 +136,6 @@
 		8446DFA31EE28BB9004337CF = {
 			isa = PBXGroup;
 			children = (
-				7C4A3B0B1F1AA7F4007A518B /* TableViewController.h */,
-				7C4A3B0C1F1AA7F4007A518B /* TableViewController2.m */,
 				8446DFAE1EE28BB9004337CF /* ToDoList */,
 				8446DFAD1EE28BB9004337CF /* Products */,
 			);
@@ -309,7 +304,6 @@
 				8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */,
 				8446DFB11EE28BB9004337CF /* main.m in Sources */,
 				84B348C41EE464A10017B9F0 /* NSDate+OMMDateConverter.m in Sources */,
-				7C4A3B0D1F1AA7F4007A518B /* TableViewController2.m in Sources */,
 				36AF759A1EF2B39000D6FF2A /* OMMSearchTableViewController.m in Sources */,
 				36BCC6581EFBBA0400F28922 /* OMMTodayTableViewController.m in Sources */,
 			);
