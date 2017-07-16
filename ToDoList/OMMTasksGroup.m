@@ -10,34 +10,13 @@
 
 @implementation OMMTasksGroup
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        self.groupID = arc4random_uniform(10000);
-        self.groupStartDate = [NSDate date];
-    }
-    return self;
++ (NSFetchRequest<OMMTasksGroup *> *)fetchRequest {
+    return [[NSFetchRequest alloc] initWithEntityName:@"TasksGroup"];
 }
 
-- (OMMTasksGroup *)initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    self.groupID = [[aDecoder decodeObjectForKey:@"groupID"] integerValue];
-    self.groupName = [aDecoder decodeObjectForKey:@"groupName"];
-    self.groupStartDate = [aDecoder decodeObjectForKey:@"groupStartDate"];
-    self.tasksArray = [aDecoder decodeObjectForKey:@"tasksArray"];
-    
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.groupID] forKey:@"groupID"];
-    [aCoder encodeObject:self.groupName forKey:@"groupName"];
-    [aCoder encodeObject:self.groupStartDate forKey:@"groupStartDate"];
-    [aCoder encodeObject:self.tasksArray forKey:@"tasksArray"];
-}
+@dynamic groupID;
+@dynamic groupName;
+@dynamic groupStartDate;
+@dynamic tasks;
 
 @end

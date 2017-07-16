@@ -8,6 +8,7 @@
 
 #import "OMMTaskDetailTableVC.h"
 #import "UIView+OMMHeaderInSection.h"
+#import "AppDelegate.h"
 
 @interface OMMTaskDetailTableVC ()
 
@@ -110,12 +111,20 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
                        taskPriority:self.priority
                     enableRemainder:[self.remaindSwitcher isOn]];
         } else { // add new task
-            OMMTask *newTask = [[OMMTaskService sharedInstance] createTaskWithName:self.taskNameTextField.text
-                                                        startDate:[NSDate convertStringToDate:self.startDateLabel.text]
-                                                            notes:self.taskNotesTextView.text
-                                                        priority:self.priority
-                                                  enableRemainder:[self.remaindSwitcher isOn]];
-            [[OMMTaskService sharedInstance] addTask:newTask toTaskGroup:self.taskGroup]; // task service save task and push notification to all tabs
+            NSManagedObjectContext *context = nil;
+            id delegate = [[UIApplication sharedApplication] delegate];
+            context = [delegate managedObjectContext];
+            
+            OMMTask *newTask = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:context];
+            
+            
+            newTask.name = self.taskNameTextField.text;
+            newTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
+            newTask.note = self.taskNotesTextView.text;
+            newTask.enableRemainder = [NSNumber numberWithBool:[self.remaindSwitcher isOn]];
+            newTask.closed = [NSNumber numberWithBool:NO];
+            [(AppDelegate *)delegate saveContext];
+
         }
         
         [self.navigationController popViewControllerAnimated:YES];

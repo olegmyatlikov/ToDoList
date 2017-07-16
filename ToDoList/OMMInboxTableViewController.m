@@ -205,8 +205,8 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     // move row in inbox section
     if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section && self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
         OMMTask *task = [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
-        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
-        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
+//        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
+//        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
         
     // move row in group but only on it section
     } else if (sourceIndexPath.section == destinationIndexPath.section) {
@@ -304,7 +304,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
                     OMMTasksGroup *checkTaskGroup = [self.tasksGroupsArray objectAtIndex:i];
                     if ([checkTaskGroup.tasksArray containsObject:task]) {
                         NSInteger j = [checkTaskGroup.tasksArray indexOfObject:task];
-                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
+//                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
                         [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
                     }
                 }
@@ -332,9 +332,9 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     
     
     // if task closed show only delete button
-    if (task.isClosed) {
-        return @[deleteAction];
-    } 
+//    if (task.isClosed) {
+//        return @[deleteAction];
+//    } 
     return @[deleteAction, doneAction];
 }
 

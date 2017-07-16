@@ -133,6 +133,14 @@
 			name = Tabs;
 			sourceTree = "<group>";
 		};
+		7C27ADEF1F1AAC5700A0CFF3 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		8446DFA31EE28BB9004337CF = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +167,7 @@
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
 				36BCC6051EF7EF3F00F28922 /* Tabs */,
 				36068B061EE58A6C0088EC2D /* Edit task/group pages */,
+				7C27ADEF1F1AAC5700A0CFF3 /* Core Data */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
@@ -181,7 +190,6 @@
 		8446DFFA1EE3597C004337CF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */,
 				8446DFCB1EE3017D004337CF /* OMMTask.h */,
 				8446DFCC1EE3017D004337CF /* OMMTask.m */,
 				8446DFCE1EE3032E004337CF /* OMMTasksGroup.h */,

@@ -31,7 +31,7 @@
     }
     
     // load data from file
-    [[OMMTaskService sharedInstance] loadData];
+    //[[OMMTaskService sharedInstance] loadData];
     
     return YES;
 }

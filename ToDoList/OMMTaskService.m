@@ -83,17 +83,17 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
     return taskGroup;
 }
 
-- (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(OMMTaskPriority)priority enableRemainder:(BOOL)remainder {
-    OMMTask *task = [[OMMTask alloc] init];
-    task.name = name;
-    task.startDate = date;
-    task.note = notes;
-    task.closed = NO;
-    task.priority = priority;
-    task.enableRemainder = remainder;
-    
-    return task;
-}
+//- (OMMTask *)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(OMMTaskPriority)priority enableRemainder:(BOOL)remainder {
+//    OMMTask *task = [[OMMTask alloc] init];
+//    task.name = name;
+//    task.startDate = date;
+//    task.note = notes;
+//    task.closed = NO;
+//    task.priority = priority;
+//    task.enableRemainder = remainder;
+//    
+//    return task;
+//}
 
 - (void)addTaskGroup:(OMMTasksGroup *)taskGroup {
     [self.privateTaskGroupsArray addObject:taskGroup];
@@ -105,77 +105,77 @@ static NSString * const OMMTaskServiceDataFilePath = @"appData";
     [self saveData];
 }
 
-- (void)addTask:(OMMTask *)task {
-    [self.inboxTasksGroup.tasksArray addObject:task];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-    [self saveData];
-}
+//- (void)addTask:(OMMTask *)task {
+//    [self.inboxTasksGroup.tasksArray addObject:task];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//    [self saveData];
+//}
 
-- (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
-    if (!taskGroup.tasksArray) {
-        taskGroup.tasksArray = [[NSMutableArray alloc] init];
-    }
-    if (![taskGroup isEqual:self.inboxTasksGroup]) {
-        [self.inboxTasksGroup.tasksArray addObject:task];
-    }
-    [taskGroup.tasksArray addObject:task];
-    
-    // add local notification
-    if (task.enableRemainder) {
-        [self addLocalNotificationForTask:task];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-    [self saveData];
-}
+//- (void)addTask:(OMMTask *)task toTaskGroup:(OMMTasksGroup *)taskGroup {
+//    if (!taskGroup.tasksArray) {
+//        taskGroup.tasksArray = [[NSMutableArray alloc] init];
+//    }
+//    if (![taskGroup isEqual:self.inboxTasksGroup]) {
+//        [self.inboxTasksGroup.tasksArray addObject:task];
+//    }
+//    [taskGroup.tasksArray addObject:task];
+//    
+//    // add local notification
+//    if (task.enableRemainder) {
+//        [self addLocalNotificationForTask:task];
+//    }
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//    [self saveData];
+//}
 
-- (void)removeTask:(OMMTask *)task {
-    [self.inboxTasksGroup.tasksArray removeObject:task];
-    for (NSMutableArray *array in [self.tasksGroupsArray valueForKeyPath:@"@unionOfObjects.tasksArray"]) {
-        [array removeObject:task];
-    }
-    
-    [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-    [self saveData];
-}
+//- (void)removeTask:(OMMTask *)task {
+//    [self.inboxTasksGroup.tasksArray removeObject:task];
+//    for (NSMutableArray *array in [self.tasksGroupsArray valueForKeyPath:@"@unionOfObjects.tasksArray"]) {
+//        [array removeObject:task];
+//    }
+//    
+//    [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
+//    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//    [self saveData];
+//}
 
-- (void)closeTask:(OMMTask *)task {
-    task.closed = YES;
-    task.enableRemainder = NO;
-    
-    [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-    [self saveData];
-}
+//- (void)closeTask:(OMMTask *)task {
+//    task.closed = YES;
+//    task.enableRemainder = NO;
+//    
+//    [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
+//    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//    [self saveData];
+//}
 
-- (void)updateTask:(OMMTask *)task  name:(NSString *)changedName taskStartDate:(NSDate *)changedDate taskNotes:(NSString *)changedTaskNotes taskPriority:(OMMTaskPriority)changedPriority enableRemainder:(BOOL)changedRemainder {
-    task.name = changedName;
-    task.startDate = changedDate;
-    task.note = changedTaskNotes;
-    task.priority = changedPriority;
-    task.enableRemainder = changedRemainder;
-    
-    
-    if (task.enableRemainder) { // if remainder on - close old notification and open new
-        [self cancelLocalNotificationForTask:task];
-        [self addLocalNotificationForTask:task];
-    } else {
-        [self cancelLocalNotificationForTask:task]; 
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-    [self saveData];
-}
+//- (void)updateTask:(OMMTask *)task  name:(NSString *)changedName taskStartDate:(NSDate *)changedDate taskNotes:(NSString *)changedTaskNotes taskPriority:(OMMTaskPriority)changedPriority enableRemainder:(BOOL)changedRemainder {
+//    task.name = changedName;
+//    task.startDate = changedDate;
+//    task.note = changedTaskNotes;
+//    task.priority = changedPriority;
+//    task.enableRemainder = changedRemainder;
+//    
+//    
+//    if (task.enableRemainder) { // if remainder on - close old notification and open new
+//        [self cancelLocalNotificationForTask:task];
+//        [self addLocalNotificationForTask:task];
+//    } else {
+//        [self cancelLocalNotificationForTask:task]; 
+//    }
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//    [self saveData];
+//}
 
-- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
-    for (OMMTask *task in tasksGroup.tasksArray) {
-        [self.inboxTasksGroup.tasksArray removeObject:task];
-    }
-    [self.privateTaskGroupsArray removeObject:tasksGroup];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-    [self saveData];
-}
+//- (void)removeTasksGroup:(OMMTasksGroup *)tasksGroup {
+//    for (OMMTask *task in tasksGroup.tasksArray) {
+//        [self.inboxTasksGroup.tasksArray removeObject:task];
+//    }
+//    [self.privateTaskGroupsArray removeObject:tasksGroup];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//    [self saveData];
+//}
 
 - (void)renameTasksGroup:(OMMTasksGroup *)taskGroup to:(NSString *)newName{
     taskGroup.groupName = newName;
