@@ -175,9 +175,9 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
     }
     OMMTask *task = [[OMMTask alloc] init];
     if (indexPath.section == 0) {
-        task = [self.openTasksFetchedResultsController objectAtIndexPath:indexPath];
+        task = [self.openTasksFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
     } else {
-        task = [self.closedTasksFetchedResultsController objectAtIndexPath:indexPath];
+        task = [self.closedTasksFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
     }
     cell.taskName.text = task.name;
     cell.taskNote.text = task.note;
@@ -274,7 +274,10 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
 //    }
 //}
 
+
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    NSLog(@"section - %ld, row - %ld", (long)newIndexPath.section, (long)newIndexPath.row);
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [[self tableView] insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];

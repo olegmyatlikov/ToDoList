@@ -122,7 +122,7 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
             newTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
             newTask.note = self.taskNotesTextView.text;
             newTask.enableRemainder = [NSNumber numberWithBool:[self.remaindSwitcher isOn]];
-            newTask.closed = [NSNumber numberWithBool:NO];
+            newTask.closed = [NSNumber numberWithBool:YES];
             [(AppDelegate *)delegate saveContext];
 
         }
