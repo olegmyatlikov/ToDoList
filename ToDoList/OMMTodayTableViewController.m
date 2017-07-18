@@ -80,10 +80,12 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
 - (void)initializeOpenTasksFetchedResultsController {
     NSFetchRequest *request = [OMMTask fetchRequest];
 
-    NSSortDescriptor *taskNameSort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    [request setSortDescriptors:@[taskNameSort]];
-    NSPredicate *openTasksPredicate = [NSPredicate predicateWithFormat:@"closed == NO"];
-    request.predicate = openTasksPredicate;
+//    NSSortDescriptor *taskNameSort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+//    [request setSortDescriptors:@[taskNameSort]];
+//    NSPredicate *openTasksPredicate = [NSPredicate predicateWithFormat:@"closed == NO"];
+//    request.predicate = openTasksPredicate;
+    request.propertiesToGroupBy = @[@"closed"];
+    request.resultType = NSDictionaryResultType;
     
     [self setOpenTasksFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil]];
     [self.openTasksFetchedResultsController setDelegate:self];
