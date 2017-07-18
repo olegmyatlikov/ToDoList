@@ -33,24 +33,17 @@
 
 #pragma mark - localization
 
-+ (NSString *)taskPriorityToString:(OMMTaskPriority)taskPriority {
++ (NSString *)taskPriorityToString:(NSNumber *)taskPriority {
     NSString *priorityInString = [[NSString alloc] init];
-    switch (taskPriority) {
-        case OMMTaskPriorityNone:
-            priorityInString = NSLocalizedString(@"task_priority.string-NONE", nil);
-            break;
-        case OMMTaskPriorityLow:
-            priorityInString = NSLocalizedString(@"task_priority.string-LOW", nil);
-            break;
-        case OMMTaskPriorityMedium:
-            priorityInString = NSLocalizedString(@"task_priority.string-MEDIUM", nil);
-            break;
-        case OMMTaskPriorityHigh:
-            priorityInString = NSLocalizedString(@"task_priority.string-HIGH", nil);
-            break;
-            
-        default:
-            break;
+    NSInteger taskPriorityIntValue = [taskPriority integerValue];
+    if (taskPriorityIntValue == 0) {
+        priorityInString = NSLocalizedString(@"task_priority.string-NONE", nil);
+    } else if (taskPriorityIntValue == 1) {
+        priorityInString = NSLocalizedString(@"task_priority.string-LOW", nil);
+    } else if (taskPriorityIntValue == 2) {
+        priorityInString = NSLocalizedString(@"task_priority.string-MEDIUM", nil);
+    } else {
+        priorityInString = NSLocalizedString(@"task_priority.string-HIGH", nil);
     }
     
     return priorityInString;
