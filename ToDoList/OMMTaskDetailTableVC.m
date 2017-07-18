@@ -120,7 +120,7 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
             newTask.name = self.taskNameTextField.text;
             newTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
             newTask.note = self.taskNotesTextView.text;
-            //newTask.priority = [];
+            newTask.priority = [NSNumber numberWithInteger:self.priority];
             newTask.enableRemainder = [NSNumber numberWithBool:[self.remaindSwitcher isOn]];
             newTask.closed = [NSNumber numberWithBool:NO];
             [delegate saveContext];
