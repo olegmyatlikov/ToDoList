@@ -95,6 +95,14 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     return [result firstObject];
 }
 
+- (NSArray *)getAllTaskArray {
+    NSFetchRequest *request = [OMMTask fetchRequest];
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO];
+    request.sortDescriptors = @[nameDescriptor];
+    NSArray *result = [self.managedObjectContext executeFetchRequest:request error:nil];
+    return result;
+}
+
 
 #pragma mark - manage local notification
 

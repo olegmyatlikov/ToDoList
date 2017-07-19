@@ -27,4 +27,6 @@ extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 - (void)deleteTaskByID:(NSNumber *)taskID;
 - (void)closeTaskByID:(NSNumber *)taskID;
 
+- (NSArray *)getAllTaskArray;
+
 @end
