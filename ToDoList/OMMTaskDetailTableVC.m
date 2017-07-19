@@ -8,7 +8,7 @@
 
 #import "OMMTaskDetailTableVC.h"
 #import "UIView+OMMHeaderInSection.h"
-#import "AppDelegate.h"
+#import "OMMDataManager.h"
 
 @interface OMMTaskDetailTableVC ()
 
@@ -54,7 +54,6 @@ static NSString *OMMTaskDetailVCOkAlertPriorityActionTitle;
 
 #pragma mark - constants 
 
-//NSString * const OMMTaskDetailTaskWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
 
 
@@ -66,8 +65,8 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
     if (self.task) {
         self.taskNameTextField.text = self.task.name;
         self.startDateLabel.text = [self.task.startDate convertDateToLongDateString];
-        [self.remaindSwitcher setOn:self.task.enableRemainder];
-        self.priorityLabel.text = [OMMTask taskPriorityToString:self.task.priority];
+        [self.remaindSwitcher setOn:[self.task.enableRemainder boolValue]];
+        self.priorityLabel.text = [OMMTask taskPriorityToString:[self.task.priority integerValue]];
         self.taskNotesTextView.text = self.task.note;
     } else {
         self.startDateLabel.text = OMMTaskDetailVCSetDateLabelText;
@@ -103,31 +102,22 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
         [self openEmptyValueAlert];
     } else {
         
-        if (self.task) { // save all changes 
-            [[OMMTaskService sharedInstance] updateTask:self.task name:self.taskNameTextField.text
-                      taskStartDate:[NSDate convertStringToDate:self.startDateLabel.text]
-                          taskNotes:self.taskNotesTextView.text
-                       taskPriority:self.priority
-                    enableRemainder:[self.remaindSwitcher isOn]];
+        if (self.task) { // save all changes
+            [[OMMDataManager sharedInstance] updateTaskWichID:self.task.taskID
+                                                  changedName:self.taskNameTextField.text
+                                                  changedDate:[NSDate convertStringToDate:self.startDateLabel.text]
+                                             changedTaskNotes:self.taskNotesTextView.text
+                                              changedPriority:self.priority
+                                             changedRemainder:[NSNumber numberWithBool:[self.remaindSwitcher isOn]]];
         } else { // add new task
-            NSManagedObjectContext *context = nil;
-            id delegate = [[UIApplication sharedApplication] delegate];
-            context = [delegate managedObjectContext];
-            
-            OMMTask *newTask = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:context];
-            
-            
-            newTask.name = self.taskNameTextField.text;
-            newTask.startDate = [NSDate convertStringToDate:self.startDateLabel.text];
-            newTask.note = self.taskNotesTextView.text;
-            newTask.priority = [NSNumber numberWithInteger:self.priority];
-            newTask.enableRemainder = [NSNumber numberWithBool:[self.remaindSwitcher isOn]];
-            newTask.closed = [NSNumber numberWithBool:NO];
-            [delegate saveContext];
-
+            [[OMMDataManager sharedInstance] createTaskWithName:self.taskNameTextField.text
+                                                      startDate:[NSDate convertStringToDate:self.startDateLabel.text]
+                                                          notes:self.taskNotesTextView.text
+                                                       priority:self.priority
+                                                enableRemainder:[NSNumber numberWithBool:[self.remaindSwitcher isOn]]];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -169,20 +159,20 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
 - (void)openPriorityAlertActionSheet {
     UIAlertController *priorityAlert = [UIAlertController alertControllerWithTitle:OMMTaskDetailVCSelectPriorityAlertTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityNone]] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = [OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityNone]];
+    UIAlertAction *nonePriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityNone] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityNone];
         self.priority = OMMTaskPriorityNone;
     }];
-    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityLow]] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = [OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityLow]] ;
+    UIAlertAction *lowPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityLow] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityLow];
         self.priority = OMMTaskPriorityLow;
     }];
-    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityMedium]] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = [OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityMedium]];
+    UIAlertAction *mediumPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityMedium] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityMedium];
         self.priority = OMMTaskPriorityMedium;
     }];
-    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityHigh]] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        self.priorityLabel.text = [OMMTask taskPriorityToString:[NSNumber numberWithInt:OMMTaskPriorityHigh]];
+    UIAlertAction *highPriority = [UIAlertAction actionWithTitle:[OMMTask taskPriorityToString:OMMTaskPriorityHigh] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        self.priorityLabel.text = [OMMTask taskPriorityToString:OMMTaskPriorityHigh];
         self.priority = OMMTaskPriorityHigh;
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:OMMTaskDetailVCOkAlertPriorityActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){ }];

@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, OMMTaskPriority) {
 @property (nullable, nonatomic, retain) TasksGroup *tasksGroup;
 
 + (NSFetchRequest<OMMTask *> *_Nonnull)fetchRequest;
-+ (NSString *_Nonnull)taskPriorityToString:(NSNumber *_Nonnull)taskPriority;
++ (NSString *_Nonnull)taskPriorityToString:(NSInteger)taskPriority;
+
+//- (void)removeTask
 
 @end

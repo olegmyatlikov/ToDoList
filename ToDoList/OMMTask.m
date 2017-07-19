@@ -33,14 +33,13 @@
 
 #pragma mark - localization
 
-+ (NSString *)taskPriorityToString:(NSNumber *)taskPriority {
++ (NSString *)taskPriorityToString:(NSInteger)taskPriority {
     NSString *priorityInString = [[NSString alloc] init];
-    NSInteger taskPriorityIntValue = [taskPriority integerValue];
-    if (taskPriorityIntValue == 0) {
+    if (taskPriority == 0) {
         priorityInString = NSLocalizedString(@"task_priority.string-NONE", nil);
-    } else if (taskPriorityIntValue == 1) {
+    } else if (taskPriority == 1) {
         priorityInString = NSLocalizedString(@"task_priority.string-LOW", nil);
-    } else if (taskPriorityIntValue == 2) {
+    } else if (taskPriority == 2) {
         priorityInString = NSLocalizedString(@"task_priority.string-MEDIUM", nil);
     } else {
         priorityInString = NSLocalizedString(@"task_priority.string-HIGH", nil);

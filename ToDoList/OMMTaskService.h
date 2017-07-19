@@ -10,7 +10,7 @@
 #import "OMMTask.h"
 #import "OMMTasksGroup.h"
 
-extern NSString * const OMMTaskServiceTaskWasModifyNotification;
+//extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 
 @interface OMMTaskService : NSObject <NSCoding>
 

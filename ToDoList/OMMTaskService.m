@@ -26,7 +26,7 @@ static NSString *OMMTaskServiceNameTaskGroupInbox;
     OMMTaskServiceNameTaskGroupInbox = NSLocalizedString(@"inbox_group_property_name-INBOX", nil);
 }
 
-NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
+//NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 static NSString * const OMMTaskServiceDataFilePath = @"appData";
 
 

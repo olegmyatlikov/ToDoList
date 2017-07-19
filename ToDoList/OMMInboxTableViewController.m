@@ -12,6 +12,7 @@
 #import "OMMTaskService.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
+#import "OMMDataManager.h"
 
 @interface OMMInboxTableViewController ()
 
