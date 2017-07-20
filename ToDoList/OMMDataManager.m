@@ -65,11 +65,11 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     task.enableRemainder = [NSNumber numberWithBool:remainder];
     
     if (taskGroup) {
-        
         task.tasksGroup = taskGroup;
     } else {
         task.tasksGroup = self.inboxTasksGroup;
     }
+    //[self.inboxTasksGroup addTasksObject:task];
     
     if ([task.enableRemainder boolValue]) {
         [self addLocalNotificationForTask:task];

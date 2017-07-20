@@ -11,7 +11,6 @@
 #import "UIView+OMMHeaderInSection.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
-#import <CoreData/CoreData.h>
 #import "OMMDataManager.h"
 
 @interface OMMTodayTableViewController ()
@@ -192,15 +191,14 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
                 taskForDelete = [self.openTasksArray objectAtIndex:indexPath.row];
                 [self.openTasksArray removeObjectAtIndex:indexPath.row];
             } else {
-                taskForDelete = [self.openTasksArray objectAtIndex:indexPath.row];
+                taskForDelete = [self.closeTaskArray objectAtIndex:indexPath.row];
                 [self.closeTaskArray removeObjectAtIndex:indexPath.row];
             }
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
             
             [[OMMDataManager sharedInstance] deleteTaskByID:taskForDelete.taskID];
-            //self.taskListWasModified = NO; // don't reload data if changes was in this tab
-            
         }];
+        
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseAction style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;
         }];

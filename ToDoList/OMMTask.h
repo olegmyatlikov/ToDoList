@@ -10,9 +10,6 @@
 #import <CoreData/CoreData.h>
 #import "OMMTasksGroup.h"
 
-
-@class TasksGroup;
-
 @interface OMMTask : NSManagedObject
 
 typedef NS_ENUM(NSInteger, OMMTaskPriority) {
