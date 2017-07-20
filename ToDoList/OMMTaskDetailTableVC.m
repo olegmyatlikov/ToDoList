@@ -114,10 +114,9 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
                                                       startDate:[NSDate convertStringToDate:self.startDateLabel.text]
                                                           notes:self.taskNotesTextView.text
                                                        priority:self.priority
-                                                enableRemainder:[NSNumber numberWithBool:[self.remaindSwitcher isOn]]];
+                                                enableRemainder:[NSNumber numberWithBool:[self.remaindSwitcher isOn]] inTasksGroup:self.taskGroup];
         }
         
-        //[[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

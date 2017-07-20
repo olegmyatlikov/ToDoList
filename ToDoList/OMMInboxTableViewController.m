@@ -9,7 +9,7 @@
 #import "OMMInboxTableViewController.h"
 #import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
-#import "OMMTaskService.h"
+#import "OMMDataManager.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
 #import "OMMDataManager.h"
@@ -105,8 +105,8 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (void)prepareDataForTableView {
     // check - if we came here from toDoList show only one group tasks
     if (!self.tasksGroup) {
-        self.tasksGroupsArray = [[OMMTaskService sharedInstance].tasksGroupsArray mutableCopy];
-        [self.tasksGroupsArray insertObject:[OMMTaskService sharedInstance].inboxTasksGroup atIndex:0];
+        self.tasksGroupsArray = [[[OMMDataManager sharedInstance] getAllTasksGroups] mutableCopy];
+        [self.tasksGroupsArray insertObject:[OMMDataManager sharedInstance].inboxTasksGroup atIndex:0];
     } else {
         [self.tasksGroupsArray removeAllObjects];
         [self.tasksGroupsArray addObject:self.tasksGroup];
@@ -122,9 +122,9 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (IBAction)addNewTaskButtonPressed:(UIBarButtonItem *)sender {
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:OMMInboxTaskDetailVCIndentifair];
     if (self.tasksGroupsArray.count == 1) { // if we in the group then send this group and add new task in it
-        taskDetails.taskGroup = self.tasksGroupsArray[0];
+        taskDetails.taskGroup = [self.tasksGroupsArray firstObject];
     } else { // else add task in inbox group
-        taskDetails.taskGroup = [OMMTaskService sharedInstance].inboxTasksGroup;
+        taskDetails.taskGroup = [[OMMDataManager sharedInstance] inboxTasksGroup];
     }
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
@@ -143,7 +143,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     [self.tasksGroupsArray removeObjectAtIndex:0];
     NSArray *reverceArray = [[self.tasksGroupsArray reverseObjectEnumerator] allObjects];
     self.tasksGroupsArray = [reverceArray mutableCopy];
-    [self.tasksGroupsArray insertObject:[OMMTaskService sharedInstance].inboxTasksGroup atIndex:0];
+    [self.tasksGroupsArray insertObject:[[OMMDataManager sharedInstance] inboxTasksGroup] atIndex:0];
 
     // revert task witch sorted by date
     NSMutableArray *reverceTaskArray = [[NSMutableArray alloc] init];
@@ -160,7 +160,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     self.allTasksSortedByDateInArrays = [[NSMutableArray alloc] init];
     NSSortDescriptor *sortByDateDescriptor = [[NSSortDescriptor alloc] initWithKey:OMMInboxStartDateTasksProperty ascending:YES];
     NSArray *sortDescriptorsArray = @[sortByDateDescriptor];
-    NSArray *tasksSortedByStartDate = [[OMMTaskService sharedInstance].allTasksArray sortedArrayUsingDescriptors:sortDescriptorsArray];
+    NSArray *tasksSortedByStartDate = [[[OMMDataManager sharedInstance] getAllTaskArray] sortedArrayUsingDescriptors:sortDescriptorsArray];
     
     for (int i = 0; i < tasksSortedByStartDate.count; i++) {
         if (i == 0) {
@@ -201,23 +201,23 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    
-    // move row in inbox section
-    if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section && self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-        OMMTask *task = [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
-//        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
-//        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
-        
-    // move row in group but only on it section
-    } else if (sourceIndexPath.section == destinationIndexPath.section) {
-        OMMTask *task = [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] objectAtIndex:sourceIndexPath.row];
-        [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] removeObjectAtIndex:sourceIndexPath.row];
-        [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] insertObject:task atIndex:destinationIndexPath.row];
-    }
-    
-    [tableView reloadData];
-}
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+//    
+//    // move row in inbox section
+//    if (sourceIndexPath.section == 0 && sourceIndexPath.section == destinationIndexPath.section && self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
+//        OMMTask *task = [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray objectAtIndex:sourceIndexPath.row];
+////        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray removeObjectAtIndex:sourceIndexPath.row];
+////        [[OMMTaskService sharedInstance].inboxTasksGroup.tasksArray insertObject:task atIndex:destinationIndexPath.row];
+//        
+//    // move row in group but only on it section
+//    } else if (sourceIndexPath.section == destinationIndexPath.section) {
+//        OMMTask *task = [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] objectAtIndex:sourceIndexPath.row];
+//        [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] removeObjectAtIndex:sourceIndexPath.row];
+//        [[[[OMMTaskService sharedInstance].tasksGroupsArray objectAtIndex:(sourceIndexPath.section - 1)] valueForKey:OMMInboxTaskArrayTasksGroupProperty] insertObject:task atIndex:destinationIndexPath.row];
+//    }
+//    
+//    [tableView reloadData];
+//}
 
 
 #pragma mark - setup data for tableView
@@ -242,7 +242,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
         OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:section];
-        return taskGroup.tasksArray.count;
+        return taskGroup.tasks.count;
     }
     return [[self.allTasksSortedByDateInArrays objectAtIndex:section] count];
 }
@@ -256,10 +256,13 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     }
     
     OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
+    taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"groupName" ascending:YES];
+    NSArray *sortedArray = [taskGroup.tasks sortedArrayUsingDescriptors:@[nameDescriptor]];
+    
     OMMTask *task = [[OMMTask alloc] init];
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
-        task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
+        task = [sortedArray objectAtIndex:indexPath.row];
     } else {
         task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
@@ -274,70 +277,70 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
 #pragma mark - edit the row
 
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    // get task witch editing
-    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
-    OMMTask *task = [[OMMTask alloc] init];
-    if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
-        task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
-    } else {
-        task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    }
-    
-    // done button - change task condition in closed
-    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[OMMTaskService sharedInstance] closeTask:task];
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-        self.taskListWasModified = NO;
-        tableView.editing = NO;
-    }];
-    
-    // delete button with alert "sure want to delete" when delete button pressed
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMInboxEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMInboxAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMInboxDeleteButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-                
-                // Delete task in all groups with animations
-                for (NSInteger i = 0; i < self.tasksGroupsArray.count; i++) {
-                    OMMTasksGroup *checkTaskGroup = [self.tasksGroupsArray objectAtIndex:i];
-                    if ([checkTaskGroup.tasksArray containsObject:task]) {
-                        NSInteger j = [checkTaskGroup.tasksArray indexOfObject:task];
-//                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
-                        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
-                    }
-                }
-                [self.allTasksSortedByDateInArrays removeObject:task]; // and delete this task from allTasksSortedByDateInArrays
-                [self sortAllTaskByDate]; // reload allTasksSortedByDateInArrays
-                
-            } else {
-                [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
-                [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-            }
-            
-            [[OMMTaskService sharedInstance] removeTask:task];
-            self.taskListWasModified = NO;
-        }];
-        
-        // cancel button close alert and stop editing
-        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMInboxCloseButton style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            tableView.editing = NO;
-        }];
-        
-        [deleteAlertVC addAction:deleteAction];
-        [deleteAlertVC addAction:closeAction];
-        [self presentViewController:deleteAlertVC animated:YES completion:nil];
-    }];
-    
-    
-    // if task closed show only delete button
-//    if (task.isClosed) {
-//        return @[deleteAction];
-//    } 
-    return @[deleteAction, doneAction];
-}
+//- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    // get task witch editing
+//    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
+//    OMMTask *task = [[OMMTask alloc] init];
+//    if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
+//        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
+//        task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
+//    } else {
+//        task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//    }
+//    
+//    // done button - change task condition in closed
+//    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//        [[OMMTaskService sharedInstance] closeTask:task];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+//        self.taskListWasModified = NO;
+//        tableView.editing = NO;
+//    }];
+//    
+//    // delete button with alert "sure want to delete" when delete button pressed
+//    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMInboxEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMInboxAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMInboxDeleteButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
+//                
+//                // Delete task in all groups with animations
+//                for (NSInteger i = 0; i < self.tasksGroupsArray.count; i++) {
+//                    OMMTasksGroup *checkTaskGroup = [self.tasksGroupsArray objectAtIndex:i];
+//                    if ([checkTaskGroup.tasksArray containsObject:task]) {
+//                        NSInteger j = [checkTaskGroup.tasksArray indexOfObject:task];
+////                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
+//                        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
+//                    }
+//                }
+//                [self.allTasksSortedByDateInArrays removeObject:task]; // and delete this task from allTasksSortedByDateInArrays
+//                [self sortAllTaskByDate]; // reload allTasksSortedByDateInArrays
+//                
+//            } else {
+//                [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
+//                [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
+//            }
+//            
+//            [[OMMTaskService sharedInstance] removeTask:task];
+//            self.taskListWasModified = NO;
+//        }];
+//        
+//        // cancel button close alert and stop editing
+//        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMInboxCloseButton style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//            tableView.editing = NO;
+//        }];
+//        
+//        [deleteAlertVC addAction:deleteAction];
+//        [deleteAlertVC addAction:closeAction];
+//        [self presentViewController:deleteAlertVC animated:YES completion:nil];
+//    }];
+//    
+//    
+//    // if task closed show only delete button
+////    if (task.isClosed) {
+////        return @[deleteAction];
+////    } 
+//    return @[deleteAction, doneAction];
+//}
 
 
 #pragma mark - tap to cell
@@ -345,11 +348,10 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OMMTaskDetailTableVC *taskDetails = [self.storyboard instantiateViewControllerWithIdentifier:OMMInboxTaskDetailVCIndentifair];
     
-    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
     OMMTask *task = [[OMMTask alloc] init];
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
-        task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
+        OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
+        task = [taskGroup.allTasksArray objectAtIndex:indexPath.row];
     } else {
         task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }

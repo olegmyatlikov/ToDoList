@@ -9,7 +9,6 @@
 #import "OMMDataManager.h"
 #import "NSDate+OMMDateConverter.h"
 #import <UIKit/UIKit.h> // for UILocalNotification
-#import "OMMTask.h"
 
 @implementation OMMDataManager
 
@@ -17,7 +16,29 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+static NSString *OMMTaskServiceNameTaskGroupInbox;
 NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
+
++ (void)initialize {
+    OMMTaskServiceNameTaskGroupInbox = NSLocalizedString(@"inbox_group_property_name-INBOX", nil);
+}
+
+
+#pragma mark - init
+
+- (instancetype)init {
+    self = [super init];
+    if (self && self.inboxTasksGroup == nil) {
+        
+        if (![self getTasksGroupByID:@1]) { // if inbox doesh't exist, create it
+            OMMTasksGroup *inboxTasksGroup = [self createTasksGroupWithName:OMMTaskServiceNameTaskGroupInbox]; // localize
+            inboxTasksGroup.groupID = @1;
+        }
+        _inboxTasksGroup = [self getTasksGroupByID:@1];
+    }
+    
+    return self;
+}
 
 + (instancetype)sharedInstance {
     static OMMDataManager *shared;
@@ -33,7 +54,7 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 
 #pragma mark - manage task
 
-- (void)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(OMMTaskPriority)priority enableRemainder:(BOOL)remainder {
+- (void)createTaskWithName:(NSString *)name startDate:(NSDate *)date notes:(NSString *)notes priority:(OMMTaskPriority)priority enableRemainder:(BOOL)remainder inTasksGroup:(OMMTasksGroup *)taskGroup {
     OMMTask *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
     task.taskID = [NSNumber numberWithInteger:arc4random_uniform(10000)];
     task.name = name;
@@ -43,11 +64,16 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     task.priority = [NSNumber numberWithInteger:priority];
     task.enableRemainder = [NSNumber numberWithBool:remainder];
     
+    if (taskGroup) {
+        
+        task.tasksGroup = taskGroup;
+    } else {
+        task.tasksGroup = self.inboxTasksGroup;
+    }
     
     if ([task.enableRemainder boolValue]) {
         [self addLocalNotificationForTask:task];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveContext];
 }
 
@@ -66,7 +92,6 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     } else {
         [self cancelLocalNotificationForTask:task];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveContext];
 }
 
@@ -75,7 +100,6 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     [self.managedObjectContext deleteObject:task];
     
     [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveContext];
 }
 
@@ -84,7 +108,6 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     task.closed = [NSNumber numberWithBool:YES];
     
     [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
     [self saveContext];
 }
 
@@ -95,11 +118,54 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     return [result firstObject];
 }
 
+
+#pragma mark - manage tasksGroup
+
+- (OMMTasksGroup *)createTasksGroupWithName:(NSString *)name {
+    OMMTasksGroup *tasksGroup = [NSEntityDescription insertNewObjectForEntityForName:@"TasksGroup" inManagedObjectContext:self.managedObjectContext];
+    tasksGroup.groupID = [NSNumber numberWithInteger:arc4random_uniform(10000)];
+    tasksGroup.groupName = name;
+    tasksGroup.groupStartDate = [NSDate date];
+    [self saveContext];
+    
+    return tasksGroup;
+}
+
+- (void)deleteTasksGroupByID:(NSNumber *)tasksGroupID {
+    OMMTasksGroup *tasksGroup = [self getTasksGroupByID:tasksGroupID];
+    [self.managedObjectContext deleteObject:tasksGroup];
+    [self saveContext];
+}
+
+- (void)renameTasksGroupWithID:(NSNumber *)tasksGroupID to:(NSString *)newName {
+    OMMTasksGroup *tasksGroup = [self getTasksGroupByID:tasksGroupID];
+    tasksGroup.groupName = newName;
+    [self saveContext];
+}
+
+- (OMMTasksGroup *)getTasksGroupByID:(NSNumber *)tasksGroupID {
+    NSFetchRequest *request = [OMMTasksGroup fetchRequest];
+    request.predicate = [NSPredicate predicateWithFormat:@"groupID = %@", tasksGroupID];
+    NSArray *result = [self.managedObjectContext executeFetchRequest:request error:nil];
+    return [result firstObject];
+}
+
+#pragma mark - get data
+
 - (NSArray *)getAllTaskArray {
     NSFetchRequest *request = [OMMTask fetchRequest];
     NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO];
     request.sortDescriptors = @[nameDescriptor];
     NSArray *result = [self.managedObjectContext executeFetchRequest:request error:nil];
+    return result;
+}
+
+- (NSArray *)getAllTasksGroups { // Whithout inbox
+    NSFetchRequest *request = [OMMTasksGroup fetchRequest];
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"groupName" ascending:NO];
+    request.sortDescriptors = @[nameDescriptor];
+    NSMutableArray *result = [[self.managedObjectContext executeFetchRequest:request error:nil] mutableCopy];
+    [result removeObject:[self getTasksGroupByID:@1]];
     return result;
 }
 
@@ -197,6 +263,7 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
             abort();
         }
     }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
 }
 

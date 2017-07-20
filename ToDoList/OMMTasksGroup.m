@@ -18,5 +18,12 @@
 @dynamic groupName;
 @dynamic groupStartDate;
 @dynamic tasks;
+@synthesize allTasksArray = _allTasksArray;
+
+- (NSArray *)allTasksArray {
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"groupName" ascending:YES];
+    NSArray *sortedArray = [self.tasks sortedArrayUsingDescriptors:@[nameDescriptor]];
+    return sortedArray;
+}
 
 @end
