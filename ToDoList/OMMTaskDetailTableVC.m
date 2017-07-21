@@ -61,6 +61,7 @@ static NSString * const OMMTaskDetailVCTextLabelProperty = @"text";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"Position - %@", self.task.positionInTasksArray);
     
     if (self.task) {
         self.taskNameTextField.text = self.task.name;

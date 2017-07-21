@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, OMMTaskPriority) {
 @property (nullable, nonatomic, copy) NSNumber *priority;
 @property (nullable, nonatomic, copy) NSNumber *closed;
 @property (nullable, nonatomic, copy) NSNumber *enableRemainder;
+@property (nullable, nonatomic, copy) NSNumber *positionInTasksArray;
 @property (nullable, nonatomic, retain) OMMTasksGroup *tasksGroup;
 
 + (NSFetchRequest<OMMTask *> *_Nonnull)fetchRequest;

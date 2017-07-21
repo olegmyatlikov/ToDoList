@@ -6,19 +6,20 @@
         <attribute name="finishDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="positionInTasksArray" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="taskID" optional="YES" attributeType="Integer 64" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tasksGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TasksGroup" inverseName="tasks" inverseEntity="TasksGroup" syncable="YES"/>
     </entity>
-    <entity name="TasksGroup" representedClassName="TasksGroup" syncable="YES">
+    <entity name="TasksGroup" representedClassName="OMMTasksGroup" syncable="YES">
         <attribute name="groupID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="groupName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupStartDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Task" inverseName="tasksGroup" inverseEntity="Task" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Task" positionX="-45" positionY="90" width="128" height="178"/>
+        <element name="Task" positionX="-45" positionY="90" width="128" height="193"/>
         <element name="TasksGroup" positionX="187" positionY="81" width="128" height="103"/>
     </elements>
 </model>

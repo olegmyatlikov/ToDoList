@@ -29,6 +29,7 @@
 @dynamic startDate;
 @dynamic taskID;
 @dynamic tasksGroup;
+@dynamic positionInTasksArray;
 
 
 #pragma mark - localization

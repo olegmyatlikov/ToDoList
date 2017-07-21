@@ -20,12 +20,12 @@
 @property (nullable, nonatomic, copy) NSString *groupName;
 @property (nullable, nonatomic, copy) NSDate *groupStartDate;
 @property (nullable, nonatomic, retain) NSSet<OMMTask *> *tasks;
-@property (nonatomic, retain) NSArray *tasksArray; // DELETE!!!
-
-- (void)printSomething;
-
+@property (nonatomic, retain) NSArray * _Nonnull tasksArray; // DELETE!!!
+@property (nullable, nonatomic, retain) NSArray *allTasksArray;
+//- (NSArray *_Nonnull)allTask;
 
 @end
+
 
 @interface OMMTasksGroup (CoreDataGeneratedAccessors)
 

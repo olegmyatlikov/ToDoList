@@ -128,7 +128,8 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
     
     if (indexPath.section == 0) {
         cell.textLabel.text = OMMToDoListInboxGroup;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)[[OMMDataManager sharedInstance] getAllTaskArray].count];
+        OMMTasksGroup *inboxGroup = [[OMMDataManager sharedInstance] inboxTasksGroup];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)[[inboxGroup allTasksArray] count]];
         
     // crete view with image for "greate new group" row
     } else if (indexPath.row == 0) {
