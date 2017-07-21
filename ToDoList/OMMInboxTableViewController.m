@@ -255,9 +255,8 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
         cell = [tableView dequeueReusableCellWithIdentifier:OMMInboxTaskCellIndetifair];
     }
     
-    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
-    taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
-    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"groupName" ascending:YES];
+    OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     NSArray *sortedArray = [taskGroup.tasks sortedArrayUsingDescriptors:@[nameDescriptor]];
     
     OMMTask *task = [[OMMTask alloc] init];
@@ -277,70 +276,70 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
 #pragma mark - edit the row
 
-//- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    // get task witch editing
-//    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
-//    OMMTask *task = [[OMMTask alloc] init];
-//    if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-//        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
-//        task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
-//    } else {
-//        task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-//    }
-//    
-//    // done button - change task condition in closed
-//    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-//        [[OMMTaskService sharedInstance] closeTask:task];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-//        self.taskListWasModified = NO;
-//        tableView.editing = NO;
-//    }];
-//    
-//    // delete button with alert "sure want to delete" when delete button pressed
-//    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMInboxEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-//        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMInboxAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMInboxDeleteButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-//                
-//                // Delete task in all groups with animations
-//                for (NSInteger i = 0; i < self.tasksGroupsArray.count; i++) {
-//                    OMMTasksGroup *checkTaskGroup = [self.tasksGroupsArray objectAtIndex:i];
-//                    if ([checkTaskGroup.tasksArray containsObject:task]) {
-//                        NSInteger j = [checkTaskGroup.tasksArray indexOfObject:task];
-////                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
-//                        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
-//                    }
-//                }
-//                [self.allTasksSortedByDateInArrays removeObject:task]; // and delete this task from allTasksSortedByDateInArrays
-//                [self sortAllTaskByDate]; // reload allTasksSortedByDateInArrays
-//                
-//            } else {
-//                [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
-//                [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-//            }
-//            
-//            [[OMMTaskService sharedInstance] removeTask:task];
-//            self.taskListWasModified = NO;
-//        }];
-//        
-//        // cancel button close alert and stop editing
-//        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMInboxCloseButton style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//            tableView.editing = NO;
-//        }];
-//        
-//        [deleteAlertVC addAction:deleteAction];
-//        [deleteAlertVC addAction:closeAction];
-//        [self presentViewController:deleteAlertVC animated:YES completion:nil];
-//    }];
-//    
-//    
-//    // if task closed show only delete button
-////    if (task.isClosed) {
-////        return @[deleteAction];
-////    } 
-//    return @[deleteAction, doneAction];
-//}
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // get task witch editing
+    OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
+    OMMTask *task = [[OMMTask alloc] init];
+    if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
+        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
+        task = [taskGroup.tasksArray objectAtIndex:indexPath.row];
+    } else {
+        task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    }
+    
+    // done button - change task condition in closed
+    UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [[OMMTaskService sharedInstance] closeTask:task];
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
+        self.taskListWasModified = NO;
+        tableView.editing = NO;
+    }];
+    
+    // delete button with alert "sure want to delete" when delete button pressed
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMInboxEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMInboxAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMInboxDeleteButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
+                
+                // Delete task in all groups with animations
+                for (NSInteger i = 0; i < self.tasksGroupsArray.count; i++) {
+                    OMMTasksGroup *checkTaskGroup = [self.tasksGroupsArray objectAtIndex:i];
+                    if ([checkTaskGroup.tasksArray containsObject:task]) {
+                        NSInteger j = [checkTaskGroup.tasksArray indexOfObject:task];
+//                        [checkTaskGroup.tasksArray removeObjectAtIndex:j];
+                        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                }
+                [self.allTasksSortedByDateInArrays removeObject:task]; // and delete this task from allTasksSortedByDateInArrays
+                [self sortAllTaskByDate]; // reload allTasksSortedByDateInArrays
+                
+            } else {
+                [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
+                [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
+            }
+            
+            [[OMMTaskService sharedInstance] removeTask:task];
+            self.taskListWasModified = NO;
+        }];
+        
+        // cancel button close alert and stop editing
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMInboxCloseButton style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            tableView.editing = NO;
+        }];
+        
+        [deleteAlertVC addAction:deleteAction];
+        [deleteAlertVC addAction:closeAction];
+        [self presentViewController:deleteAlertVC animated:YES completion:nil];
+    }];
+    
+    
+    // if task closed show only delete button
+//    if (task.isClosed) {
+//        return @[deleteAction];
+//    } 
+    return @[deleteAction, doneAction];
+}
 
 
 #pragma mark - tap to cell
@@ -350,8 +349,13 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     
     OMMTask *task = [[OMMTask alloc] init];
     if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {
-        OMMTasksGroup *taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
-        task = [taskGroup.allTasksArray objectAtIndex:indexPath.row];
+        OMMTasksGroup *taskGroup = [[OMMTasksGroup alloc] init];
+        [taskGroup printSomething];
+        taskGroup = [self.tasksGroupsArray objectAtIndex:indexPath.section];
+//        NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+//        NSArray *sortedArray = [taskGroup.tasks sortedArrayUsingDescriptors:@[nameDescriptor]];
+        
+        task = [[taskGroup.tasks allObjects] objectAtIndex:indexPath.row];
     } else {
         task = [[self.allTasksSortedByDateInArrays objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
