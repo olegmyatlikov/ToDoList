@@ -49,6 +49,8 @@ static NSString * const OMMTodayVCTaskDetailVCIndentifair = @"OMMTaskDetailVCInd
 static NSString * const OMMTodayVCEmptyTitleForSectionsHeader = @"";
 static NSString * const OMMTodayVCTaskCellIdentifier = @"OMMTaskCellIdentifier";
 static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
+static NSString * const OMMTodayVCStartDateTaskProperty = @"startDate";
+
 
 
 #pragma mark - life cycle
@@ -63,6 +65,7 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     if (self.taskListWasModified) {
         [self prepareDataForTableView];
         [self.tableView reloadData];
@@ -79,7 +82,7 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
     NSDate *dateDayNext = [dateDayStart dateByAddingTimeInterval:(24 * 60 * 60)];
     
     NSFetchRequest *openTodayTasksRequest = [OMMTask fetchRequest];
-    NSSortDescriptor *taskByDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES];
+    NSSortDescriptor *taskByDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:OMMTodayVCStartDateTaskProperty ascending:YES];
     NSPredicate *openTodayTaskPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) && (startDate < %@) && (closed == NO)", dateDayStart, dateDayNext];
     [openTodayTasksRequest setSortDescriptors:@[taskByDateDescriptor]];
     [openTodayTasksRequest setPredicate:openTodayTaskPredicate];
@@ -179,7 +182,6 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
         [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:(self.closeTaskArray.count - 1) inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-        //self.taskListWasModified = NO; // don't reload data if changes was in this tab
         tableView.editing = NO;
     }];
     

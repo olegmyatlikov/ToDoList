@@ -10,6 +10,8 @@
 
 @implementation OMMTasksGroup
 
+static NSString * const OMMTaskGroupPositionInTaskArrayProperty = @"positionInTasksArray";
+
 + (NSFetchRequest<OMMTasksGroup *> *)fetchRequest {
     return [[NSFetchRequest alloc] initWithEntityName:@"TasksGroup"];
 }
@@ -21,7 +23,7 @@
 @dynamic allTasksArray;
 
 - (NSArray *)allTasksArray {
-    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"positionInTasksArray" ascending:YES];
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:OMMTaskGroupPositionInTaskArrayProperty ascending:YES];
     NSArray *sortedArray = [self.tasks sortedArrayUsingDescriptors:@[nameDescriptor]];
     return sortedArray;
 }

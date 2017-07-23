@@ -40,8 +40,6 @@ static NSString *OMMsearchNoResultText;
 
 #pragma mark - constants
 
-//static NSString * const OMMsearchTaskIsOpen = @"closed = 0";
-//static NSString * const OMMsearchTaskIsClosed = @"closed = 1";
 static NSString * const OMMsearchClearText = @"";
 static NSString * const OMMSearchTaskCellIdentifier = @"OMMTaskCellIdentifier";
 static NSString * const OMMSearchTaskCellXibName = @"OMMTaskCell";
@@ -94,7 +92,7 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 }
 
 - (NSArray *)filterArrayUsingSelectScopeButton:(NSArray *)array {
-    NSArray *resultArray = [[NSArray alloc] init];
+    NSArray *resultArray = @[];
     if (self.searchController.searchBar.selectedScopeButtonIndex == 0) {
         resultArray = [array filteredArrayUsingPredicate:self.activeTasksPredicate];
     } else {

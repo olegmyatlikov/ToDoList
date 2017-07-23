@@ -8,7 +8,6 @@
 
 #import "OMMTaskDetailTableVC.h"
 #import "UIView+OMMHeaderInSection.h"
-#import "OMMDataManager.h"
 
 @interface OMMTaskDetailTableVC ()
 

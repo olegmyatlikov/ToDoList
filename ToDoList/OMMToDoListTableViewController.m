@@ -9,7 +9,6 @@
 #import "OMMToDoListTableViewController.h"
 #import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
-#import "OMMTaskService.h"
 #import "OMMInboxTableViewController.h"
 #import "OMMCreateGroupTableViewController.h"
 #import "OMMDataManager.h"
@@ -75,6 +74,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     if (self.taskListWasModified) {
         self.tasksGroupArray = [[[OMMDataManager sharedInstance] getAllTasksGroups] mutableCopy];
         [self.tableView reloadData];

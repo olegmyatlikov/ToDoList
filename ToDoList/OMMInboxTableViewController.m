@@ -84,6 +84,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     if (self.taskListWasModified) {
         [self prepareDataForTableView];
         [self sortAllTaskByDate];
@@ -227,21 +228,6 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
             task.positionInTasksArray = [NSNumber numberWithInteger:i];
         }
         
-//        NSInteger start = sourceIndexPath.row;
-//        if (destinationIndexPath.row < start) {
-//            start = destinationIndexPath.row;
-//        }
-//        NSInteger end = destinationIndexPath.row;
-//        if (sourceIndexPath.row > end) {
-//            end = sourceIndexPath.row;
-//        }
-//        NSInteger j = end;
-//        for (NSInteger i = start; i <= end; i++) {
-//            OMMTask *task = [taskGroup.allTasksArray objectAtIndex:i];
-//            task.positionInTasksArray = [NSNumber numberWithInteger:j];
-//            j--;
-//        }
-        
     }
     
     [[OMMDataManager sharedInstance] saveContext];
@@ -316,7 +302,6 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     // done button - change task condition in closed
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMInboxDoneButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[OMMDataManager sharedInstance] closeTaskByID:task.taskID];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self]; //?
         self.taskListWasModified = NO;
         tableView.editing = NO;
     }];
