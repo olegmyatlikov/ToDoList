@@ -64,23 +64,21 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     task.priority = [NSNumber numberWithInteger:priority];
     task.enableRemainder = [NSNumber numberWithBool:remainder];
     
+    NSInteger position = 0;
     if (taskGroup) {
         task.tasksGroup = taskGroup;
-        //task.positionInTasksArray = [NSNumber numberWithInteger:taskGroup.tasks.count];
+        position = [[[taskGroup.allTasksArray lastObject] positionInTasksArray] integerValue] + 1;
     } else {
         task.tasksGroup = self.inboxTasksGroup;
-        //task.positionInTasksArray = [NSNumber numberWithInteger:[self inboxTasksGroup].allTasksArray.count];
+        position = [[[task.tasksGroup.allTasksArray lastObject] positionInTasksArray] integerValue] + 1;
     }
+    task.positionInTasksArray = [NSNumber numberWithInteger:position];
     
-    NSInteger position = 0;
-    if (taskGroup.allTasksArray.count > 0) { // set position in tasksArray
-        position = [[[taskGroup.allTasksArray lastObject] positionInTasksArray] integerValue] + 1;
-        task.positionInTasksArray = [NSNumber numberWithInteger:position];
-    }
     
     if ([task.enableRemainder boolValue]) {
         [self addLocalNotificationForTask:task];
     }
+    
     [self saveContext];
 }
 

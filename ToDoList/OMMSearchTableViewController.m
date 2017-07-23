@@ -92,7 +92,7 @@ static NSString * const OMMSearchTaskDetailVCIndentifair = @"OMMTaskDetailVCInde
 }
 
 - (NSArray *)filterArrayUsingSelectScopeButton:(NSArray *)array {
-    NSArray *resultArray = @[];
+    NSArray *resultArray = [[NSArray alloc] init];
     if (self.searchController.searchBar.selectedScopeButtonIndex == 0) {
         resultArray = [array filteredArrayUsingPredicate:self.activeTasksPredicate];
     } else {

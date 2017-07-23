@@ -320,7 +320,6 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
             [[OMMDataManager sharedInstance] deleteTaskByID:task.taskID];
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-            self.taskListWasModified = NO;
         }];
         
         // cancel button close alert and stop editing
