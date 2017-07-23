@@ -26,20 +26,35 @@
 
 @implementation OMMInboxTableViewController
 
+#pragma mark - localizetion 
+
+static NSString *OMMInboxGroupSegmentControl;
+static NSString *OMMInboxDateSegmentControl;
+static NSString *OMMInboxCancelButton; // if we came to the inbox page from ToDoList
+static NSString *OMMInboxEditingActionDelete;
+static NSString *OMMInboxDoneButton;
+static NSString *OMMInboxDeleteButton;
+static NSString *OMMInboxCloseButton;
+static NSString *OMMInboxAlertWarning;
+
++ (void)initialize {
+    OMMInboxGroupSegmentControl = NSLocalizedString(@"segment_control.title-GROUP", nil);
+    OMMInboxDateSegmentControl = NSLocalizedString(@"segment_control,title-DATE", nil);
+    OMMInboxCancelButton = NSLocalizedString(@"left_bar_button_item.title-CLOSE", nil);
+    OMMInboxEditingActionDelete = NSLocalizedString(@"editing_action.title-DELETE", nil);
+    OMMInboxDoneButton = NSLocalizedString(@"edeiting_action.title-DONE", nil);
+    OMMInboxDeleteButton = NSLocalizedString(@"alert_action_button.title-DELETE", nil);
+    OMMInboxCloseButton = NSLocalizedString(@"alert_action_button.title-CLOSE", nil);
+    OMMInboxAlertWarning = NSLocalizedString(@"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_TASK", nil);
+}
+
 
 #pragma mark - constants
 
-static NSString * const OMMInboxGroupSegmentControl = @"Group";
-static NSString * const OMMInboxDateSegmentControl = @"Date";
-static NSString * const OMMInboxCancelButton = @"Cancel";
 static NSString * const OMMInboxStartDateTasksProperty = @"startDate";
 static NSString * const OMMInboxTaskArrayTasksGroupProperty = @"tasksArray";
 static NSString * const OMMInboxTaskCellIndetifair = @"OMMTaskCellIdentifier";
 static NSString * const OMMInboxTaskCellXibName = @"OMMTaskCell";
-static NSString * const OMMInboxDoneButton = @"Done";
-static NSString * const OMMInboxDeleteButton = @"Delete";
-static NSString * const OMMInboxCloseButton = @"Close";
-static NSString * const OMMInboxAlertWarning = @"Are you sure want to delete the task";
 static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCIndentifair";
 
 
@@ -76,7 +91,6 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
         }
         [self.tableView reloadData];
         self.taskListWasModified = NO;
-        NSLog(@"Data was reloaded in today tab");
     }
 }
 
@@ -85,7 +99,6 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 
 - (void)triggerTaskListWasModify {
     self.taskListWasModified = YES;
-    NSLog(@"Data was changed. TRIGGER");
 }
 
 - (void)prepareDataForTableView {
@@ -281,7 +294,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     }];
     
     // delete button with alert "sure want to delete" when delete button pressed
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMInboxDeleteButton handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMInboxEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMInboxAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMInboxDeleteButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (self.sortByGroupsOrDateSegmentControl.selectedSegmentIndex == 0) {

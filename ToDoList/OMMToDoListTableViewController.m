@@ -24,22 +24,39 @@
 
 @implementation OMMToDoListTableViewController
 
+#pragma mark - localization
+
+static NSString *OMMToDoListInboxGroup;
+static NSString *OMMToDoListGreateNewGroupLabelText;
+static NSString *OMMToDoListRenameTitleForEditingAction;
+static NSString *OMMToDoListRenameGroupAlertName;
+static NSString *OMMToDoListSaveButtonInRenameAlert;
+static NSString *OMMToDoListCloseButtonInRenameAlert;
+static NSString *OMMToDoListDeleteTitleForEditingAction;
+static NSString *OMMToDoListCloseTitleForEditingAction;
+static NSString *OMMToDoListDeleteGroupAlertWarning;
+
++ (void)initialize
+{
+    OMMToDoListInboxGroup = NSLocalizedString(@"section_name.text-INBOX", nil);
+    OMMToDoListGreateNewGroupLabelText =  NSLocalizedString(@"cell.title-GREATE_NEW_GROUP", nil);
+    OMMToDoListRenameTitleForEditingAction = NSLocalizedString(@"editing_action_button.title-RENAME", nil);
+    OMMToDoListRenameGroupAlertName = NSLocalizedString(@"alert_rename_group_name.title-RENAME_THE_GROUP", nil);
+    OMMToDoListSaveButtonInRenameAlert = NSLocalizedString(@"alert_rename_group_button.title-SAVE", nil);
+    OMMToDoListCloseButtonInRenameAlert = NSLocalizedString(@"alert_rename_group_button.title-CLOSE", nil);
+    OMMToDoListDeleteTitleForEditingAction = NSLocalizedString(@"alert_delte_droup_button.title-DELETE", nil);
+    OMMToDoListCloseTitleForEditingAction = NSLocalizedString(@"alert_delte_droup_button.title-CLOSE", nil);
+    OMMToDoListDeleteGroupAlertWarning = NSLocalizedString(@"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_GROUP", nil);
+}
+
+
 #pragma mark - constants
 
 static NSString * const OMMToDoListTaskListTableVCCellIdentifair = @"OMMTaskListTableVCCell";
 static NSString * const OMMToDoListEmptyHeaderSection = @" ";
-static NSString * const OMMToDoListInboxGroup = @"Inbox";
 static NSString * const OMMToDoListPlusImage = @"ic_plus.png";
-static NSString * const OMMToDoListGreateNewGroupLabelText = @"Create new group";
 static NSString * const OMMToDoListEmptyLabelText = @"";
-static NSString * const OMMToDoListRenameTitleForEditingAction = @"Rename";
-static NSString * const OMMToDoListRenameGroupAlertName = @"Rename the group";
-static NSString * const OMMToDoListSaveButtonInRenameAlert = @"Save";
-static NSString * const OMMToDoListCloseButtonInRenameAlert = @"Close";
 static NSString * const OMMToDoListGroupNameTaskGroupProperty = @"groupName";
-static NSString * const OMMToDoListDeleteTitleForEditingAction = @"Delete";
-static NSString * const OMMToDoListCloseTitleForEditingAction = @"Close";
-static NSString * const OOMMToDoListDeleteGroupAlertWarning = @"Are you sure want to delete the group";
 static NSString * const OMMToDoListInboxTableVCIdentifair = @"OMMInboxTableVCIdentifair";
 static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGroupTableVCIdentifair";
 
@@ -61,13 +78,11 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
         self.tasksGroupArray = [[OMMTaskService sharedInstance].tasksGroupsArray mutableCopy];
         [self.tableView reloadData];
         self.taskListWasModified = NO;
-        NSLog(@"Data was reloaded in today tab");
     }
 }
 
 - (void)triggerTaskListWasModify {
     self.taskListWasModified = YES;
-    NSLog(@"Data was changed. TRIGGER");
 }
 
 
@@ -176,7 +191,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
     
     // delete action
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMToDoListDeleteTitleForEditingAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OOMMToDoListDeleteGroupAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMToDoListDeleteGroupAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMToDoListDeleteTitleForEditingAction style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self.tasksGroupArray removeObjectAtIndex:(indexPath.row - 1)];
             [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:YES];

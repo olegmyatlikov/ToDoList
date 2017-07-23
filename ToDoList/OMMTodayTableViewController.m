@@ -25,19 +25,33 @@
 
 @implementation OMMTodayTableViewController
 
+#pragma mark - localization
+
+static NSString *OMMTodayVCSectionHeaderTitleComplited;
+static NSString *OMMTodayVCEditingActionDelete;
+static NSString *OMMTodayVCDeleteAction;
+static NSString *OMMTodayVCDoneAction;
+static NSString *OMMTodayVCCloseAction;
+static NSString *OMMTodayVCAlertWarning;
+
++ (void)initialize {
+    OMMTodayVCSectionHeaderTitleComplited = NSLocalizedString(@"section_header.title-COMPLITED", nil);
+    OMMTodayVCEditingActionDelete = NSLocalizedString(@"editing_action.title-DELETE", nil);
+    OMMTodayVCDoneAction = NSLocalizedString(@"edeiting_action.title-DONE", nil);
+    OMMTodayVCDeleteAction = NSLocalizedString(@"alert_action_button.title-DELETE", nil);
+    OMMTodayVCCloseAction = NSLocalizedString(@"alert_action_button.title-CLOSE", nil);
+    OMMTodayVCAlertWarning = NSLocalizedString(@"alert_warning.title-ARE_YOU_SURE_WANT_TO_DELETE_THE_TASK", nil);
+}
+
+
 #pragma mark - constants
 
 static NSString * const OMMTodayVCTaskDetailVCIndentifair = @"OMMTaskDetailVCIndentifair";
 static NSString * const OMMTodayVCPredicateOpenTaks = @"closed = 0";
 static NSString * const OMMTodayVCPredicateCloseTaks = @"closed = 1";
-static NSString * const OMMTodayVCSectionHeaderTitleComplited = @"Complited";
 static NSString * const OMMTodayVCEmptyTitleForSectionsHeader = @"";
 static NSString * const OMMTodayVCTaskCellIdentifier = @"OMMTaskCellIdentifier";
 static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
-static NSString * const OMMTodayVCDeleteAction = @"Delete";
-static NSString * const OMMTodayVCDoneAction = @"Done";
-static NSString * const OMMTodayVCCloseACtion = @"Close";
-static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete the task";
 
 
 #pragma mark - life cycle
@@ -183,7 +197,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
         tableView.editing = NO;
     }];
     
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMTodayVCDeleteAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMTodayVCEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMTodayVCAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMTodayVCDeleteAction style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             OMMTask *taskForDelete = [[OMMTask alloc] init];
@@ -198,7 +212,7 @@ static NSString * const OMMTodayVCAlertWarning = @"Are you sure want to delete t
             [[OMMTaskService sharedInstance] removeTask:taskForDelete];
             self.taskListWasModified = NO; // don't reload data if changes was in this tab
         }];
-        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseACtion style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseAction style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;
         }];
         

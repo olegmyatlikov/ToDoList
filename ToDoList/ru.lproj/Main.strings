@@ -1,0 +1,81 @@
+
+/* Class = "UITabBarItem"; title = "Search"; ObjectID = "3pm-2p-s1m"; */
+"3pm-2p-s1m.title" = "Поиск";
+
+/* Class = "UITextField"; placeholder = "add name..."; ObjectID = "4FR-fR-cQI"; */
+"4FR-fR-cQI.placeholder" = "введите имя...";
+
+/* Class = "UITableViewSection"; headerTitle = "NOTES"; ObjectID = "69M-jJ-kko"; */
+"69M-jJ-kko.headerTitle" = "ПРИМЕЧАНИЕ";
+
+/* Class = "UINavigationController"; title = "Today"; ObjectID = "6dI-IR-6iu"; */
+"6dI-IR-6iu.title" = "Сегодня";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "6fc-D2-kkZ"; */
+"6fc-D2-kkZ.text" = "Детали";
+
+/* Class = "UINavigationItem"; title = "Search"; ObjectID = "6ja-QO-5Mq"; */
+"6ja-QO-5Mq.title" = "Поиск";
+
+/* Class = "UILabel"; text = "Remaind me on the Day"; ObjectID = "9JL-px-tYT"; */
+"9JL-px-tYT.text" = "Напомнить мне";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Loc-Bz-QWy"; */
+"Loc-Bz-QWy.text" = "Title";
+
+/* Class = "UITabBarItem"; title = "ToDoList"; ObjectID = "ZC4-MT-ydP"; */
+"ZC4-MT-ydP.title" = "ТуДуЛист";
+
+/* Class = "UILabel"; text = "10.12.2017 12:30"; ObjectID = "ZaG-L9-6pz"; ?????????*/
+"ZaG-L9-6pz.text" = "10.12.2017 12:30";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "aun-Ja-tmI"; */
+"aun-Ja-tmI.text" = "Детали";
+
+/* Class = "UITableViewSection"; headerTitle = "TASK"; ObjectID = "fkR-NV-Ret"; */
+"fkR-NV-Ret.headerTitle" = "ЗАДАЧА";
+
+/* Class = "UITabBarItem"; title = "Inbox"; ObjectID = "g6n-R2-xO3"; */
+"g6n-R2-xO3.title" = "Инбокс";
+
+/* Class = "UINavigationItem"; title = "Today"; ObjectID = "g8c-ot-tqQ"; */
+"g8c-ot-tqQ.title" = "Сегодня";
+
+/* Class = "UITextField"; placeholder = "Group name"; ObjectID = "iQl-Dc-rQH"; */
+"iQl-Dc-rQH.placeholder" = "Название группы";
+
+/* Class = "UITabBarItem"; title = "Notify"; ObjectID = "jjN-99-7Qd"; */
+"jjN-99-7Qd.title" = "Напоминания";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "lG0-kp-5zU"; */
+"lG0-kp-5zU.text" = "Title";
+
+/* Class = "UINavigationController"; title = "ToDoList"; ObjectID = "qQS-d9-XaV"; */
+"qQS-d9-XaV.title" = "ТуДуЛист";
+
+/* Class = "UINavigationItem"; title = "ToDoList"; ObjectID = "qjf-c0-qCH"; */
+"qjf-c0-qCH.title" = "ТуДуЛист";
+
+/* Class = "UITabBarItem"; title = "Today"; ObjectID = "rgF-zX-t7v"; */
+"rgF-zX-t7v.title" = "Сегодня";
+
+/* Class = "UITableViewSection"; headerTitle = "PRIORITY"; ObjectID = "rvB-Dq-EB8"; */
+"rvB-Dq-EB8.headerTitle" = "ПРИОРИТЕТ";
+
+/* Class = "UINavigationItem"; title = "Inbox"; ObjectID = "sHr-4J-eQg"; */
+"sHr-4J-eQg.title" = "Инбокс";
+
+/* Class = "UITableViewSection"; headerTitle = "Group"; ObjectID = "sKg-9t-TYh"; */
+"sKg-9t-TYh.headerTitle" = "Группа";
+
+/* Class = "UINavigationController"; title = "Search"; ObjectID = "vj5-x1-d9k"; */
+"vj5-x1-d9k.title" = "Поиск";
+
+/* Class = "UINavigationController"; title = "Inbox"; ObjectID = "wWf-mN-qvC"; */
+"wWf-mN-qvC.title" = "Инбокс";
+
+/* Class = "UINavigationItem"; title = "Notifications"; ObjectID = "xuF-dO-Cha"; */
+"xuF-dO-Cha.title" = "Напоминания";
+
+/* Class = "UITableViewSection"; headerTitle = "REMAINDER"; ObjectID = "yn3-3b-A2s"; */
+"yn3-3b-A2s.headerTitle" = "НАПОМИНАНИЕ";
