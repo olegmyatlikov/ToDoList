@@ -32,3 +32,7 @@ ToDoList v.1.2:
 ToDoList v.1.3:
 
 - Add localization (rus_lang) 
+
+ToDoList v.2.0:
+
+- Core data
