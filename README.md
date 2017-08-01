@@ -35,4 +35,4 @@ ToDoList v.1.3:
 
 ToDoList v.2.0:
 
-- Core data
+- Переделать приложение на работу с Core data
