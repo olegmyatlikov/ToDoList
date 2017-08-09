@@ -35,7 +35,7 @@ extern NSString * const OMMTaskServiceTaskWasModifyNotification;
 - (void)deleteTasksGroupByID:(NSNumber *)tasksGroupID;
 - (void)renameTasksGroupWithID:(NSNumber *)tasksGroupID to:(NSString *)newName;
 
-- (NSArray *)getAllTaskArray;
-- (NSArray *)getAllTasksGroups;
+- (NSArray *)allTaskArray;
+- (NSArray *)allTasksGroups;
 
 @end

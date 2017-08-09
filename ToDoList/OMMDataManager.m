@@ -30,11 +30,11 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     self = [super init];
     if (self && self.inboxTasksGroup == nil) {
         
-        if (![self getTasksGroupByID:@1]) { // if inbox doesh't exist, create it
+        if (![self tasksGroupByID:@1]) { // if inbox doesh't exist, create it
             OMMTasksGroup *inboxTasksGroup = [self createTasksGroupWithName:OMMTaskServiceNameTaskGroupInbox]; // localize
             inboxTasksGroup.groupID = @1;
         }
-        _inboxTasksGroup = [self getTasksGroupByID:@1];
+        _inboxTasksGroup = [self tasksGroupByID:@1];
     }
     
     return self;
@@ -83,7 +83,7 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 }
 
 - (void)updateTaskWichID:(NSNumber *)taskID  changedName:(NSString *)changedName changedDate:(NSDate *)changedDate changedTaskNotes:(NSString *)changedTaskNotes changedPriority:(OMMTaskPriority)changedPriority changedRemainder:(NSNumber *)changedRemainder {
-    OMMTask *task = [self getTaskByID:taskID];
+    OMMTask *task = [self taskByID:taskID];
     
     task.name = changedName;
     task.startDate = changedDate;
@@ -101,7 +101,7 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 }
 
 - (void)deleteTaskByID:(NSNumber *)taskID {
-    OMMTask *task = [self getTaskByID:taskID];
+    OMMTask *task = [self taskByID:taskID];
     [self.managedObjectContext deleteObject:task];
     
     [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
@@ -109,14 +109,14 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 }
 
 - (void)closeTaskByID:(NSNumber *)taskID {
-    OMMTask *task = [self getTaskByID:taskID];
+    OMMTask *task = [self taskByID:taskID];
     task.closed = [NSNumber numberWithBool:YES];
     
     [self cancelLocalNotificationForTask:task]; // delete notification if task was removed
     [self saveContext];
 }
 
-- (OMMTask *)getTaskByID:(NSNumber *)taskID {
+- (OMMTask *)taskByID:(NSNumber *)taskID {
     NSFetchRequest *request = [OMMTask fetchRequest];
     request.predicate = [NSPredicate predicateWithFormat:@"taskID == %@", taskID];
     NSArray *result = [self.managedObjectContext executeFetchRequest:request error:nil];
@@ -137,18 +137,18 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 }
 
 - (void)deleteTasksGroupByID:(NSNumber *)tasksGroupID {
-    OMMTasksGroup *tasksGroup = [self getTasksGroupByID:tasksGroupID];
+    OMMTasksGroup *tasksGroup = [self tasksGroupByID:tasksGroupID];
     [self.managedObjectContext deleteObject:tasksGroup];
     [self saveContext];
 }
 
 - (void)renameTasksGroupWithID:(NSNumber *)tasksGroupID to:(NSString *)newName {
-    OMMTasksGroup *tasksGroup = [self getTasksGroupByID:tasksGroupID];
+    OMMTasksGroup *tasksGroup = [self tasksGroupByID:tasksGroupID];
     tasksGroup.groupName = newName;
     [self saveContext];
 }
 
-- (OMMTasksGroup *)getTasksGroupByID:(NSNumber *)tasksGroupID {
+- (OMMTasksGroup *)tasksGroupByID:(NSNumber *)tasksGroupID {
     NSFetchRequest *request = [OMMTasksGroup fetchRequest];
     request.predicate = [NSPredicate predicateWithFormat:@"groupID = %@", tasksGroupID];
     NSArray *result = [self.managedObjectContext executeFetchRequest:request error:nil];
@@ -157,7 +157,7 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
 
 #pragma mark - get data
 
-- (NSArray *)getAllTaskArray {
+- (NSArray *)allTaskArray {
     NSFetchRequest *request = [OMMTask fetchRequest];
     NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:NO];
     request.sortDescriptors = @[nameDescriptor];
@@ -165,12 +165,12 @@ NSString * const OMMTaskServiceTaskWasModifyNotification = @"TaskListWasModify";
     return result;
 }
 
-- (NSArray *)getAllTasksGroups { // Whithout inbox
+- (NSArray *)allTasksGroups { // Whithout inbox
     NSFetchRequest *request = [OMMTasksGroup fetchRequest];
     NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"groupName" ascending:NO];
     request.sortDescriptors = @[nameDescriptor];
     NSMutableArray *result = [[self.managedObjectContext executeFetchRequest:request error:nil] mutableCopy];
-    [result removeObject:[self getTasksGroupByID:@1]];
+    [result removeObject:[self tasksGroupByID:@1]];
     return result;
 }
 

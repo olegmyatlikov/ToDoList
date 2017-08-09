@@ -67,7 +67,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tasksGroupArray = [[[OMMDataManager sharedInstance] getAllTasksGroups] mutableCopy];
+    self.tasksGroupArray = [[[OMMDataManager sharedInstance] allTasksGroups] mutableCopy];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(triggerTaskListWasModify) name:OMMTaskServiceTaskWasModifyNotification object:nil];
@@ -76,7 +76,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     if (self.taskListWasModified) {
-        self.tasksGroupArray = [[[OMMDataManager sharedInstance] getAllTasksGroups] mutableCopy];
+        self.tasksGroupArray = [[[OMMDataManager sharedInstance] allTasksGroups] mutableCopy];
         [self.tableView reloadData];
         self.taskListWasModified = NO;
     }
@@ -145,7 +145,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
         cell.detailTextLabel.text = OMMToDoListEmptyLabelText;
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
-        OMMTasksGroup *taskGroup = [[[OMMDataManager sharedInstance] getAllTasksGroups] objectAtIndex:indexPath.row - 1];
+        OMMTasksGroup *taskGroup = [[[OMMDataManager sharedInstance] allTasksGroups] objectAtIndex:indexPath.row - 1];
         cell.textLabel.text = taskGroup.groupName;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)[taskGroup.tasks count]];
     }
@@ -185,7 +185,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
         [renameAvlertVC addAction:closeAction];
         [renameAvlertVC addAction:saveAction];
         [renameAvlertVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.text = [[[[OMMDataManager sharedInstance] getAllTasksGroups] objectAtIndex:(indexPath.row - 1)] valueForKey:OMMToDoListGroupNameTaskGroupProperty];
+            textField.text = [[[[OMMDataManager sharedInstance] allTasksGroups] objectAtIndex:(indexPath.row - 1)] valueForKey:OMMToDoListGroupNameTaskGroupProperty];
         }];
         [self presentViewController:renameAvlertVC animated:YES completion:nil];
     }];
@@ -234,7 +234,7 @@ static NSString * const OMMToDoListCreateGroupTableVCIdentifair = @"OMMCreateGro
         };
         pushingVC = createGroupVC;
     } else { // if we tap to a group row
-        taskGroupVC.tasksGroup = [[[OMMDataManager sharedInstance] getAllTasksGroups] objectAtIndex:indexPath.row - 1];
+        taskGroupVC.tasksGroup = [[[OMMDataManager sharedInstance] allTasksGroups] objectAtIndex:indexPath.row - 1];
         pushingVC = taskGroupVC;
     }
     

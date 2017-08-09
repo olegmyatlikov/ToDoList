@@ -106,7 +106,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
 - (void)prepareDataForTableView {
     // check - if we came here from toDoList show only one group tasks
     if (!self.tasksGroup) {
-        self.tasksGroupsArray = [[[OMMDataManager sharedInstance] getAllTasksGroups] mutableCopy];
+        self.tasksGroupsArray = [[[OMMDataManager sharedInstance] allTasksGroups] mutableCopy];
         [self.tasksGroupsArray insertObject:[OMMDataManager sharedInstance].inboxTasksGroup atIndex:0];
     } else {
         [self.tasksGroupsArray removeAllObjects];
@@ -161,7 +161,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
     self.allTasksSortedByDateInArrays = [[NSMutableArray alloc] init];
     NSSortDescriptor *sortByDateDescriptor = [[NSSortDescriptor alloc] initWithKey:OMMInboxStartDateTasksProperty ascending:YES];
     NSArray *sortDescriptorsArray = @[sortByDateDescriptor];
-    NSArray *tasksSortedByStartDate = [[[OMMDataManager sharedInstance] getAllTaskArray] sortedArrayUsingDescriptors:sortDescriptorsArray];
+    NSArray *tasksSortedByStartDate = [[[OMMDataManager sharedInstance] allTaskArray] sortedArrayUsingDescriptors:sortDescriptorsArray];
     
     for (int i = 0; i < tasksSortedByStartDate.count; i++) {
         if (i == 0) {
@@ -214,7 +214,7 @@ static NSString * const OMMInboxTaskDetailVCIndentifair = @"OMMTaskDetailVCInden
         if (sourceIndexPath.section == 0) {
             taskGroup = [[OMMDataManager sharedInstance] inboxTasksGroup];
         } else {
-            taskGroup = [[[OMMDataManager sharedInstance] getAllTasksGroups] objectAtIndex:sourceIndexPath.section - 1];
+            taskGroup = [[[OMMDataManager sharedInstance] allTasksGroups] objectAtIndex:sourceIndexPath.section - 1];
         }
         
         OMMTask *firstTask = [taskGroup.allTasksArray objectAtIndex:sourceIndexPath.row];
