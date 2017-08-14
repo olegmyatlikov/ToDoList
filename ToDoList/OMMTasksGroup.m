@@ -10,34 +10,22 @@
 
 @implementation OMMTasksGroup
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        self.groupID = arc4random_uniform(10000);
-        self.groupStartDate = [NSDate date];
-    }
-    return self;
+static NSString * const OMMTaskGroupPositionInTaskArrayProperty = @"positionInTasksArray";
+
++ (NSFetchRequest<OMMTasksGroup *> *)fetchRequest {
+    return [[NSFetchRequest alloc] initWithEntityName:@"TasksGroup"];
 }
 
-- (OMMTasksGroup *)initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    self.groupID = [[aDecoder decodeObjectForKey:@"groupID"] integerValue];
-    self.groupName = [aDecoder decodeObjectForKey:@"groupName"];
-    self.groupStartDate = [aDecoder decodeObjectForKey:@"groupStartDate"];
-    self.tasksArray = [aDecoder decodeObjectForKey:@"tasksArray"];
-    
-    return self;
-}
+@dynamic groupID;
+@dynamic groupName;
+@dynamic groupStartDate;
+@dynamic tasks;
+@dynamic allTasksArray;
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.groupID] forKey:@"groupID"];
-    [aCoder encodeObject:self.groupName forKey:@"groupName"];
-    [aCoder encodeObject:self.groupStartDate forKey:@"groupStartDate"];
-    [aCoder encodeObject:self.tasksArray forKey:@"tasksArray"];
+- (NSArray *)allTasksArray {
+    NSSortDescriptor *nameDescriptor = [NSSortDescriptor sortDescriptorWithKey:OMMTaskGroupPositionInTaskArrayProperty ascending:YES];
+    NSArray *sortedArray = [self.tasks sortedArrayUsingDescriptors:@[nameDescriptor]];
+    return sortedArray;
 }
 
 @end

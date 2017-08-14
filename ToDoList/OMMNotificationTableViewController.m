@@ -32,12 +32,14 @@ static NSString * const OMMNotificationSortDescriptorKeyFireDate = @"fireDate";
 #pragma mark - Life cycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     self.notificationsArray = [self allLocalNotificationsSortedByDate];
     [self.tableView reloadData];
 }

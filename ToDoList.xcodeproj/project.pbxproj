@@ -13,16 +13,16 @@
 		36BCC6081EF7EFBA00F28922 /* OMMToDoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6071EF7EFBA00F28922 /* OMMToDoListTableViewController.m */; };
 		36BCC6581EFBBA0400F28922 /* OMMTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */; };
 		36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */; };
+		7C484D511F1FD5F800C0A494 /* OMMDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C484D501F1FD5F800C0A494 /* OMMDataManager.m */; };
+		7C4A3B071F1AA2AF007A518B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */; };
 		7C65D0201F005305005122D0 /* OMMCreateGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */; };
 		7C99D7F51F0AC4E300AB3CF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7C99D7F71F0AC4E300AB3CF0 /* Localizable.strings */; };
 		8446DFB11EE28BB9004337CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB01EE28BB9004337CF /* main.m */; };
 		8446DFB41EE28BB9004337CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB31EE28BB9004337CF /* AppDelegate.m */; };
-		8446DFB71EE28BB9004337CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFB61EE28BB9004337CF /* ViewController.m */; };
 		8446DFBA1EE28BB9004337CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFB81EE28BB9004337CF /* Main.storyboard */; };
 		8446DFBF1EE28BB9004337CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFBD1EE28BB9004337CF /* LaunchScreen.storyboard */; };
 		8446DFCD1EE3017D004337CF /* OMMTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFCC1EE3017D004337CF /* OMMTask.m */; };
 		8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFCF1EE3032E004337CF /* OMMTasksGroup.m */; };
-		8446DFD31EE30423004337CF /* OMMTaskService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFD21EE30423004337CF /* OMMTaskService.m */; };
 		8446DFF91EE35863004337CF /* OMMInboxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */; };
 		8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446DFFE1EE36AEC004337CF /* OMMDatepickerViewController.m */; };
 		8446E0011EE36AEC004337CF /* OMMDatepickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8446DFFF1EE36AEC004337CF /* OMMDatepickerViewController.xib */; };
@@ -44,6 +44,9 @@
 		36BCC6571EFBBA0400F28922 /* OMMTodayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTodayTableViewController.m; sourceTree = "<group>"; };
 		36BCC6601EFBBED800F28922 /* UIView+OMMHeaderInSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OMMHeaderInSection.h"; sourceTree = "<group>"; };
 		36BCC6611EFBBED900F28922 /* UIView+OMMHeaderInSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OMMHeaderInSection.m"; sourceTree = "<group>"; };
+		7C484D4F1F1FD5F800C0A494 /* OMMDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMDataManager.h; sourceTree = "<group>"; };
+		7C484D501F1FD5F800C0A494 /* OMMDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMDataManager.m; sourceTree = "<group>"; };
+		7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7C65D01E1F005305005122D0 /* OMMCreateGroupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMCreateGroupTableViewController.h; sourceTree = "<group>"; };
 		7C65D01F1F005305005122D0 /* OMMCreateGroupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMCreateGroupTableViewController.m; sourceTree = "<group>"; };
 		7C99D7F11F0AC38600AB3CF0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -54,8 +57,6 @@
 		8446DFB01EE28BB9004337CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8446DFB21EE28BB9004337CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8446DFB31EE28BB9004337CF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8446DFB51EE28BB9004337CF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8446DFB61EE28BB9004337CF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8446DFB91EE28BB9004337CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8446DFBE1EE28BB9004337CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8446DFC01EE28BB9004337CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,8 +64,6 @@
 		8446DFCC1EE3017D004337CF /* OMMTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTask.m; sourceTree = "<group>"; };
 		8446DFCE1EE3032E004337CF /* OMMTasksGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTasksGroup.h; sourceTree = "<group>"; };
 		8446DFCF1EE3032E004337CF /* OMMTasksGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTasksGroup.m; sourceTree = "<group>"; };
-		8446DFD11EE30423004337CF /* OMMTaskService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTaskService.h; sourceTree = "<group>"; };
-		8446DFD21EE30423004337CF /* OMMTaskService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTaskService.m; sourceTree = "<group>"; };
 		8446DFF71EE35863004337CF /* OMMInboxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMInboxTableViewController.h; sourceTree = "<group>"; };
 		8446DFF81EE35863004337CF /* OMMInboxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMInboxTableViewController.m; sourceTree = "<group>"; };
 		8446DFFD1EE36AEC004337CF /* OMMDatepickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMDatepickerViewController.h; sourceTree = "<group>"; };
@@ -131,6 +130,16 @@
 			name = Tabs;
 			sourceTree = "<group>";
 		};
+		7C27ADEF1F1AAC5700A0CFF3 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */,
+				7C484D4F1F1FD5F800C0A494 /* OMMDataManager.h */,
+				7C484D501F1FD5F800C0A494 /* OMMDataManager.m */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		8446DFA31EE28BB9004337CF = {
 			isa = PBXGroup;
 			children = (
@@ -152,11 +161,10 @@
 			children = (
 				8446DFB21EE28BB9004337CF /* AppDelegate.h */,
 				8446DFB31EE28BB9004337CF /* AppDelegate.m */,
-				8446DFB51EE28BB9004337CF /* ViewController.h */,
-				8446DFB61EE28BB9004337CF /* ViewController.m */,
 				8446DFB81EE28BB9004337CF /* Main.storyboard */,
 				36BCC6051EF7EF3F00F28922 /* Tabs */,
 				36068B061EE58A6C0088EC2D /* Edit task/group pages */,
+				7C27ADEF1F1AAC5700A0CFF3 /* Core Data */,
 				8446DFFA1EE3597C004337CF /* Models */,
 				364F25E61EE571ED00CC43C3 /* Helpers */,
 				8446DFAF1EE28BB9004337CF /* Supporting Files */,
@@ -183,8 +191,6 @@
 				8446DFCC1EE3017D004337CF /* OMMTask.m */,
 				8446DFCE1EE3032E004337CF /* OMMTasksGroup.h */,
 				8446DFCF1EE3032E004337CF /* OMMTasksGroup.m */,
-				8446DFD11EE30423004337CF /* OMMTaskService.h */,
-				8446DFD21EE30423004337CF /* OMMTaskService.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -286,10 +292,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8446DFF91EE35863004337CF /* OMMInboxTableViewController.m in Sources */,
-				8446DFD31EE30423004337CF /* OMMTaskService.m in Sources */,
-				8446DFB71EE28BB9004337CF /* ViewController.m in Sources */,
+				7C484D511F1FD5F800C0A494 /* OMMDataManager.m in Sources */,
 				8446DFCD1EE3017D004337CF /* OMMTask.m in Sources */,
 				8446DFD01EE3032E004337CF /* OMMTasksGroup.m in Sources */,
+				7C4A3B071F1AA2AF007A518B /* Model.xcdatamodeld in Sources */,
 				36BCC6621EFBBED900F28922 /* UIView+OMMHeaderInSection.m in Sources */,
 				8446E0001EE36AEC004337CF /* OMMDatepickerViewController.m in Sources */,
 				365640E51F0A3DE5005D909E /* OMMNotificationTableViewController.m in Sources */,
@@ -478,6 +484,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7C4A3B051F1AA2AF007A518B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */,
+			);
+			currentVersion = 7C4A3B061F1AA2AF007A518B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8446DFA41EE28BB9004337CF /* Project object */;
 }

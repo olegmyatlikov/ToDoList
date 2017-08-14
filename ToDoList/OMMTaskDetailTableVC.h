@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NSDate+OMMDateConverter.h"
 #import "OMMDatepickerViewController.h"
-#import "OMMTaskService.h"
+#import "OMMDataManager.h"
 
 
 @interface OMMTaskDetailTableVC : UITableViewController <OMMDatepickerViewControllerDelegate, UITextViewDelegate>

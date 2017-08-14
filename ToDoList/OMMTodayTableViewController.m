@@ -9,13 +9,12 @@
 #import "OMMTodayTableViewController.h"
 #import "NSDate+OMMDateConverter.h"
 #import "UIView+OMMHeaderInSection.h"
-#import "OMMTaskService.h"
 #import "OMMTaskCell.h"
 #import "OMMTaskDetailTableVC.h"
+#import "OMMDataManager.h"
 
 @interface OMMTodayTableViewController ()
 
-@property (strong, nonatomic) NSMutableArray *allTodayTasks;
 @property (strong, nonatomic) NSMutableArray *openTasksArray;
 @property (strong, nonatomic) NSMutableArray *closeTaskArray;
 @property (assign, nonatomic) BOOL taskListWasModified;
@@ -47,11 +46,11 @@ static NSString *OMMTodayVCAlertWarning;
 #pragma mark - constants
 
 static NSString * const OMMTodayVCTaskDetailVCIndentifair = @"OMMTaskDetailVCIndentifair";
-static NSString * const OMMTodayVCPredicateOpenTaks = @"closed = 0";
-static NSString * const OMMTodayVCPredicateCloseTaks = @"closed = 1";
 static NSString * const OMMTodayVCEmptyTitleForSectionsHeader = @"";
 static NSString * const OMMTodayVCTaskCellIdentifier = @"OMMTaskCellIdentifier";
 static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
+static NSString * const OMMTodayVCStartDateTaskProperty = @"startDate";
+
 
 
 #pragma mark - life cycle
@@ -66,6 +65,7 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     if (self.taskListWasModified) {
         [self prepareDataForTableView];
         [self.tableView reloadData];
@@ -73,12 +73,26 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
     }
 }
 
+
 #pragma mark - methods
 
 - (void)prepareDataForTableView {
-    self.allTodayTasks = [self allTodayTasksInTasksArray:[OMMTaskService sharedInstance].allTasksArray];
-    self.openTasksArray = [self allOpenTasksInArray:self.allTodayTasks];
-    self.closeTaskArray = [self allCloseTasksInArray:self.allTodayTasks];
+    NSManagedObjectContext *context = [[OMMDataManager sharedInstance] managedObjectContext];
+    NSDate *dateDayStart = [[NSCalendar currentCalendar] startOfDayForDate:[NSDate date]];
+    NSDate *dateDayNext = [dateDayStart dateByAddingTimeInterval:(24 * 60 * 60)];
+    
+    NSFetchRequest *openTodayTasksRequest = [OMMTask fetchRequest];
+    NSSortDescriptor *taskByDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:OMMTodayVCStartDateTaskProperty ascending:YES];
+    NSPredicate *openTodayTaskPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) && (startDate < %@) && (closed == NO)", dateDayStart, dateDayNext];
+    [openTodayTasksRequest setSortDescriptors:@[taskByDateDescriptor]];
+    [openTodayTasksRequest setPredicate:openTodayTaskPredicate];
+    self.openTasksArray = [[context executeFetchRequest:openTodayTasksRequest error:nil] mutableCopy];
+    
+    NSFetchRequest *closedTodayTasksRequest = [OMMTask fetchRequest];
+    NSPredicate *closedTodayTaskPredicate = [NSPredicate predicateWithFormat:@"(startDate >= %@) && (startDate < %@) && (closed == YES)", dateDayStart, dateDayNext];
+    [closedTodayTasksRequest setSortDescriptors:@[taskByDateDescriptor]];
+    [closedTodayTasksRequest setPredicate:closedTodayTaskPredicate];
+    self.closeTaskArray = [[context executeFetchRequest:closedTodayTasksRequest error:nil] mutableCopy];
 }
 
 - (void)triggerTaskListWasModify {
@@ -90,31 +104,6 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
     [self.navigationController pushViewController:taskDetails animated:YES];
 }
 
-- (NSMutableArray *)allOpenTasksInArray:(NSMutableArray *)array {
-    NSMutableArray *openTasksArray = [[NSMutableArray alloc] init];
-    NSPredicate *openTaskPredicate = [NSPredicate predicateWithFormat:OMMTodayVCPredicateOpenTaks];
-    openTasksArray = [[array filteredArrayUsingPredicate:openTaskPredicate] mutableCopy];
-    return openTasksArray;
-}
-
-- (NSMutableArray *)allCloseTasksInArray:(NSMutableArray *)array {
-    NSMutableArray *closeTasksArray = [[NSMutableArray alloc] init];
-    NSPredicate *closeTaskPredicate = [NSPredicate predicateWithFormat:OMMTodayVCPredicateCloseTaks];
-    closeTasksArray = [[array filteredArrayUsingPredicate:closeTaskPredicate] mutableCopy];
-    return closeTasksArray;
-}
-
-- (NSMutableArray *)allTodayTasksInTasksArray:(NSArray *)tasksArray {
-    NSMutableArray *allTodayTasks = [[NSMutableArray alloc] init];
-    for (OMMTask *task in tasksArray) {
-        if ([[task.startDate convertToStringForCompareDate] isEqualToString:[[NSDate date] convertToStringForCompareDate]]) {
-                [allTodayTasks addObject:task];
-        }
-    }
-    
-    return allTodayTasks;
-}
-
 
 #pragma mark - Setup UI for tableView
 
@@ -123,7 +112,7 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
         return 0;
     } else if (section == 0) {
         return 25.f;
-    } 
+    }
     return 50.f;
 }
 
@@ -155,7 +144,7 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
         return self.openTasksArray.count;
     }
     return self.closeTaskArray.count;
-
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -186,32 +175,32 @@ static NSString * const OMMTodayVCTaskCellXibName = @"OMMTaskCell";
     UITableViewRowAction *doneAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:OMMTodayVCDoneAction handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         
         OMMTask *task = [self.openTasksArray objectAtIndex:indexPath.row];
-        [[OMMTaskService sharedInstance] closeTask:task];
+        [[OMMDataManager sharedInstance] closeTaskByID:task.taskID];
         [self.openTasksArray removeObject:task];
         [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationBottom];
         [self.closeTaskArray addObject:task];
         [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:(self.closeTaskArray.count - 1) inSection:1]] withRowAnimation:UITableViewRowAnimationTop];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:OMMTaskServiceTaskWasModifyNotification object:self];
-        self.taskListWasModified = NO; // don't reload data if changes was in this tab
         tableView.editing = NO;
     }];
     
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:OMMTodayVCEditingActionDelete handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         UIAlertController *deleteAlertVC = [UIAlertController alertControllerWithTitle:OMMTodayVCAlertWarning message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:OMMTodayVCDeleteAction style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            OMMTask *taskForDelete = [[OMMTask alloc] init];
+            OMMTask *taskForDelete = nil;
             if (indexPath.section == 0) {
                 taskForDelete = [self.openTasksArray objectAtIndex:indexPath.row];
-                [self.openTasksArray removeObject:taskForDelete];
+                [self.openTasksArray removeObjectAtIndex:indexPath.row];
             } else {
                 taskForDelete = [self.closeTaskArray objectAtIndex:indexPath.row];
-                [self.closeTaskArray removeObject:taskForDelete];
+                [self.closeTaskArray removeObjectAtIndex:indexPath.row];
             }
             [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:(indexPath.section)]] withRowAnimation:UITableViewRowAnimationFade];
-            [[OMMTaskService sharedInstance] removeTask:taskForDelete];
-            self.taskListWasModified = NO; // don't reload data if changes was in this tab
+            
+            [[OMMDataManager sharedInstance] deleteTaskByID:taskForDelete.taskID];
         }];
+        
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:OMMTodayVCCloseAction style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             tableView.editing = NO;
         }];

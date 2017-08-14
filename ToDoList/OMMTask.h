@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import "OMMTasksGroup.h"
 
-
-@interface OMMTask : NSObject <NSCoding>
+@interface OMMTask : NSManagedObject
 
 typedef NS_ENUM(NSInteger, OMMTaskPriority) {
     OMMTaskPriorityNone = 0,
@@ -18,15 +19,19 @@ typedef NS_ENUM(NSInteger, OMMTaskPriority) {
     OMMTaskPriorityHigh = 3,
 };
 
-@property (nonatomic, assign, readonly) NSInteger taskID;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSDate *startDate;
-@property (nonatomic, strong) NSDate *finishDate;
-@property (nonatomic, assign) OMMTaskPriority priority;
-@property (nonatomic, strong) NSString *note;
-@property (nonatomic, assign, getter=isClosed) BOOL closed;
-@property (nonatomic, assign) BOOL enableRemainder;
+@property (nullable, nonatomic, copy) NSNumber *taskID;
+@property (nullable, nonatomic, copy) NSString *name;
+@property (nullable, nonatomic, copy) NSDate *startDate;
+@property (nullable, nonatomic, copy) NSDate *finishDate;
+@property (nullable, nonatomic, copy) NSString *note;
+@property (nullable, nonatomic, copy) NSNumber *priority;
+@property (nullable, nonatomic, copy) NSNumber *closed;
+@property (nullable, nonatomic, copy) NSNumber *enableRemainder;
+@property (nullable, nonatomic, copy) NSNumber *positionInTasksArray;
+@property (nullable, nonatomic, retain) OMMTasksGroup *tasksGroup;
 
-+ (NSString *)taskPriorityToString:(OMMTaskPriority)taskPriority;
++ (NSFetchRequest<OMMTask *> *_Nonnull)fetchRequest;
++ (NSString *_Nonnull)taskPriorityToString:(NSInteger)taskPriority;
+
 
 @end
